@@ -111,6 +111,7 @@ class HomeScreen extends React.Component {
      ],
      height: heightTranslate,
    };
+   //  handling a search button
    if (this.props.userSearch && !search) {
      return (<ScrollView>
        {
@@ -127,6 +128,7 @@ class HomeScreen extends React.Component {
        }
      </ScrollView>);
    }
+   //  main screen view
    return (
      <View style={[styles.container]}>
        <Text style={styles.date}> {currentDate()}</Text>
@@ -138,6 +140,7 @@ class HomeScreen extends React.Component {
              bounces={false}
              showsHorizontalScrollIndicator={false}
            >
+             {/* rendering Cards components  */}
              {
                this.props.data.slice(0, 10).map(i => (
                  <View key={i._id}>

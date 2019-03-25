@@ -1,6 +1,9 @@
+import { Dimensions } from 'react-native';
 import Colors from '../../../constants/Colors';
 
-const HEADER_MAX_HEIGHT = 450;
+const { height } = Dimensions.get('window');
+
+const HEADER_MAX_HEIGHT = height / 2;
 export const styles = {
   container: {
     flex: 1,

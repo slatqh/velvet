@@ -18,7 +18,7 @@ async function shareWithFriends() {
 export const ArticleText = ({ animation, data }) => {
   const content = data.content.rendered.replace('This slideshow requires JavaScript.', ' ');
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: 'black' }}>
       <Animated.View
         style={[styles.Bar, animation]}
       />

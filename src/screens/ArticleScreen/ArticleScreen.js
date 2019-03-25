@@ -23,7 +23,7 @@ import Colors from '../../../constants/Colors';
 const { width, height } = Dimensions.get('window');
 const h1 = '<h1>';
 const h1close = '</h1>';
-const HEADER_MAX_HEIGHT = height - 300;
+const HEADER_MAX_HEIGHT = Platform.OS === 'ios' ? height - 300 : height - 300;
 
 class ArticleScreen extends PureComponent {
   static navigationOptions = {
@@ -43,7 +43,7 @@ class ArticleScreen extends PureComponent {
     this.shoppingBag = new Animated.Value(0);
     this.shoppingBagOpacity = new Animated.Value(0);
     this.scrollY = new Animated.Value(
-      Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0
+      Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : -HEADER_MAX_HEIGHT
     );
   }
 
@@ -138,7 +138,7 @@ class ArticleScreen extends PureComponent {
     }
     return (
       <View >
-        <MyStatusBar backgroundColor='black' barStyle="light-content" />
+        {/* <MyStatusBar backgroundColor='black' barStyle="light-content" /> */}
         <Animated.ScrollView
           contentContainerStyle={styles.scrollContent}
           scrollEventThrottle={16}
@@ -162,7 +162,9 @@ class ArticleScreen extends PureComponent {
             )
           }
         >
-          <ArticleText animation={barOpacity} data={data} />
+          <View style={() => (Platform.OS === 'ios' ? null : { marginTop: -450 })}>
+            <ArticleText animation={barOpacity} data={data} />
+          </View>
         </Animated.ScrollView>
         <View style={styles.header}>
           <Animated.Image

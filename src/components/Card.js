@@ -8,7 +8,7 @@ import Colors from '../../constants/Colors';
 
 const h1 = '<h1>';
 const h1close = '</h1>';
-const width = Dimensions.get('window').width;
+const { width, height } = Dimensions.get('window');
 
 export default class ImageCard extends PureComponent {
   constructor(props) {
@@ -54,13 +54,13 @@ export default class ImageCard extends PureComponent {
                 value={`${h1}${this.props.title.toUpperCase()}${h1close}`}
                 stylesheet={styles.title}
               />
-              <Animated.View style={this.props.showReadButton}>
+              <Animated.View style={[this.props.showReadButton, { flex: 1 }]}>
                 <TouchableOpacity
                   style={[styles.button, { marginTop: 10 }]}
                   onPress={onPress}
                 >
                   <Text
-                    style={{ fontFamily: 'Raleway', letterSpacing: 1, fontSize: 12, color: Colors.white }}
+                    style={{ width: 40, fontFamily: 'Raleway', letterSpacing: 1, fontSize: 12, color: Colors.white, flexDirection: 'row' }}
                   >READ</Text>
                 </TouchableOpacity>
               </Animated.View>
@@ -77,6 +77,7 @@ const styles = {
     flex: 1,
     marginLeft: 10,
     width: width / 1.3,
+    //height: (height / 2) + 40,
     paddingBottom: 10,
   },
 
