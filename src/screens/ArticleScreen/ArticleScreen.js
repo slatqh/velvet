@@ -23,7 +23,7 @@ import Colors from '../../../constants/Colors';
 const { width, height } = Dimensions.get('window');
 const h1 = '<h1>';
 const h1close = '</h1>';
-const HEADER_MAX_HEIGHT = Platform.OS === 'ios' ? height - 300 : height - 300;
+const HEADER_MAX_HEIGHT = Platform.OS === 'ios' ? 500 : height - 300;
 
 class ArticleScreen extends PureComponent {
   static navigationOptions = {
@@ -138,7 +138,7 @@ class ArticleScreen extends PureComponent {
     }
     return (
       <View >
-        {/* <MyStatusBar backgroundColor='black' barStyle="light-content" /> */}
+        <MyStatusBar backgroundColor='black' barStyle="light-content" />
         <Animated.ScrollView
           contentContainerStyle={styles.scrollContent}
           scrollEventThrottle={16}

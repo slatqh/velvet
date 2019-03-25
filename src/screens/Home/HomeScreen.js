@@ -6,6 +6,8 @@ import {
   Animated,
   RefreshControl,
   Alert,
+  Dimensions,
+  Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -14,6 +16,9 @@ import { List, Card, Logo, SearchBar, Loading } from '../../components';
 import { loadArticles, searchValue } from './action';
 import { currentDate } from '../../helpers';
 import { styles } from './styles';
+
+const { height } = Dimensions.get('window');
+const CARD_HEIGHT = Platform.OS === 'android' ? (height / 2) - 50 : (height / 2) + 50;
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -82,8 +87,8 @@ class HomeScreen extends React.Component {
      return Alert.alert('Article already added to wishlist');
    }
    this.updateUserStarred(id);
+   return false;
  }
-
  async updateUserStarred(id) {
    const arr = [...this.props.starred, id];
    this.props.addStarredArticle(arr);
@@ -94,7 +99,7 @@ class HomeScreen extends React.Component {
 
    const heightTranslate = this.scrollY.interpolate({
      inputRange: [0, 1],
-     outputRange: [450, 300],
+     outputRange: [CARD_HEIGHT, 300],
      extrapolate: 'clamp',
    });
    const readButton = this.scrollY.interpolate({
@@ -145,7 +150,8 @@ class HomeScreen extends React.Component {
                this.props.data.slice(0, 10).map(i => (
                  <View key={i._id}>
                    <Card
-
+                     starred={this.props.starred}
+                     id={i.id}
                      date={i.date}
                      navigation={navigation}
                      categoryName={this.getCategoryName}

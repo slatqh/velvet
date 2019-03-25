@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, View, Text, Share } from 'react-native';
+import { Animated, View, Text, Share, Platform, Dimensions } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import { InstagramButton, ShareButton, ShoppingButton } from '../../components';
 import { getDate } from '../../helpers';
@@ -12,13 +12,15 @@ const shareOptions = {
   url: 'http://velvet-mag.com',
   subject: 'Share Link',
 };
+const { width, height } = Dimensions.get('window');
+const HEADER = height / 2;
 async function shareWithFriends() {
   await Share.share(shareOptions);
 }
 export const ArticleText = ({ animation, data }) => {
   const content = data.content.rendered.replace('This slideshow requires JavaScript.', ' ');
   return (
-    <View style={{ flex: 1, backgroundColor: 'black' }}>
+    <View style={[styles.container, { marginTop: Platform.OS === 'android' ? HEADER : 0, backgroundColor: 'black' }]}>
       <Animated.View
         style={[styles.Bar, animation]}
       />
@@ -38,7 +40,6 @@ export const ArticleText = ({ animation, data }) => {
           // renderNode={renderNode}
           />
         </View>
-
       </View>
       <View style={{ flex: 1 }} />
       <View style={{ paddingBottom: 60 }}>
@@ -52,6 +53,11 @@ export const ArticleText = ({ animation, data }) => {
 };
 
 const Styles = {
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+    // marginTop: () => (Platform.OS === 'ios' ? 400 : 0),
+  },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',

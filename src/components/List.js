@@ -36,6 +36,7 @@ export const List = ({ title, image, categoryName, onPress, date, trashIcon, del
             onPress={deleteArticle}
             name='trash'
             size={14}
+            iconStyle={{ padding: 5 }}
             containerStyle={{ alignSelf: 'flex-end', padding: 10 }}
           /> : null
         }

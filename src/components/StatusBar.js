@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
 
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 36 : StatusBar;
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 36 : 0;
 // const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 
 export const MyStatusBar = ({ backgroundColor, ...props }) => (

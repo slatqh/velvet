@@ -14,7 +14,16 @@ export default class ImageCard extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      starIconStyle: false,
     };
+  }
+  opacityStyle() {
+    const { starred, id } = this.props;
+    const existingArticle = starred.includes(id);
+    if (existingArticle) {
+      return 0.3;
+    }
+    return 1;
   }
   render() {
     const { image, categoryName, onPress } = this.props;
@@ -34,13 +43,13 @@ export default class ImageCard extends PureComponent {
         >
           <TouchableOpacity
             style={{ alignSelf: 'flex-end', flex: 1, paddingTop: 20, paddingRight: 10 }}
+            onPress={this.props.starIcon}
           >
             <Icon
               type='font-awesome'
               name='star'
               size={10}
-              onPress={this.props.starIcon}
-              containerStyle={{ backgroundColor: 'white', padding: 5, borderRadius: 20 }}
+              containerStyle={[styles.starIcon, { opacity: this.opacityStyle() }]}
               color={Colors.black}
             />
           </TouchableOpacity>
@@ -77,7 +86,7 @@ const styles = {
     flex: 1,
     marginLeft: 10,
     width: width / 1.3,
-    //height: (height / 2) + 40,
+    // height: (height / 2) + 40,
     paddingBottom: 10,
   },
 
@@ -124,7 +133,11 @@ const styles = {
     paddingRight: 12,
     backgroundColor: Colors.black,
     borderRadius: 35,
-
+  },
+  starIcon: {
+    backgroundColor: 'white',
+    padding: 5,
+    borderRadius: 20,
   },
 
 };
