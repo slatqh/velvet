@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, View, Text, Share, Platform, Dimensions } from 'react-native';
+import { Animated, View, Text, Share, Platform, Dimensions, Image } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import { InstagramButton, ShareButton, ShoppingButton } from '../../components';
 import { getDate } from '../../helpers';
@@ -17,8 +17,54 @@ const HEADER = height / 2;
 async function shareWithFriends() {
   await Share.share(shareOptions);
 }
+
+function renderNode(node, index, siblings, parent, defaultRenderer) {
+  if (node.name == 'img') {
+    const { src } = node.attribs;
+    var pWidth = node.attribs.width;
+    var pHeight = node.attribs.height;
+    const imageHeight = ((width-20)*pHeight/pWidth) || 300;
+    if (parent.name == 'p') {
+      return (
+        <Text>
+          {"\n"}{"\n"}
+        <Image
+          key={index}
+          style={{ width: width - 20, height: imageHeight}}
+          source={{ uri: src }} />
+          {"\n"}{"\n"}
+          </Text>
+      );
+    }
+    return (
+      <Image
+        key={index}
+        style={{ width: width - 20, height: imageHeight, margin:0, padding:0 }}
+        source={{ uri: src }} />
+    );
+  }
+  if (node.name == 'p') {
+      if (node.children[0].data == "&nbsp;") {
+        return null;
+      }
+      return (
+        <Text key={index} style={styles.articleText.p}>
+          {defaultRenderer(node.children, node)}
+        </Text>
+      )
+  }
+  if (node.name == 'h1' || node.name == 'h2' || node.name == 'h3' || node.name == 'h4' || node.name == 'h5') {
+      return (
+        <Text key={index} style={styles.articleText.h}>
+          {defaultRenderer(node.children, node)}
+        </Text>
+      )
+  }
+}
+
 export const ArticleText = ({ animation, data }) => {
-  const content = data.content.rendered.replace('This slideshow requires JavaScript.', ' ');
+  var content = data.content.rendered.replace(/This slideshow requires JavaScript./g, ' ');
+  console.log(content);
   return (
     <View style={[styles.container, { marginTop: Platform.OS === 'android' ? HEADER : 0, backgroundColor: 'black' }]}>
       <Animated.View
@@ -36,8 +82,7 @@ export const ArticleText = ({ animation, data }) => {
 
           <HTMLView
             value={content}
-            stylesheet={styles.articleText}
-          // renderNode={renderNode}
+            renderNode={renderNode}
           />
         </View>
       </View>
