@@ -104,22 +104,32 @@ export const styles = {
   // styles for webcontent rendering
   articleText: {
     p: {
-      flex: 1,
       // justifyContent: 'space-around',
       color: Colors.white,
       fontFamily: 'raleway',
       fontSize: 18,
       alignSelf: 'center',
+      margin:0,
+      padding: 0,
+      width:width - 20
+      // padding: 14,
+    },
+    h: {
+      // justifyContent: 'space-around',
+      color: Colors.white,
+      fontFamily: 'Playfair Display',
+      width:width - 20
       // padding: 14,
     },
     img: {
-      flexDirection: 'row',
-      width: '50%',
-      alignSelf: 'center',
-      paddingRight: 130,
+      // flexDirection: 'row',
+      // width: width,
+      // alignSelf: 'center',
+      // paddingRight: 130,
     },
     div: {
-      padding: 10,
+      paddingLeft:10,
+      paddingRight:10,
       alignSelf: 'center',
     },
   },

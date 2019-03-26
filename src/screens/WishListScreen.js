@@ -35,6 +35,7 @@ class WishList extends Component {
     await this.props.fetchingStarredArticles();
   }
   render() {
+    console.log(this.props.starredArticles);
     return (
       this.props.starred.length > 0 ?
         <ScrollView style={styles.container}>
