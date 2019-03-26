@@ -25,7 +25,6 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
     var pHeight = node.attribs.height;
     const imageHeight = ((width-20)*pHeight/pWidth) || 300;
     if (parent.name == 'p') {
-      console.log(node)
       return (
         <Text>
           {"\n"}{"\n"}
@@ -61,15 +60,11 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
         </Text>
       )
   }
-  if (node.name == 'div' || node.name == 'em') {
-      return (
-        defaultRenderer(node.children, parent)
-      )
-  }
 }
 
 export const ArticleText = ({ animation, data }) => {
   var content = data.content.rendered.replace(/This slideshow requires JavaScript./g, ' ');
+  console.log(content);
   return (
     <View style={[styles.container, { marginTop: Platform.OS === 'android' ? HEADER : 0, backgroundColor: 'black' }]}>
       <Animated.View
