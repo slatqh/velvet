@@ -11,7 +11,6 @@ const { width, height } = Dimensions.get('window');
 class AuthScreen extends Component {
   constructor(props) {
     super(props);
-    this.checkUser();
     this.progress = new Animated.Value(0);
     this.lottie = new Animated.Value(0);
   }
@@ -20,15 +19,6 @@ class AuthScreen extends Component {
   }
   componentWillUnmount() {
     this.progress.removeListener();
-  }
-  async checkUser() {
-    const userEmail = await AsyncStorage.getItem('userEmail');
-    const userPassword = await AsyncStorage.getItem('userPassword');
-    if (userEmail && userPassword) {
-      await this.props.login(userEmail, userPassword);
-      return this.props.navigation.navigate('App');
-    }
-    this.props.navigation.navigate('Auth');
   }
   reduceValue() {
     return this.progress.addListener(({ value }) => {
