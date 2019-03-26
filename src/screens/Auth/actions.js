@@ -87,6 +87,7 @@ export function loginSuccess(data) {
 }
 
 export function loginFailed({ response }) {
+  console.log(response);
   return {
     type: LOGIN_FAILED,
     payload: response.data.message,

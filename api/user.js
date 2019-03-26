@@ -4,12 +4,12 @@ import { keys } from '../constants/config';
 class UserApi {
   async login(args) {
     try {
-      const {data} = await axios.post(`${keys.LOCALHOST}/user/signin`, {
+      const { data } = await axios.post(`${keys.LOCALHOST}/user/signin`, {
         ...args,
       });
       return data;
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
 

@@ -42,7 +42,7 @@ class PostApi {
       });
       return data;
     } catch (error) {
-      throw error.message;
+      throw error;
     }
   }
   async getUser(value) {

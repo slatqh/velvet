@@ -63,7 +63,7 @@ export default class ImageCard extends PureComponent {
                 value={`${h1}${this.props.title.toUpperCase()}${h1close}`}
                 stylesheet={styles.title}
               />
-              <Animated.View style={[this.props.showReadButton, { flex: 1 }]}>
+              <Animated.View style={[this.props.showReadButton, { }]}>
                 <TouchableOpacity
                   style={[styles.button, { marginTop: 10 }]}
                   onPress={onPress}
@@ -120,7 +120,7 @@ const styles = {
       flexShrink: 1,
       fontFamily: 'Playfair Display',
       // flexShrink: 3,
-      fontSize: 14,
+      fontSize: 16,
 
     },
   },

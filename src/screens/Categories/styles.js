@@ -120,10 +120,10 @@ export const styles = {
   },
   influ: {
     marginTop: 103,
-    marginLeft: -11,
+    marginLeft: -5,
   },
   watch: {
-    marginTop: -20,
+    marginTop: -11,
     marginLeft: -60,
   },
   enter: {
