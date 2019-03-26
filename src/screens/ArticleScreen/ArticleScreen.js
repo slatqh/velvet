@@ -8,6 +8,7 @@ import {
   Dimensions,
   Easing,
   Alert,
+  Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from 'react-native-elements';
@@ -37,6 +38,7 @@ class ArticleScreen extends PureComponent {
       loading: true,
       zIndex: 1,
       starredId: [],
+      shopping: null,
     };
     this.loadArticle();
     this.shoppingBagWidth = new Animated.Value(20);
@@ -61,7 +63,7 @@ class ArticleScreen extends PureComponent {
   async loadArticle() {
     const articleId = this.props.navigation.getParam('id');
     const { data } = await Post.getArticle(articleId);
-    this.setState({ data, loading: false, starredId: data.id });
+    this.setState({ data, shopping: data.mainShoppingLink, loading: false, starredId: data.id });
   }
 
   _starredArticle() {
@@ -98,7 +100,8 @@ class ArticleScreen extends PureComponent {
     ]);
   }
   render() {
-    const { zIndex, data } = this.state;
+    console.log(this.state.shopping);
+    const { zIndex, data, shopping } = this.state;
     const starIconY = this.scrollY.interpolate({
       inputRange: [-HEADER_MAX_HEIGHT, -HEADER_MAX_HEIGHT / 2, HEADER_MAX_HEIGHT],
       outputRange: [0, -130, -130],
@@ -192,9 +195,9 @@ class ArticleScreen extends PureComponent {
                     fontFamily: 'Playfair Display',
                     color: Colors.white,
                     fontSize: 36,
-                    marginRight: 20,
+                    marginRight: 25,
                     justifyContent: 'flex-end',
-                    // flexDirection: 'row',
+                    flexDirection: 'row',
 
                   },
                 }}
@@ -257,7 +260,7 @@ class ArticleScreen extends PureComponent {
                   <Animated.Text style={[shoppingBagText,
                     { fontSize: 12, letterSpacing: 1, fontFamily: 'Raleway', marginLeft: 10, alignSelf: 'center' }]}
                   >
-                    {'shop long dress'.toUpperCase()}
+                    { shopping.name}
                   </Animated.Text>
                   <Icon
                     type='font-awesome'
@@ -265,6 +268,7 @@ class ArticleScreen extends PureComponent {
                     size={18}
                     containerStyle={{ flex: 1 }}
                     color={Colors.White}
+                    onPress={() => Linking.openURL(shopping.link.toString())}
                     iconStyle={{ }}
                   />
                 </Animated.View>

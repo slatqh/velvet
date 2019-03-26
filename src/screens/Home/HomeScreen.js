@@ -173,6 +173,7 @@ class HomeScreen extends React.Component {
              bounces
              showsVerticalScrollIndicator={false}
              scrollEventThrottle={16}
+             decelerationRate={0.5}
              contentOffset={
                {
                  y: 0,

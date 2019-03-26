@@ -52,7 +52,6 @@ export const App = createDrawerNavigator({
   Login: AuthStack,
   Profile: ProfileStack,
   Category: CategoryStack,
-  WishList,
 }, {
   headerMode: 'screen',
   transitionConfig: () => fadeIn(1200),

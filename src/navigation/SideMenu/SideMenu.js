@@ -68,25 +68,25 @@ class SideMenu extends Component {
     Animated.parallel([
       Animated.timing(value, {
         toValue: height - height - heightValue,
-        duration: 1000,
+        duration: 300,
         easing: Easing.elastic(1),
         useNativeDriver: true,
       }).start(() => value.setValue(0)),
       Animated.timing(this.animation, {
         toValue: 0,
-        duration: 500,
+        duration: 250,
         easing: Easing.ease,
         useNativeDriver: true,
       }).start(),
       Animated.timing(this.categoryMenu, {
         toValue: 1,
-        duration: 400,
+        duration: 200,
         useNativeDriver: true,
       }).start(() => this.setState({ showMenu: true })),
     ]);
     Animated.timing(this.titleOpactity, {
       toValue: 1,
-      duration: 1100,
+      duration: 250,
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
@@ -95,12 +95,12 @@ class SideMenu extends Component {
     Animated.parallel([
       Animated.timing(this.categoryMenu, {
         toValue: 0.5,
-        duration: 300,
+        duration: 150,
         useNativeDriver: true,
       }).start(() => this.setState({ showMenu: false })),
       Animated.timing(this.animation, {
         toValue: 1,
-        duration: 1500,
+        duration: 250,
         useNativeDriver: true,
       }).start(() => this.titleOpactity.setValue(0)),
 
@@ -235,7 +235,7 @@ class SideMenu extends Component {
               onPress={() => Linking.openURL('https://www.instagram.com/velvetmagazine/')}
             />
             <MenuText
-              title='LOG OUT'
+              title='LOGOUT'
               onPress={() => this._userLogout()}
             />
           </View>

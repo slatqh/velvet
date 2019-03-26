@@ -172,7 +172,7 @@ class ProfileScreen extends React.Component {
               <SocialIcon name='instagram' onPress={() => Linking.openURL('https://www.instagram.com/velvetmagazine/')} />
             </View>
             <View style={{ margin: 10 }}>
-              <Text style={styles.title}>Visit our other site</Text>
+              <Text style={styles.title}>Visit our other sites</Text>
               <Text style={styles.siteLinks} onPress={() => Linking.openURL('http://velvet-mag.ru/')}>VELVET RUSSIA</Text>
               <Text style={styles.siteLinks} onPress={() => Linking.openURL('https://velvetmagazine.it/')}>VELVET ITALIA</Text>
               <Text style={styles.siteLinks} onPress={() => Linking.openURL('http://velvet-mag.lat/')}>VELVET LATINOAMERICA</Text>

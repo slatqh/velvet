@@ -27,7 +27,7 @@ class SignUpScreen extends Component {
       message: 'Account created successfully',
     };
   }
-  async _handleSignup() {
+  _handleSignup() {
     const { name, email, password, passwordConfirm, phone } = this.props;
     if ((name.length === 0) || (email.length === 0)) {
       Alert.alert('Make sure all inputs is filled');
@@ -36,17 +36,21 @@ class SignUpScreen extends Component {
       Alert.alert('Password not match');
       return;
     }
+    this.loignUser(name, email, password);
+  }
+  async loignUser(name, email, password) {
     await this.props.signUp(name, email, password);
+    if (this.props.error) {
+      return;
+    }
     await this.props.login(email, password, true).then(
       this.props.navigation.navigate('Category')
     );
   }
-
   _handleError() {
     return Alert.alert(this.props.error);
   }
   render() {
-    console.log(this.props.password);
     return (
       <View style={styles.container}>
         <ImageBackground

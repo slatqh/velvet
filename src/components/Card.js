@@ -21,9 +21,9 @@ export default class ImageCard extends PureComponent {
     const { starred, id } = this.props;
     const existingArticle = starred.includes(id);
     if (existingArticle) {
-      return 0.3;
+      return 1;
     }
-    return 1;
+    return 0.4;
   }
   render() {
     const { image, categoryName, onPress } = this.props;
@@ -135,7 +135,7 @@ const styles = {
     borderRadius: 35,
   },
   starIcon: {
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     padding: 5,
     borderRadius: 20,
   },
