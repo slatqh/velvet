@@ -33,15 +33,16 @@ class ArticleScreen extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      progress: false,
+      progress: true,
+      pressed: true,
       data: '',
       loading: true,
       zIndex: 1,
       starredId: [],
-      shopping: null,
+      shopping: '',
     };
     this.loadArticle();
-    this.shoppingBagWidth = new Animated.Value(20);
+    this.shoppingBagWidth = new Animated.Value(24);
     this.shoppingBag = new Animated.Value(0);
     this.shoppingBagOpacity = new Animated.Value(0);
     this.scrollY = new Animated.Value(
@@ -80,28 +81,48 @@ class ArticleScreen extends PureComponent {
     this.props.addStarredArticle(arr);
   }
   shoppingBagAnimation = () => {
-    this.setState({ progress: !this.state.progress });
+    if (this.state.shopping === undefined) {
+      return;
+    }
+    const { name } = this.state.shopping;
+    const linkWidth = name.replace(/\s/g, '').length;
+    const totalWidth = () => {
+      if (linkWidth < 9) {
+        return (linkWidth * 13) + 25;
+      }
+      return linkWidth * 13;
+    };
+
+    this.setState({ progress: false });
     Animated.parallel([
       Animated.timing(this.shoppingBagWidth, {
-        toValue: this.state.progress ? 20 : 200,
-        duration: 1000,
+        toValue: totalWidth(),
+        duration: 800,
         easing: Easing.linear(),
       }).start(),
-      Animated.timing(this.shoppingBag, {
-        toValue: this.state.progress ? 0 : 170,
-        duration: 1000,
-      }).start(() => {
-        Animated.timing(this.shoppingBagOpacity, {
-          toValue: 1,
-          duration: 1000,
-          easing: Easing.linear(),
-        }).start();
-      }),
+      Animated.timing(this.shoppingBagOpacity, {
+        toValue: 1,
+        duration: 400,
+        easing: Easing.linear(),
+      }).start(() => this.setState({ pressed: true })),
+    ]);
+  }
+  shoppingAnimationBack = () => {
+    Animated.parallel([
+      Animated.timing(this.shoppingBagOpacity, {
+        toValue: 0,
+        duration: 400,
+        easing: Easing.linear(),
+      }).start(),
+      Animated.timing(this.shoppingBagWidth, {
+        toValue: 24,
+        duration: 800,
+        easing: Easing.linear(),
+      }).start(() => this.setState({ progress: true })),
     ]);
   }
   render() {
-    console.log(this.state.shopping);
-    const { zIndex, data, shopping } = this.state;
+    const { zIndex, data } = this.state;
     const starIconY = this.scrollY.interpolate({
       inputRange: [-HEADER_MAX_HEIGHT, -HEADER_MAX_HEIGHT / 2, HEADER_MAX_HEIGHT],
       outputRange: [0, -130, -130],
@@ -130,7 +151,6 @@ class ArticleScreen extends PureComponent {
     };
     const shoppingBagStyles = {
       width: this.shoppingBagWidth,
-      marginLeft: this.shoppingBag,
     };
     const shoppingBagText = {
       opacity: this.shoppingBagOpacity,
@@ -183,7 +203,7 @@ class ArticleScreen extends PureComponent {
             end={{ x: 0.8, y: 0.8 }}
             style={styles.gradient}
           />
-          <View style={styles.textSection}>
+          <View style={[styles.textSection, { flex: 1 }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.fashion}>FASHION</Text>
             </View>
@@ -229,53 +249,62 @@ class ArticleScreen extends PureComponent {
 
           </View>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.shoppingBag, { zIndex }]}
-          onPress={() => null}
-        >
-          <Icon
-            type='font-awesome'
-            name='shopping-bag'
-            size={10}
-            containerStyle={{ backgroundColor: 'white', padding: 5, borderRadius: 25 }}
-            color={Colors.black}
-          />
-        </TouchableOpacity>
-        <View
-          style={[styles.shoppingBag, { zIndex }]}
-        >
-          <Animated.View style={[styles.shopBag, shoppingBagStyles]}>
-            <Icon
-              type='font-awesome'
+        {/* ANIMATION */}
+        <Animated.View style={[styles.shoppingBag, { zIndex }]}>
+          {
+
+            this.state.progress ? <TouchableOpacity
               onPress={this.shoppingBagAnimation}
-              name='shopping-bag'
-              size={10}
-              containerStyle={{ backgroundColor: 'white', padding: 5, borderRadius: 25 }}
-              color={Colors.black}
-              iconStyle={{ }}
-            />
-            {
-              this.state.progress ? <View style={{ flex: 1 }}>
-                <Animated.View style={[shoppingBagText, { flex: 1, flexDirection: 'row', alignItems: 'center' }]}>
-                  <Animated.Text style={[shoppingBagText,
-                    { fontSize: 12, letterSpacing: 1, fontFamily: 'Raleway', marginLeft: 10, alignSelf: 'center' }]}
-                  >
-                    { shopping.name}
-                  </Animated.Text>
+              style={{ backgroundColor: 'white', width: 24, borderRadius: 12, height: 24, alignItems: 'center', justifyContent: 'center' }}
+            >
+              <Icon
+                type='font-awesome'
+                name='shopping-bag'
+                size={12}
+                color={Colors.black}
+              />
+
+            </TouchableOpacity> :
+              <Animated.View style={[shoppingBagStyles, { flex: 1,
+                backgroundColor: 'white',
+                height: 24,
+                borderRadius: 12,
+                flexDirection: 'row',
+                alignItems: 'center' }]}
+              >
+                <TouchableOpacity
+                  onPress={this.shoppingAnimationBack}
+                >
                   <Icon
+                    type='font-awesome'
+                    name='shopping-bag'
+                    size={12}
+                    iconStyle={{ paddingLeft: 5, paddingRight: 10 }}
+                    color={Colors.black}
+                  />
+
+                </TouchableOpacity>
+                <Animated.Text
+                  style={[shoppingBagText]}
+                  onPress={() => Linking.openURL(this.state.shopping.link)}
+
+                >
+                  {this.state.shopping.name.toUpperCase()}</Animated.Text>
+                <Animated.View style={shoppingBagText}>
+                  <Icon
+                    onPress={() => Linking.openURL(this.state.shopping.link)}
                     type='font-awesome'
                     name='angle-right'
                     size={18}
-                    containerStyle={{ flex: 1 }}
-                    color={Colors.White}
-                    onPress={() => Linking.openURL(shopping.link.toString())}
-                    iconStyle={{ }}
+                    iconStyle={[{ marginLeft: 5, marginRight: 5 }]}
+                    color={Colors.black}
                   />
+
                 </Animated.View>
-              </View> : <View />
-            }
-          </Animated.View>
-        </View>
+              </Animated.View>
+          }
+
+        </Animated.View>
       </View>
     );
   }

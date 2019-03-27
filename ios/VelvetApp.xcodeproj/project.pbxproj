@@ -45,7 +45,6 @@
 		36892DB05DD143D3B07DE6A5 /* libLottieReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B040B6DC6D142AE817F10DF /* libLottieReactNative.a */; };
 		4519742DD3054E67B843A99C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C18E54E51FEA4B3998B3B8E6 /* Feather.ttf */; };
 		5465E4121D6D40F7BEBB131F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AC717E601EBD412B98346EAB /* Octicons.ttf */; };
-		55FD935CEF2A419EAA6BB511 /* Lottie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF009981D6E842C1AC57E60C /* Lottie.framework */; };
 		69894C810632426EBB9B67C2 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB285F4868EA45A595AD3ECE /* libRNVectorIcons-tvOS.a */; };
 		746734D3C84040719C7E9826 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FF552D6765DB462CB48DFE6B /* FontAwesome5_Solid.ttf */; };
 		79D7373E2D4940BD8159A86F /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67B1C5F23AF140EABFFBC586 /* libBVLinearGradient.a */; };
@@ -566,7 +565,6 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				36892DB05DD143D3B07DE6A5 /* libLottieReactNative.a in Frameworks */,
 				02BF0C9891E542528CA8754E /* libRNVectorIcons.a in Frameworks */,
-				55FD935CEF2A419EAA6BB511 /* Lottie.framework in Frameworks */,
 				2B2A7DD3B4074EE188EEF82F /* libLottie.a in Frameworks */,
 				A33AF393284340BA9F2C0C81 /* libRNGestureHandler.a in Frameworks */,
 				F6F08FFBCEB542A980943789 /* libFastImage.a in Frameworks */,

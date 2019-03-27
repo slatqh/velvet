@@ -42,11 +42,10 @@ export const styles = {
   },
   shoppingBag: {
     position: 'absolute',
-    top: 95,
-    left: 70,
-    right: 10,
-    width: 40,
-    height: 40,
+    top: 105,
+    left: 78,
+    // width: 40,
+    // height: 40,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -88,10 +87,12 @@ export const styles = {
     borderBottomWidth: 3,
   },
   fashion: {
+
     fontSize: 12,
     paddingRight: 10,
     color: Colors.white,
     fontFamily: 'Raleway',
+    alignSelf: 'flex-start',
   },
   title: {
     fontFamily: 'Playfair Display',
@@ -109,16 +110,16 @@ export const styles = {
       fontFamily: 'raleway',
       fontSize: 18,
       alignSelf: 'center',
-      margin:0,
+      margin: 0,
       padding: 0,
-      width:width - 20
+      width: width - 20,
       // padding: 14,
     },
     h: {
       // justifyContent: 'space-around',
       color: Colors.white,
       fontFamily: 'Playfair Display',
-      width:width - 20
+      width: width - 20,
       // padding: 14,
     },
     img: {
@@ -128,8 +129,8 @@ export const styles = {
       // paddingRight: 130,
     },
     div: {
-      paddingLeft:10,
-      paddingRight:10,
+      paddingLeft: 10,
+      paddingRight: 10,
       alignSelf: 'center',
     },
   },
