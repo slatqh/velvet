@@ -40,7 +40,7 @@ class AuthScreen extends Component {
       <View style={styles.container}>
         <LottieView
           style={[styles.lottie, {}]}
-          source={require('../../../assets/lottie/Android_BCK.json')}
+          source={require('../../../assets/lottie/data.json')}
           progress={this.lottie}
         />
         <Pages
@@ -111,11 +111,9 @@ const styles = {
     flex: 1,
     alignSelf: 'center',
     position: 'absolute',
-    top: Platform.OS === 'ios' ? -20 : -30,
-    right: 0,
-    left: 0,
-    width,
-    height,
+    top: -height*0.07,
+    width: width*1.3,
+    height: height*1.3,
     marginBottom: 0,
     zIndex: -1,
   },
