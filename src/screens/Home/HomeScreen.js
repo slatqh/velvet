@@ -18,7 +18,9 @@ import { currentDate } from '../../helpers';
 import { styles } from './styles';
 
 const { height } = Dimensions.get('window');
-const CARD_HEIGHT = Platform.OS === 'android' ? (height / 2) - 50 : (height / 2) + 50;
+const HEADER_MAX_HEIGHT = height / 2;
+const CARD_HEIGHT = Platform.OS === 'android' ? (height / 2) + 30 : (height / 2) + 50;
+const CARD_MIN_HEIGHT = Platform.OS === 'android' ? (height / 3) : 300;
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -93,14 +95,27 @@ class HomeScreen extends React.Component {
    const arr = [...this.props.starred, id];
    this.props.addStarredArticle(arr);
  }
+
+ animateCard = () => {
+   Animated.timing(this.scrollY, {
+     toValue: CARD_MIN_HEIGHT,
+     duration: 500,
+   }).start();
+ }
  render() {
    const search = this.props.navigation.getParam('search');
    const { navigation, articles } = this.props;
 
+   //  const heightTranslate = this.scrollY.interpolate({
+   //    inputRange: [0, 1],
+   //    outputRange: [CARD_HEIGHT, CARD_MIN_HEIGHT],
+   //    extrapolate: 'clamp',
+   //  });
    const heightTranslate = this.scrollY.interpolate({
      inputRange: [0, 1],
-     outputRange: [CARD_HEIGHT, 300],
+     outputRange: [CARD_HEIGHT, CARD_MIN_HEIGHT],
      extrapolate: 'clamp',
+     useNativeDriver: true,
    });
    const readButton = this.scrollY.interpolate({
      inputRange: [0, 1],
@@ -139,11 +154,12 @@ class HomeScreen extends React.Component {
        <Text style={styles.date}> {currentDate()}</Text>
        <Text style={styles.title}> { this.getCategoryName()}</Text>
        <View style={{ flex: 1 }}>
-         <Animated.View style={[styles.header, headerStyle]}>
+         <Animated.View style={[styles.header, headerStyle, { backgroundColor: 'transparent' }]}>
            <ScrollView
              horizontal
              bounces={false}
              showsHorizontalScrollIndicator={false}
+             scrollEventThrottle={16}
            >
              {/* rendering Cards components  */}
              {
@@ -168,11 +184,11 @@ class HomeScreen extends React.Component {
 
            </ScrollView>
          </Animated.View>
-         <View style={{ flex: 2 }}>
+         <View style={[styles.listScroll]}>
            <ScrollView
              bounces
              showsVerticalScrollIndicator={false}
-             scrollEventThrottle={16}
+             scrollEventThrottle={10}
              decelerationRate={0.5}
              contentOffset={
                {
@@ -192,7 +208,7 @@ class HomeScreen extends React.Component {
              refreshControl={
                <RefreshControl
                  refreshing={this.state.refreshing}
-                 onRefresh={() => this._onRefresh()}
+                 // onRefresh={() => this._onRefresh()}
                />
              }
            >

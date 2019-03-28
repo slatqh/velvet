@@ -164,7 +164,7 @@ class ProfileScreen extends React.Component {
               />}
             />
           </View>
-          <View style={{ paddingTop: 20 }}>
+          <View style={{ paddingTop: 20, flex: 1 }}>
             <Text style={styles.title}>FOLLOW US</Text>
             <View style={styles.social}>
               <SocialIcon name='facebook' onPress={() => Linking.openURL('https://www.facebook.com/VelvetMagME')} />
@@ -180,7 +180,7 @@ class ProfileScreen extends React.Component {
               <Text style={styles.siteLinks} onPress={() => Linking.openURL('https://www.idfweek.com/')}>IDFW</Text>
             </View>
           </View>
-          <View style={styles.footer}>
+          <View style={[styles.footer]}>
             <MenuText title='Show Privacy Policy' style={styles.footerLinks} />
             <MenuText title='Show Terms & Condition' style={styles.footerLinks} />
             <MenuText title='info@velvet.ae' style={{ color: 'black', padding: 5 }} />

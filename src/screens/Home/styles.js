@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import Colors from '../../../constants/Colors';
 
 const { height } = Dimensions.get('window');
@@ -12,9 +12,18 @@ export const styles = {
     backgroundColor: 'blue',
   },
   header: {
-    height: HEADER_MAX_HEIGHT,
+    // position: 'absolute',
+    height: Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 250,
     backgroundColor: 'white',
     top: 0,
+    left: 0,
+    right: 0,
+  },
+  listScroll: {
+    zIndex: 1,
+    flex: 2,
+    // position: 'absolute',
+    // bottom: -HEADER_MAX_HEIGHT,
     left: 0,
     right: 0,
   },

@@ -13,7 +13,7 @@ const shareOptions = {
   subject: 'Share Link',
 };
 const { width, height } = Dimensions.get('window');
-const HEADER = height / 2;
+const HEADER = height / 1.5;
 async function shareWithFriends() {
   await Share.share(shareOptions);
 }

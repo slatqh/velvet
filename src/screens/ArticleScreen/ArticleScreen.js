@@ -14,6 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import HTMLView from 'react-native-htmlview';
+import FastImage from 'react-native-fast-image';
 import { MyStatusBar, Loading } from '../../components';
 import { styles } from './styles';
 import { addStarredArticle } from '../Auth/actions';
@@ -24,7 +25,7 @@ import Colors from '../../../constants/Colors';
 const { width, height } = Dimensions.get('window');
 const h1 = '<h1>';
 const h1close = '</h1>';
-const HEADER_MAX_HEIGHT = Platform.OS === 'ios' ? 500 : height - 300;
+const HEADER_MAX_HEIGHT = Platform.OS === 'ios' ? 500 : 500;
 
 class ArticleScreen extends PureComponent {
   static navigationOptions = {
@@ -190,12 +191,14 @@ class ArticleScreen extends PureComponent {
           </View>
         </Animated.ScrollView>
         <View style={styles.header}>
-          <Animated.Image
+          <FastImage
             style={[
               styles.backgroundImage,
               // imageStyle,
             ]}
-            source={{ uri: this.state.data.jetpack_featured_media_url }}
+            source={{ uri: this.state.data.jetpack_featured_media_url,
+              priority: FastImage.priority.normal }}
+            resizeMode={FastImage.resizeMode.cover}
           />
           <LinearGradient
             colors={['black', 'transparent']}

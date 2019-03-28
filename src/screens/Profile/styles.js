@@ -46,7 +46,7 @@ export const styles = {
   },
   footer: {
     backgroundColor: Colors.grey,
-    flex: 1,
+    height: 150,
     width: '100%',
     padding: 10,
     alignItems: 'center',

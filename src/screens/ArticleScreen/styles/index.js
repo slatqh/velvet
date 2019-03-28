@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import Colors from '../../../../constants/Colors';
 
 const { width, height } = Dimensions.get('window');
@@ -61,7 +61,7 @@ export const styles = {
     position: 'absolute',
     opacity: 1,
     top: 180,
-    right: 20,
+    right: Platform.OS === 'ios' ? 20 : width + 150,
     backgroundColor: '#fff',
     width: 40,
     height: 40,

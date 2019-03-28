@@ -65,7 +65,7 @@ class SignUpScreen extends Component {
           { this.props.error ? this._handleError() : null}
 
           <KeyboardAvoidingView
-            style={{ flex: 1 }}
+            style={{ flex: 2 }}
             behavior="padding"
           >
             <View style={styles.innerContainer}>
