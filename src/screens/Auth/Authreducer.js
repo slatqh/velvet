@@ -11,6 +11,7 @@ const initialState = {
   preferred: [],
   starred: [],
   starredArticles: [],
+  starredUpdate: false,
   admin: false,
   loading: false,
   signup: false,
@@ -58,6 +59,7 @@ export default (state = initialState, action) => {
         starred: action.starred,
         loading: false,
         preferred: action.preferred,
+        phone: action.phone,
       };
     case LOGIN:
       return { ...state, loading: true, signup: false };
@@ -80,7 +82,7 @@ export default (state = initialState, action) => {
     case STARRED_ARTICLES :
       return { ...state, loading: true, profileUpdate: false };
     case STARRED_ARTICLE_UPDATE:
-      return { ...state, starred: action.payload, loading: false };
+      return { ...state, starred: action.payload, loading: false, starredUpdate: !state.starredUpdate };
     case STARRED_ARTICLES_DELETED :
       return { ...state, loading: false, starred: action.payload };
     case STARRED_FETCH_SUCCESS :

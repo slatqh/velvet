@@ -21,6 +21,7 @@ class WishList extends Component {
     this.state = {
       data: [],
       articleId: [],
+      deleted: true,
     };
   }
   componentWillMount() {
@@ -32,10 +33,10 @@ class WishList extends Component {
   async deleteArticle(index, id) {
     const articleId = this.props.starred.filter(i => i !== id);
     await this.props.deleteStarred(articleId);
-    await this.props.fetchingStarredArticles();
+    this.setState({ deleted: !this.state.deleted });
+    this.props.fetchingStarredArticles();
   }
   render() {
-    console.log(this.props.starredArticles);
     return (
       this.props.starred.length > 0 ?
         <ScrollView style={styles.container}>

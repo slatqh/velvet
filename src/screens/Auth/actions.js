@@ -73,9 +73,10 @@ function SignUpSuccess() {
 }
 
 export function loginSuccess(data) {
-  const { name, email, _id, admin, starred, preferred } = data;
+  const { name, email, _id, admin, starred, preferred, phone } = data;
   return dispatch => {
     dispatch({ type: LOGIN_SUCCESS,
+      phone,
       name,
       email,
       user: _id,
@@ -122,7 +123,6 @@ export function addStarredArticle(args) {
     dispatch({ type: STARRED_ARTICLES });
     try {
       const { starred } = await User.profileUpdate({ starred: args });
-
       return dispatch({
         type: STARRED_ARTICLE_UPDATE,
         payload: starred,
@@ -137,7 +137,6 @@ export function deleteStarred(args) {
     dispatch({ type: STARRED_ARTICLES });
     try {
       const { starred } = await User.profileUpdate({ starred: args });
-      console.log('from action', starred);
       return dispatch({ type: STARRED_ARTICLES_DELETED, payload: starred });
     } catch (error) {
       throw error;

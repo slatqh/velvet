@@ -17,7 +17,7 @@ import HTMLView from 'react-native-htmlview';
 import FastImage from 'react-native-fast-image';
 import { MyStatusBar, Loading } from '../../components';
 import { styles } from './styles';
-import { addStarredArticle } from '../Auth/actions';
+import { addStarredArticle, deleteStarred } from '../Auth/actions';
 import { ArticleText } from './ArticleTextComponent';
 import { Post } from '../../../api/post';
 import Colors from '../../../constants/Colors';
@@ -41,6 +41,7 @@ class ArticleScreen extends PureComponent {
       zIndex: 1,
       starredId: [],
       shopping: '',
+      articleColor: true,
     };
     this.loadArticle();
     this.shoppingBagWidth = new Animated.Value(24);
@@ -58,6 +59,11 @@ class ArticleScreen extends PureComponent {
       }
       return this.setState({ zIndex: 1 });
     });
+    const { starred } = this.props;
+    const existingArticle = starred.includes(this.state.starredId);
+    if (existingArticle) {
+      return this.setState({ articleColor: !this.state.articleColor });
+    }
   }
   componentWillUnmount() {
     this.scrollY.removeAllListeners();
@@ -72,9 +78,12 @@ class ArticleScreen extends PureComponent {
     const { starred } = this.props;
     const existingArticle = starred.includes(this.state.starredId);
     if (existingArticle) {
-      return Alert.alert('Article already added to wishlist');
+      this.setState({ articleColor: !this.state.articleColor });
+      const articleId = this.props.starred.filter(i => i !== this.state.starredId);
+      return this.props.deleteStarred(articleId);
     }
-    this.updateUserStarred();
+    this.setState({ articleColor: !this.state.articleColor });
+    return this.updateUserStarred();
   }
 
   async updateUserStarred() {
@@ -123,7 +132,7 @@ class ArticleScreen extends PureComponent {
     ]);
   }
   render() {
-    const { zIndex, data } = this.state;
+    const { zIndex, data, articleColor } = this.state;
     const starIconY = this.scrollY.interpolate({
       inputRange: [-HEADER_MAX_HEIGHT, -HEADER_MAX_HEIGHT / 2, HEADER_MAX_HEIGHT],
       outputRange: [0, -130, -130],
@@ -234,7 +243,7 @@ class ArticleScreen extends PureComponent {
         >
           <Icon
             name='star'
-            containerStyle={{ backgroundColor: 'white', padding: 5, borderRadius: 25 }}
+            containerStyle={{ backgroundColor: articleColor ? '#4f4f4f' : 'white', padding: 5, borderRadius: 25 }}
             size={25}
           />
         </TouchableOpacity>
@@ -313,7 +322,7 @@ class ArticleScreen extends PureComponent {
   }
 }
 const mapStateToProps = ({ Auth }) => {
-  const { starred } = Auth;
-  return { starred };
+  const { starred, starredUpdate } = Auth;
+  return { starred, starredUpdate };
 };
-export default connect(mapStateToProps, { addStarredArticle })(ArticleScreen);
+export default connect(mapStateToProps, { addStarredArticle, deleteStarred })(ArticleScreen);

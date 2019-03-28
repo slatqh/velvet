@@ -3,11 +3,12 @@ import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
-
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { login } from '../Auth/actions';
 
-export default class AuthLoadingScreen extends React.Component {
+class AuthLoadingScreen extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
@@ -16,7 +17,11 @@ export default class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const userEmail = await AsyncStorage.getItem('userEmail');
     const userPassword = await AsyncStorage.getItem('userPassword');
-    this.props.navigation.navigate(userEmail && userPassword ? 'App' : 'Auth');
+    if (userEmail && userPassword) {
+      await this.props.login(userEmail, userPassword);
+      return this.props.navigation.navigate('Home');
+    }
+    return this.props.navigation.navigate('Auth');
   };
 
   render() {
@@ -28,3 +33,6 @@ export default class AuthLoadingScreen extends React.Component {
     );
   }
 }
+
+export default connect(null, { login })(AuthLoadingScreen)
+;
