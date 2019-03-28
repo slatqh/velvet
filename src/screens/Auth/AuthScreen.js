@@ -40,7 +40,7 @@ class AuthScreen extends Component {
       <View style={styles.container}>
         <LottieView
           style={[styles.lottie, {}]}
-          source={require('../../../assets/lottie/Android_BCK.json')}
+          source={require('../../../assets/lottie/data.json')}
           progress={this.lottie}
         />
         <Pages
@@ -64,7 +64,7 @@ class AuthScreen extends Component {
             <View style={{ }}>
               <Text style={styles.descriptionShop}>
                 Browse your favorite products by clicking the
-                shopping links provided with the articles
+                shopping links provided with the articles.
               </Text>
             </View>
           </View>
@@ -73,7 +73,7 @@ class AuthScreen extends Component {
             <Text style={styles.descriptionInspired}>
               Discover new trends from our extensive coverage
               of fashion events around
-              <Text style={{ flex: 1, margin: 50, alignItems: 'center' }}>the world.</Text>
+              <Text style={{ flex: 1, margin: 50, alignItems: 'center' }}> the world.</Text>
             </Text>
           </View>
         </Pages>
@@ -111,11 +111,9 @@ const styles = {
     flex: 1,
     alignSelf: 'center',
     position: 'absolute',
-    top: Platform.OS === 'ios' ? -20 : -30,
-    right: 0,
-    left: 0,
-    width,
-    height,
+    bottom:0,
+    width: width*1.3,
+    height: width*2.4,
     marginBottom: 0,
     zIndex: -1,
   },
@@ -152,7 +150,7 @@ const styles = {
   },
   pages: {
     justifyContent: 'flex-end',
-    paddingHorizontal: 60,
+    paddingHorizontal: 40,
     alignItems: 'center',
     // alignSelf: 'center',
     flex: 1,

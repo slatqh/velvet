@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, SafeAreaView, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import { Logo, CustomButton, CircleText } from '../../components';
 import Colors from '../../../constants/Colors';
@@ -31,6 +31,11 @@ class Category extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
+        <ImageBackground
+          resizeMode="cover"
+          style={{ flex: 1 }}
+          source={require('../../../assets/images/shapes.png')}
+        >
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1 }}>
             <Logo />
@@ -229,6 +234,7 @@ class Category extends Component {
 
           </View>
         </View>
+        </ImageBackground>
       </SafeAreaView>
     );
   }
@@ -238,4 +244,3 @@ const mapStatetoProps = ({ Auth }) => {
   return { preferred };
 };
 export default connect(mapStatetoProps, { })(Category);
-

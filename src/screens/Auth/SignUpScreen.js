@@ -36,9 +36,9 @@ class SignUpScreen extends Component {
       Alert.alert('Password not match');
       return;
     }
-    this.loignUser(name, email, password);
+    this.loginUser(name, email, password);
   }
-  async loignUser(name, email, password) {
+  async loginUser(name, email, password) {
     await this.props.signUp(name, email, password);
     if (this.props.error) {
       return;
