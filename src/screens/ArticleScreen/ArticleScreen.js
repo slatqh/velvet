@@ -100,7 +100,7 @@ class ArticleScreen extends PureComponent {
       if (linkWidth < 9) {
         return (linkWidth * 13) + 25;
       }
-      return linkWidth * 13;
+      return (linkWidth * 13) + 10;
     };
 
     this.setState({ progress: false });
@@ -112,7 +112,7 @@ class ArticleScreen extends PureComponent {
       }).start(),
       Animated.timing(this.shoppingBagOpacity, {
         toValue: 1,
-        duration: 400,
+        duration: 600,
         easing: Easing.linear(),
       }).start(() => this.setState({ pressed: true })),
     ]);
@@ -121,7 +121,7 @@ class ArticleScreen extends PureComponent {
     Animated.parallel([
       Animated.timing(this.shoppingBagOpacity, {
         toValue: 0,
-        duration: 400,
+        duration: 800,
         easing: Easing.linear(),
       }).start(),
       Animated.timing(this.shoppingBagWidth, {
@@ -308,7 +308,7 @@ class ArticleScreen extends PureComponent {
                     type='font-awesome'
                     name='angle-right'
                     size={18}
-                    iconStyle={[{ marginLeft: 5, marginRight: 5 }]}
+                    iconStyle={[{ alignSelf: 'flex-end' }]}
                     color={Colors.black}
                   />
 
