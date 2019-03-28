@@ -3,7 +3,7 @@ import { ScrollView, View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import { deleteStarred, fetchingStarredArticles } from '../screens/Auth/actions';
-import { List } from '../components';
+import { List, Loading } from '../components';
 
 class WishList extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -37,6 +37,9 @@ class WishList extends Component {
     this.props.fetchingStarredArticles();
   }
   render() {
+    if (this.props.loading) {
+      return <Loading />;
+    }
     return (
       this.props.starred.length > 0 ?
         <ScrollView style={styles.container}>
@@ -52,6 +55,7 @@ class WishList extends Component {
                   image={i.jetpack_featured_media_url}
                   deleteArticle={() => this.deleteArticle(index, i.id)}
                 />
+
               </View>
 
             ))
