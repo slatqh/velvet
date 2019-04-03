@@ -29,5 +29,21 @@ export const menuData = (name) => {
     default:
       return [];
   }
-}
-;
+};
+
+export const titleMenu = (name) => {
+  switch (name) {
+    case 'fashion' :
+      return { id: 170, name: 'Fashion' };
+    case 'travel' :
+      return { id: 150, name: 'Travel' };
+    case 'drive':
+      return { id: 520, name: 'Drive' };
+    case 'culture':
+      return { id: 163, name: 'Culture' };
+    case 'food' :
+      return { id: 151, name: 'Food' };
+    default:
+      return [];
+  }
+};

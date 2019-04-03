@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, SafeAreaView, Animated, Text, ScrollView, Dimensions, Easing, Linking } from 'react-native';
+import { View,
+  SafeAreaView,
+  Animated,
+  ScrollView,
+  Dimensions,
+  Easing,
+  Linking,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { Divider, Icon } from 'react-native-elements';
 import { NavigationActions, StackActions } from 'react-navigation';
@@ -7,7 +14,7 @@ import { userLogout } from '../../screens/Auth/actions';
 import { MenuText, InstagramButton } from '../../components';
 import { loadCategoryPosts, loadArticles } from '../../screens/Home/action';
 import { styles } from './styles';
-import { menuData } from '../../helpers';
+import { menuData, titleMenu } from '../../helpers';
 
 const { height } = Dimensions.get('window');
 class SideMenu extends Component {
@@ -27,9 +34,11 @@ class SideMenu extends Component {
     this.titleCulture = new Animated.Value(0);
     this.titleFood = new Animated.Value(0);
   }
-  componentWillUnmount() {
-
+  closeMenu() {
+    this.setState({ showMenu: false });
+    this.props.navigation.closeDrawer();
   }
+
   _userLogout() {
     this.props.userLogout();
     const resetAction = StackActions.reset({
@@ -56,6 +65,10 @@ class SideMenu extends Component {
   loadPosts(id, categoryName, animationValue, heightValue) {
     this.setState({ menuTitle: categoryName.toLowerCase() });
     this.MenuAnimation(animationValue, heightValue);
+  }
+  titleMenu(name) {
+    const title = titleMenu(this.state.menuTitle);
+    this.loadCategory(title.id, title.name);
   }
   loadCategory(id, categoryName) {
     this.props.loadCategoryPosts(id);
@@ -149,7 +162,7 @@ class SideMenu extends Component {
             underlayColor="#514C4C"
             containerStyle={styles.closeButton}
             iconStyle={styles.icon}
-            onPress={() => this.props.navigation.closeDrawer()}
+            onPress={() => this.closeMenu()}
           />
         </SafeAreaView>
         <View style={{ alignItems: 'center' }}>
@@ -158,26 +171,29 @@ class SideMenu extends Component {
           <Animated.View style={[categoryMenuOpactity]}>
             { this.state.showMenu ? <Animated.View style={{ alignSelf: 'center' }}>
               <Animated.View style={[titleOpacity, { alignItems: 'center', marginBottom: 10 }]}>
-                <Animated.View style={[{ flexDirection: 'row', alignItems: 'space-around', paddingRight: 20 }]}>
-                  <Icon
-                    type='font-awesome'
-                    name='angle-left'
-                    size={20}
-                    color='white'
-                    iconStyle={{ padding: 10 }}
-                    containerStyle={{ paddingRight: 10 }}
-                    onPress={() => this.backToMainMenu()}
-                  />
-                  <Text
-                    style={styles.subMenuTitle}
-                  >{this.state.menuTitle.toUpperCase()}
-                  </Text>
+                <Animated.View style={[{ flexDirection: 'row' }]}>
+                  <View
+                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                  >
+                    <Icon
+                      type='font-awesome'
+                      name='angle-left'
+                      size={20}
+                      color='white'
+                      // iconStyle={{ marginRight: 5 }}
+                      containerStyle={{ }}
+                      onPress={() => this.backToMainMenu()}
+                    />
+                    <View>
+                      <MenuText title={this.state.menuTitle.toUpperCase()} onPress={() => this.titleMenu()} />
+                    </View>
+                  </View>
                 </Animated.View>
-                <Divider style={{ marginTop: 7, backgroundColor: 'white', width: 120, height: 2 }} />
+                <Divider style={styles.mainDivider} />
               </Animated.View>
               {
                 popupMenu.map(i => (
-                  <View style={[{ alignItems: 'center', marginBottom: 0, textDecorationLine: 'underline' }]} key={i.name}>
+                  <View style={styles.popUpMenu} key={i.name}>
                     <MenuText title={i.name.toUpperCase()} onPress={() => this.loadCategory(i.id, i.name)} />
                   </View>
                 ))
@@ -191,7 +207,7 @@ class SideMenu extends Component {
             !this.state.showMenu ? <Animated.View style={[{ alignSelf: 'center' }]}>
               <MenuText title='WOMEN' onPress={() => this.loadCategory(155, 'WOMEN')} />
               <MenuText title='MEN' onPress={() => this.loadCategory(156, 'MEN')} />
-              <Animated.View style={[titleFashionStyle, { }]}>
+              <Animated.View style={[titleFashionStyle]}>
                 <MenuText
                   title='FASHION'
                   style={{ }}
