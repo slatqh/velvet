@@ -22,7 +22,7 @@ export const styles = {
     left: 0,
     right: 0,
     width: null,
-    alignItems: 'center',
+    // alignItems: 'center',
     height: HEADER_MAX_HEIGHT,
   },
   scrollContent: {

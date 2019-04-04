@@ -18,11 +18,10 @@ import { loadArticles, searchValue } from './action';
 import { currentDate } from '../../helpers';
 import { styles } from './styles';
 
-const { height } = Dimensions.get('window');
-const HEADER_MAX_HEIGHT = height / 2;
+const { height, width } = Dimensions.get('window');
 const CARD_HEIGHT = Platform.OS === 'android' ? (height / 2) + 30 : (height / 2) + 50;
 const CARD_MIN_HEIGHT = Platform.OS === 'android' ? (height / 3) : 300;
-const ScrollAnimationRange = CARD_HEIGHT - CARD_MIN_HEIGHT;
+const CARD_WIDTH = width / 1.3;
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -55,14 +54,12 @@ class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.myFlatList = this.myFlatList.bind(this);
     this.state = {
       refreshing: false,
       loading: false,
       closeSearch: true,
     };
     this.scrollY = new Animated.Value(0);
-    this.myFlatList = React.createRef();
   }
   componentWillMount() {
     this.props.navigation.setParams({
@@ -76,13 +73,18 @@ class HomeScreen extends React.Component {
     this.setState({ loading: true });
   }
 
-  componentWillReceiveProps() {
-    this.ScrollList.scrollTo({ animated: false, x: 0, y: 0 });
+  componentWillReceiveProps(nextProps) {
+    if (this.props.data !== nextProps.data) {
+      this.ScrollList.scrollTo({ animated: false, x: 0, y: 0 });
+    }
+    return;
   }
   componentWillUnmount() {
     clearInterval(this.props.loadArticles());
     this.scrollY.removeListener();
   }
+
+  // component function
  getCategoryName =() => {
    if (this.props.navigation.state.params === undefined) {
      return "WHAT'S NEW";
@@ -103,10 +105,9 @@ class HomeScreen extends React.Component {
    const arr = [...this.props.starred, id];
    this.props.addStarredArticle(arr);
  }
- _renderItem = ({ item }) =>
+ _renderTopCards = ({ item }) =>
    (
      <Card
-       //  key={item.id}
        starred={this.props.starred}
        id={item.id}
        date={item.date}
@@ -119,9 +120,6 @@ class HomeScreen extends React.Component {
        starIcon={() => this._starredArticle(item.id)}
      />
    );
- handleCardScroll(event) {
-   console.log(event);
- }
  render() {
    const search = this.props.navigation.getParam('search');
    const { articles } = this.props;
@@ -167,22 +165,18 @@ class HomeScreen extends React.Component {
              bounces={false}
              showsHorizontalScrollIndicator={false}
              scrollEventThrottle={16}
-             pagingEnabled
-             contentInset={{ top: 0, left: 50, bottom: 0, right: 0 }}
+             decelerationRate={0.8}
              ref={(scroll) => {
                this.ScrollList = scroll;
              }}
-             onScroll={event =>
-               this.handleCardScroll(event)
-             }
            >
+             {/* rendering Cards components  */}
              <FlatList
                horizontal
                data={this.props.data.slice(0, 10)}
                keyExtractor={item => item._id}
-               renderItem={this._renderItem}
+               renderItem={this._renderTopCards}
              />
-             {/* rendering Cards components  */}
 
            </ScrollView>
          </Animated.View>
