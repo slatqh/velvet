@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, ImageBackground, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, ImageBackground, StyleSheet, Animated } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import HTMLView from 'react-native-htmlview';
 import { Icon } from 'react-native-elements';
@@ -9,6 +9,8 @@ import Colors from '../../constants/Colors';
 const h1 = '<h1>';
 const h1close = '</h1>';
 const { width, height } = Dimensions.get('window');
+const CARD_HEIGHT = height / 1.8;
+const CARD_SMALL = height / 4;
 
 export default class ImageCard extends PureComponent {
   constructor(props) {
@@ -58,12 +60,14 @@ export default class ImageCard extends PureComponent {
               <Text style={{ fontSize: 12, letterSpacing: 2, fontFamily: 'raleway' }}>{categoryName()} </Text>
               {/* <Text style={{ opacity: 0.5 }}>7 min read </Text> */}
             </View>
-            <View style={{ flex: 1 }}>
-              <HTMLView
-                value={`${h1}${this.props.title.toUpperCase()}${h1close}`}
-                stylesheet={styles.title}
-              />
-              <Animated.View style={[this.props.showReadButton, { }]}>
+            <View style={{ flex: 1, justifyContent: 'space-around' }}>
+              <View stlye={{ flex: 0.7 }}>
+                <HTMLView
+                  value={`${h1}${this.props.title.toUpperCase()}${h1close}`}
+                  stylesheet={title.title}
+                />
+              </View>
+              <View style={[this.props.showReadButton, { }]}>
                 <TouchableOpacity
                   style={[styles.button, { marginTop: 10 }]}
                   onPress={onPress}
@@ -72,7 +76,7 @@ export default class ImageCard extends PureComponent {
                     style={{ width: 40, fontFamily: 'Raleway', letterSpacing: 1, fontSize: 12, color: Colors.white, flexDirection: 'row' }}
                   >READ</Text>
                 </TouchableOpacity>
-              </Animated.View>
+              </View>
             </View>
           </View>
         </FastImage>
@@ -80,13 +84,25 @@ export default class ImageCard extends PureComponent {
     );
   }
 }
+const title = {
+  title: {
+    h1: {
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      flexWrap: 'wrap',
+      flexShrink: 1,
+      fontFamily: 'Playfair Display',
+      fontSize: 16,
 
-const styles = {
+    },
+  },
+};
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginLeft: 10,
     width: width / 1.3,
-    // height: (height / 2) + 40,
+    // height: CARD_HEIGHT,
     paddingBottom: 10,
   },
 
@@ -99,6 +115,7 @@ const styles = {
     borderRadius: 16,
   },
   inner: {
+    height: CARD_HEIGHT / 2,
     flex: 0.5,
     margin: 10,
     padding: 10,
@@ -106,25 +123,11 @@ const styles = {
     backgroundColor: Colors.white,
   },
   category: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
+    alignSelf: 'flex-start',
   },
-  title: {
-    h1: {
-      flexDirection: 'row',
-      // flex: 1,
-      // marginRight: 40,
-      justifyContent: 'flex-start',
-      flexWrap: 'wrap',
-      flexShrink: 1,
-      fontFamily: 'Playfair Display',
-      // flexShrink: 3,
-      fontSize: 16,
 
-    },
-  },
   button: {
+
     alignSelf: 'flex-end',
     width: 60,
     paddingTop: 3,
@@ -140,4 +143,4 @@ const styles = {
     borderRadius: 20,
   },
 
-};
+});

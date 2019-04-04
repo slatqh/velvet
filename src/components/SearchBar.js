@@ -1,10 +1,17 @@
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 
-export const SearchBar = ({ value }) => (
+export const Search = ({ value }) => (
   <View style={styles.container}>
     <TextInput
-      style={{ backgroundColor: '#f5f5f5', padding: 5 }}
+      style={{ backgroundColor: '#f5f5f5',
+        padding: 5,
+        paddingLeft: 10,
+        overflow: 'visible',
+
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 10 }}
       autoCorrect={false}
       autoFocus
       placeholder='Search'
@@ -17,5 +24,6 @@ const styles = {
   container: {
     flex: 1,
     justifyContent: 'flex-start',
+
   },
 };

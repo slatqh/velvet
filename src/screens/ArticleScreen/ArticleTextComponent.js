@@ -24,7 +24,7 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
     const pWidth = node.attribs.width;
     const pHeight = node.attribs.height;
     const imageHeight = ((width - 20) * pHeight / pWidth) || 300;
-    if (parent.name == 'p') {
+    if (parent.name === 'p') {
       return (
         <Text>
           {'\n'}{'\n'}
@@ -45,8 +45,8 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
       />
     );
   }
-  if (node.name == 'p') {
-    if (node.children[0].data == '&nbsp;') {
+  if (node.name === 'p') {
+    if (node.children[0].data === '&nbsp;') {
       return null;
     }
     return (
@@ -55,7 +55,7 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
       </Text>
     );
   }
-  if (node.name == 'h1' || node.name == 'h2' || node.name == 'h3' || node.name == 'h4' || node.name == 'h5') {
+  if (node.name === 'h1' || node.name === 'h2' || node.name === 'h3' || node.name === 'h4' || node.name === 'h5') {
     return (
       <Text key={index} style={styles.articleText.h}>
         {defaultRenderer(node.children, node)}

@@ -9,7 +9,7 @@ import { InstagramButton } from './InstagramButton';
 import { SocialIcons } from './Socialicons';
 import { MenuText } from './MenuText';
 import { Loading } from './Loading';
-import { SearchBar } from './SearchBar';
+import { Search } from './SearchBar';
 import { MyStatusBar } from './StatusBar';
 import { Circle } from './Categorycircle';
 import CircleText from './CircleText';
@@ -22,7 +22,7 @@ export {
   CircleText,
   Circle,
   MyStatusBar,
-  SearchBar,
+  Search,
   Loading,
   SocialIcons,
   MenuText,

@@ -8,11 +8,12 @@ import {
   Alert,
   Dimensions,
   Platform,
+  FlatList,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { addStarredArticle } from '../Auth/actions';
-import { List, Card, Logo, SearchBar, Loading } from '../../components';
+import { List, Card, Logo, Search, Loading } from '../../components';
 import { loadArticles, searchValue } from './action';
 import { currentDate } from '../../helpers';
 import { styles } from './styles';
@@ -21,53 +22,62 @@ const { height } = Dimensions.get('window');
 const HEADER_MAX_HEIGHT = height / 2;
 const CARD_HEIGHT = Platform.OS === 'android' ? (height / 2) + 30 : (height / 2) + 50;
 const CARD_MIN_HEIGHT = Platform.OS === 'android' ? (height / 3) : 300;
+const ScrollAnimationRange = CARD_HEIGHT - CARD_MIN_HEIGHT;
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const search = navigation.getParam('search');
     return {
-      headerTitle: () => (!search ? <SearchBar value={(e) => navigation.state.params.headerSearch(e)} /> : <Logo />),
-      headerTitleStyle: { flex: 1 },
+      headerTitle: () => (!search ? <Search value={(e) => navigation.state.params.headerSearch(e)} /> : <Logo />),
       headerStyle: { borderBottomColor: 'transparent', opacity: 1 },
       headerLeft: <Icon
         containerStyle={{ margin: 10 }}
         onPress={() => navigation.openDrawer()}
         name='menu'
       />,
-      headerRight: !search ? <Icon
-        containerStyle={{ margin: 10 }}
-        size={25}
-        onPress={() => {
-          navigation.setParams({ search: !search });
-        }
-        }
-        name='close'
-      /> : <Icon
-        containerStyle={{ margin: 10 }}
-        onPress={() => navigation.setParams({ search: !search })}
-        name='search'
-      />,
+      headerRight: !search ?
+        <Icon
+          containerStyle={{ margin: 10 }}
+          size={25}
+          onPress={() => {
+            navigation.setParams({ search: !search });
+          }
+          }
+          name='close'
+        />
+        : <Icon
+          containerStyle={{ margin: 10 }}
+          onPress={() => navigation.setParams({ search: !search })}
+          name='search'
+        />,
     };
   }
 
   constructor(props) {
     super(props);
+    // this.myFlatList = this.myFlatList.bind(this);
     this.state = {
       refreshing: false,
       loading: false,
       closeSearch: true,
     };
     this.scrollY = new Animated.Value(0);
+    this.myFlatList = React.createRef();
   }
-
-  async componentDidMount() {
-    await this.props.loadArticles();
-    this.setState({ loading: true });
+  componentWillMount() {
     this.props.navigation.setParams({
       headerSearch: this.props.searchValue,
       search: true,
       name: "WHAT'S NEW",
     });
+  }
+  async componentDidMount() {
+    await this.props.loadArticles();
+    this.setState({ loading: true });
+  }
+
+  componentWillReceiveProps() {
+    this.ScrollList.scrollTo({ animated: false, x: 0, y: 0 });
   }
   componentWillUnmount() {
     clearInterval(this.props.loadArticles());
@@ -79,9 +89,7 @@ class HomeScreen extends React.Component {
    }
    return this.props.navigation.state.params.name;
  }
- _onRefresh() {
-   this.setState({ refreshing: true });
- }
+
  _starredArticle(id) {
    const { starred } = this.props;
    const existingArticle = starred.includes(id);
@@ -95,43 +103,42 @@ class HomeScreen extends React.Component {
    const arr = [...this.props.starred, id];
    this.props.addStarredArticle(arr);
  }
-
- animateCard = () => {
-   Animated.timing(this.scrollY, {
-     toValue: CARD_MIN_HEIGHT,
-     duration: 500,
-   }).start();
+ _renderItem = ({ item }) =>
+   (
+     <Card
+       //  key={item.id}
+       starred={this.props.starred}
+       id={item.id}
+       date={item.date}
+       navigation={this.props.navigation}
+       categoryName={this.getCategoryName}
+       onPress={() => this.props.navigation.navigate('Article', { id: item._id })}
+       title={this.props.articles ? item.title.rendered : item.title}
+       image={item.jetpack_featured_media_url}
+       loading={this.state.data}
+       starIcon={() => this._starredArticle(item.id)}
+     />
+   );
+ handleCardScroll(event) {
+   console.log(event);
  }
  render() {
    const search = this.props.navigation.getParam('search');
-   const { navigation, articles } = this.props;
+   const { articles } = this.props;
 
-   //  const heightTranslate = this.scrollY.interpolate({
-   //    inputRange: [0, 1],
-   //    outputRange: [CARD_HEIGHT, CARD_MIN_HEIGHT],
-   //    extrapolate: 'clamp',
-   //  });
    const heightTranslate = this.scrollY.interpolate({
-     inputRange: [0, 1],
+     inputRange: [0, 100],
      outputRange: [CARD_HEIGHT, CARD_MIN_HEIGHT],
      extrapolate: 'clamp',
      useNativeDriver: true,
    });
-   const readButton = this.scrollY.interpolate({
-     inputRange: [0, 1],
-     outputRange: [1, 0],
-     extrapolate: 'clamp',
-   });
 
-   const readButtonStyle = {
-     opacity: readButton,
-   };
    const headerStyle = {
      transform: [
      ],
      height: heightTranslate,
    };
-   //  handling a search button
+     //  handling a search button
    if (this.props.userSearch && !search) {
      return (<ScrollView>
        {
@@ -160,27 +167,22 @@ class HomeScreen extends React.Component {
              bounces={false}
              showsHorizontalScrollIndicator={false}
              scrollEventThrottle={16}
-           >
-             {/* rendering Cards components  */}
-             {
-               this.props.data.slice(0, 10).map(i => (
-                 <View key={i._id}>
-                   <Card
-                     starred={this.props.starred}
-                     id={i.id}
-                     date={i.date}
-                     navigation={navigation}
-                     categoryName={this.getCategoryName}
-                     onPress={() => this.props.navigation.navigate('Article', { id: i._id })}
-                     title={articles ? i.title.rendered : i.title}
-                     image={i.jetpack_featured_media_url}
-                     loading={this.state.data}
-                     starIcon={() => this._starredArticle(i.id)}
-                     showReadButton={readButtonStyle}
-                   />
-                 </View>
-               ))
+             pagingEnabled
+             contentInset={{ top: 0, left: 50, bottom: 0, right: 0 }}
+             ref={(scroll) => {
+               this.ScrollList = scroll;
+             }}
+             onScroll={event =>
+               this.handleCardScroll(event)
              }
+           >
+             <FlatList
+               horizontal
+               data={this.props.data.slice(0, 10)}
+               keyExtractor={item => item._id}
+               renderItem={this._renderItem}
+             />
+             {/* rendering Cards components  */}
 
            </ScrollView>
          </Animated.View>
@@ -190,25 +192,17 @@ class HomeScreen extends React.Component {
              showsVerticalScrollIndicator={false}
              scrollEventThrottle={10}
              decelerationRate={0.5}
-             contentOffset={
-               {
-                 y: 0,
-               }
-             }
-             contentInset={{
-               top: 0,
-             }}
+
              onScroll={
                Animated.event(
                  [
                    { nativeEvent: { contentOffset: { y: this.scrollY } } },
-                 ]
+                 ],
                )
              }
              refreshControl={
                <RefreshControl
                  refreshing={this.state.refreshing}
-                 // onRefresh={() => this._onRefresh()}
                />
              }
            >
