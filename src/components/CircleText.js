@@ -34,7 +34,7 @@ export default class CircleText extends React.Component {
     const { selected, category } = this.state;
     return (
       <TouchableOpacity
-        style={selected || category ? [this.props.style, { backgroundColor: 'black' }] : this.props.style}
+        style={selected || category ? [this.props.style, { backgroundColor: '#7E354D' }] : this.props.style}
         onPress={() => this.styleCategory()}
       >
         <Text
@@ -48,6 +48,7 @@ export default class CircleText extends React.Component {
 const styles = {
   title: {
     fontSize: 12,
+    color: '#7E354D',
     fontFamily: 'Playfair Display',
   },
   titleWhite: {
@@ -56,7 +57,7 @@ const styles = {
     color: 'white',
   },
   selected: {
-    backgroundColor: 'black',
+    backgroundColor: '#7E354D',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -64,7 +65,7 @@ const styles = {
     flex: 1,
     alignContent: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#7E354D',
   },
   default: {
     flex: 1,
@@ -76,6 +77,7 @@ const styles = {
     height: 40,
     borderRadius: 20,
     borderWidth: 1,
+    borderColor: '#7E354D',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
@@ -85,7 +87,8 @@ const styles = {
     height: 70,
     borderRadius: 35,
     borderWidth: 1,
-    backgroundColor: 'black',
+    borderColor: '#7E354D',
+    backgroundColor: '#7E354D',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -94,17 +97,19 @@ const styles = {
     height: 100,
     borderRadius: 50,
     borderWidth: 1,
-    backgroundColor: 'black',
+    borderColor: '#7E354D',
+    backgroundColor: '#7E354D',
     justifyContent: 'center',
     alignItems: 'center',
   },
   smallCircleSelected: {
-    idth: 40,
+    width: 40,
     height: 40,
     borderRadius: 20,
     borderWidth: 1,
+    borderColor: '#7E354D',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#7E354D',
   },
 };
