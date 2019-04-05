@@ -62,7 +62,7 @@ class WishList extends Component {
           }
         </ScrollView> :
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontFamily: 'raleway', fontSize: 24, opacity: 0.7 }}>Wishlist list is empty</Text>
+          <Text style={{ fontFamily: 'raleway', fontSize: 24, opacity: 0.7 }}>Wishlist is empty</Text>
         </View>
     );
   }

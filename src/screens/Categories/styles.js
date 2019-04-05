@@ -13,6 +13,7 @@ export const styles = {
     height: 40,
     borderRadius: 20,
     borderWidth: 1,
+    borderColor: '#7E354D',
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
@@ -22,6 +23,7 @@ export const styles = {
     height: 70,
     borderRadius: 35,
     borderWidth: 1,
+    borderColor: '#7E354D',
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
@@ -31,6 +33,7 @@ export const styles = {
     height: 100,
     borderRadius: 50,
     borderWidth: 1,
+    borderColor: '#7E354D',
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
@@ -152,6 +155,7 @@ export const styles = {
   },
   title: {
     fontSize: 12,
+    color: '#7E354D',
     fontFamily: 'Playfair Display',
   },
 };
