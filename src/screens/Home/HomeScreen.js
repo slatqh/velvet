@@ -204,6 +204,9 @@ class HomeScreen extends React.Component {
                  this.props.data.slice(10).map((i) => (
                    <View key={i._id}>
                      <List
+                      starIcon={() => this._starredArticle(i.id)}
+                      starred={this.props.starred}
+                      id={i.id}
                        onPress={() => this.props.navigation.navigate('Article', { id: i._id })}
                        categoryName={this.getCategoryName}
                        date={i.date}

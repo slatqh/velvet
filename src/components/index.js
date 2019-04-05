@@ -1,5 +1,5 @@
 import Card from './Card';
-import { List } from './List';
+import List from './List';
 import { CustomButton } from './Button';
 import { Inputs } from './Input';
 import { Logo } from './Logo';

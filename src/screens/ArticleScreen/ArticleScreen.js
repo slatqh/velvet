@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Dimensions,
   Easing,
-  Alert,
   Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,12 +17,11 @@ import FastImage from 'react-native-fast-image';
 import { MyStatusBar, Loading } from '../../components';
 import { styles } from './styles';
 import { loadArticlePost } from './action';
-import { addStarredArticle, deleteStarred } from '../Auth/actions';
 import { ArticleText } from './ArticleTextComponent';
-import { Post } from '../../../api/post';
+import { addStarredArticle, deleteStarred } from '../Auth/actions';
 import Colors from '../../../constants/Colors';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const h1 = '<h1>';
 const h1close = '</h1>';
 const HEADER_MAX_HEIGHT = Platform.OS === 'ios' ? 500 : 500;
@@ -51,14 +49,6 @@ class ArticleScreen extends PureComponent {
       Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : -HEADER_MAX_HEIGHT
     );
   }
-
-  // componentWillMount() {
-  //   const { starred } = this.props;
-  //   const existingArticle = starred.includes(this.props.data.id);
-  //   if (existingArticle) {
-  //     this.setState({ articleColor: true });
-  //   }
-  // }
   componentDidMount() {
     this.loadArticle();
     this.scrollY.addListener(event => {
@@ -137,7 +127,7 @@ class ArticleScreen extends PureComponent {
   }
   render() {
     const existingArticle = this.props.starred.includes(this.props.data.id);
-    const { zIndex, articleColor } = this.state;
+    const { zIndex } = this.state;
     const starIconY = this.scrollY.interpolate({
       inputRange: [-HEADER_MAX_HEIGHT, -HEADER_MAX_HEIGHT / 2, HEADER_MAX_HEIGHT],
       outputRange: [0, -130, -130],
@@ -208,7 +198,6 @@ class ArticleScreen extends PureComponent {
           <FastImage
             style={[
               styles.backgroundImage,
-              // imageStyle,
             ]}
             source={{ uri: this.state.data.jetpack_featured_media_url,
               priority: FastImage.priority.normal }}

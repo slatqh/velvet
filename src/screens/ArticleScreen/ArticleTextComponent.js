@@ -4,7 +4,7 @@ import HTMLView from 'react-native-htmlview';
 import { InstagramButton, ShareButton, ShoppingButton } from '../../components';
 import { getDate } from '../../helpers';
 import Colors from '../../../constants/Colors';
-import { styles } from './styles';
+import { styles, ArticleTextStyles } from './styles';
 
 const shareOptions = {
   title: 'Velvet',
@@ -50,14 +50,14 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
       return null;
     }
     return (
-      <Text key={index} style={styles.articleText.p}>
+      <Text key={index} style={ArticleTextStyles.articleText.p}>
         {defaultRenderer(node.children, node)}
       </Text>
     );
   }
   if (node.name === 'h1' || node.name === 'h2' || node.name === 'h3' || node.name === 'h4' || node.name === 'h5') {
     return (
-      <Text key={index} style={styles.articleText.h}>
+      <Text key={index} style={ArticleTextStyles.articleText.h}>
         {defaultRenderer(node.children, node)}
       </Text>
     );

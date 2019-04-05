@@ -1,10 +1,10 @@
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 import Colors from '../../../../constants/Colors';
 
 const { width, height } = Dimensions.get('window');
 
 const HEADER_MAX_HEIGHT = 550;
-export const styles = {
+export const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     zIndex: -1,
@@ -101,8 +101,11 @@ export const styles = {
   gradient: {
     zIndex: -1, opacity: 0.7, position: 'absolute', top: 0, left: 0, width, height,
   },
-  // styles for webcontent rendering
-  articleText: {
+});
+
+
+export const ArticleTextStyles = {
+   articleText: {
     p: {
       // justifyContent: 'space-around',
       color: Colors.white,
@@ -133,4 +136,4 @@ export const styles = {
       alignSelf: 'center',
     },
   },
-};
+}

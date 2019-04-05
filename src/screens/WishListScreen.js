@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 import { deleteStarred, fetchingStarredArticles } from '../screens/Auth/actions';
@@ -37,9 +37,7 @@ class WishList extends Component {
     this.props.fetchingStarredArticles();
   }
   render() {
-    if (this.props.loading) {
-      return <Loading />;
-    }
+
     return (
       this.props.starred.length > 0 ?
         <ScrollView style={styles.container}>
@@ -47,6 +45,8 @@ class WishList extends Component {
             this.props.starredArticles.map((i, index) => (
               <View key={i.id}>
                 <List
+                  starIconDisable
+                  loading={ this.props.loading}
                   onPress={() => this.props.navigation.navigate('Article', { id: i._id })}
                   categoryName={this.getCategoryName}
                   trashIcon
@@ -55,6 +55,7 @@ class WishList extends Component {
                   image={i.jetpack_featured_media_url}
                   deleteArticle={() => this.deleteArticle(index, i.id)}
                 />
+
 
               </View>
 

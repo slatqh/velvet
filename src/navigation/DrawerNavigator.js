@@ -26,7 +26,7 @@ const HomeStack = createStackNavigator({
 
 const ProfileStack = createStackNavigator({
   Profile: ProfileScreen,
-  // Home: HomeStack,
+  Home: AuthScreen,
 });
 const CategoryStack = createStackNavigator({
   Category,

@@ -1,10 +1,10 @@
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
 import Colors from '../../../constants/Colors';
 
 const { height } = Dimensions.get('window');
 
 const HEADER_MAX_HEIGHT = height / 2;
-export const styles = {
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -43,4 +43,4 @@ export const styles = {
     marginLeft: 10,
   },
 
-};
+});

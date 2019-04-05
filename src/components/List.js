@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Loading } from '../components';
 import HTMLView from 'react-native-htmlview';
 import { Icon } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
@@ -7,8 +8,38 @@ import { getDate } from '../helpers';
 
 const h1 = '<h1>';
 const h1close = '</h1>';
-export const List = ({ title, image, categoryName, onPress, date, trashIcon, deleteArticle }) => (
-  <TouchableOpacity onPress={onPress}>
+
+export default class List extends React.PureComponent {
+  opacityStyle = () => {
+
+    const { starred, id, starIconDisable } = this.props;
+    if(starIconDisable){
+       return;
+    } else {
+        const existingArticle = starred.includes(id);
+        if (existingArticle) {
+          return 1;
+        }
+        return 0.4;
+
+    }
+  }
+render(){
+  const {
+    title,
+    image,
+    categoryName,
+    onPress,
+    date,
+    trashIcon,
+    deleteArticle,
+    starIcon,
+    starIconDisable,
+    loading
+  } = this.props;
+
+  return (
+    <TouchableOpacity onPress={onPress}>
     <View style={styles.container}>
       <View style={{ flex: 0.7, flexDirection: 'row' }}>
         <FastImage
@@ -23,11 +54,24 @@ export const List = ({ title, image, categoryName, onPress, date, trashIcon, del
       <View style={{ justifyContent: 'space-around', flex: 1 }}>
         <View style={styles.inner}>
           <Text style={styles.categoryTitle}>{categoryName ? categoryName() : null}</Text>
+        { starIconDisable ? <View /> : <TouchableOpacity
+            onPress={starIcon}
+          >
+             <Icon
+              type='font-awesome'
+              name='star'
+              size={10}
+              containerStyle={[styles.starIcon, { opacity: this.opacityStyle() }]}
+
+              color='black'
+              />
+          </TouchableOpacity>
+        }
           {/* <Text style={styles.minToRead}>7 min read</Text> */}
         </View>
         <HTMLView
           value={`${h1}${title.toUpperCase()}${h1close}`}
-          stylesheet={styles.title}
+          stylesheet={Title.title}
         />
         <Text style={styles.minToRead}>{getDate(date)}</Text>
         {
@@ -43,9 +87,24 @@ export const List = ({ title, image, categoryName, onPress, date, trashIcon, del
       </View>
     </View>
   </TouchableOpacity>
-);
+  )
+}
+}
 
-const styles = {
+
+  const Title = {
+    title: {
+      h1: {
+        fontFamily: 'Playfair Display',
+        paddingHorizontal: 10,
+        paddingTop: 15,
+        fontSize: 12,
+      },
+    }
+  }
+
+
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: 130,
@@ -85,19 +144,17 @@ const styles = {
     fontSize: 10,
     fontFamily: 'raleway',
   },
-  title: {
-    h1: {
-      fontFamily: 'Playfair Display',
-      paddingHorizontal: 10,
-      paddingTop: 15,
-      fontSize: 12,
-    },
-  },
   minToRead: {
     opacity: 0.7,
     fontSize: 10,
     fontFamily: 'raleway',
     paddingRight: 10,
   },
+  starIcon: {
+    margin: 5,
+    backgroundColor: '#ddd',
+    padding: 5,
+    borderRadius: 20,
+  },
 
-};
+});
