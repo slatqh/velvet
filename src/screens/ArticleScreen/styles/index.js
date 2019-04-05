@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
   starIcon: {
     position: 'absolute',
     opacity: 1,
-    top: 180,
+    top: 100,
     right: Platform.OS === 'ios' ? 20 : width + 150,
     // backgroundColor: '#fff',
     width: 40,

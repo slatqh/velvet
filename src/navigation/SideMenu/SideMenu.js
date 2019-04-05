@@ -17,6 +17,7 @@ import { styles } from './styles';
 import { menuData, titleMenu } from '../../helpers';
 
 const { height } = Dimensions.get('window');
+const ANIMATION_HEIGHT = height; 
 class SideMenu extends Component {
   constructor(props) {
     super(props);
@@ -212,7 +213,7 @@ class SideMenu extends Component {
                   title='FASHION'
                   style={{ }}
                   onPress={() =>
-                    this.loadPosts(170, 'fashion', this.titleFashion, 140)
+                    this.loadPosts(170, 'fashion', this.titleFashion, 95)
                   }
                 />
               </Animated.View>

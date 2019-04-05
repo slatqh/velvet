@@ -7,35 +7,50 @@ export default class CircleText extends React.Component {
     this.state = {
       selected: false,
       category: false,
+      categoryData: []
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     const { userCategory, id } = this.props;
-
     if (userCategory) {
       const cat = userCategory.includes(Number(id));
       return this.setState({ category: cat });
     }
   }
-
-  styleCategory() {
-    const { selected } = this.state;
+// componentWillUpdate(){
+//   const { selected } = this.state;
+//   if(selected !== selected){
+//     return true; 
+//   }
+// }
+onCategoryPress() {
+    const { selected, category } = this.state;
     console.log('CIRCLE ', selected);
-    if (selected) {
+    if (selected || category) {
       this.setState({ selected: !this.state.selected, category: false });
       return this.props.onSelect(this.state.selected);
+
     }
     this.setState({ selected: !this.state.selected });
-    return this.props.onSelect(false);
+    return this.props.onSelect(!this.state.selected);
   }
-
+handleCircleStyles(){
+  const { selected, category } = this.state; 
+  if(selected || category ){
+    return [this.props.style, { backgroundColor: '#7E354D' }]
+  } else if (selected){
+    return [this.props.style, { backgroundColor: '#7E354D' }]
+  }
+  return this.props.style
+}
   render() {
-    // console.log('SELECTED CIRCLE', this.state.selected);
+    console.log('SELECTED CIRCLE', this.state.selected);
+    console.log('CATEGORY CIRCLE', this.state.category);
     const { selected, category } = this.state;
     return (
       <TouchableOpacity
-        style={selected || category ? [this.props.style, { backgroundColor: '#7E354D' }] : this.props.style}
-        onPress={() => this.styleCategory()}
+        style={ this.handleCircleStyles()}
+        onPress={() => this.onCategoryPress()}
       >
         <Text
           style={category || selected ? styles.titleWhite : styles.title}

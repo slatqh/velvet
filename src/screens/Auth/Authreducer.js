@@ -38,6 +38,9 @@ export const STARRED_ARTICLE_UPDATE = 'STARRED_ARTICLE_UPDATE';
 export const STARRED_ARTICLES_DELETED = 'STARRED_ARTICLES_DELETED';
 export const STARRED_FETCH_SUCCESS = 'STARRED_FETCH_SUCCESS';
 export const STARRED_FETCH_FAILED = 'FAILED';
+export const UPDATING_USER_CATEGORY_START = 'UPDATING_USER_CATEGORY_START'
+export const UPDATING_USER_CATEGORY_FINISHED = 'UPDATING_USER_CATEGORY_FINISHED'
+
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -88,6 +91,10 @@ export default (state = initialState, action) => {
       return { ...state, loading: false, starred: action.payload, starIconColor: false };
     case STARRED_FETCH_SUCCESS :
       return { ...state, loading: false, starredArticles: action.payload };
+    case UPDATING_USER_CATEGORY_START :
+    return { ...state, loading: true,  };
+    case UPDATING_USER_CATEGORY_FINISHED :
+    return { ...state, loading: false };
     default:
       return state;
   }

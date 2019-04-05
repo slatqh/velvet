@@ -130,7 +130,7 @@ class ArticleScreen extends PureComponent {
     const { zIndex } = this.state;
     const starIconY = this.scrollY.interpolate({
       inputRange: [-HEADER_MAX_HEIGHT, -HEADER_MAX_HEIGHT / 2, HEADER_MAX_HEIGHT],
-      outputRange: [0, -130, -130],
+      outputRange: [0, -50, -50],
       extrapolate: 'clamp',
     });
     const starIconX = this.scrollY.interpolate({
@@ -213,18 +213,19 @@ class ArticleScreen extends PureComponent {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.fashion}>FASHION</Text>
             </View>
-            <View>
+            <View style={{ 
+             
+            }}>
               <HTMLView
                 value={`${h1}${this.props.articleTitle}${h1close}`}
                 stylesheet={{
                   h1: {
                     fontFamily: 'Playfair Display',
                     color: Colors.white,
-                    fontSize: 36,
-                    marginRight: 25,
-                    justifyContent: 'flex-end',
-                    flexDirection: 'row',
-
+                    fontSize: 30,
+                    justifyContent: 'center',
+                    alignItems:'center',
+                    marginTop: 15,
                   },
                 }}
               />

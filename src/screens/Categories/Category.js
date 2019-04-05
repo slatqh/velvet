@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, SafeAreaView, ImageBackground } from 'react-native';
 import { connect } from 'react-redux';
 import { Logo, CustomButton, CircleText } from '../../components';
+import { updateUserCategory } from './action';
 import Colors from '../../../constants/Colors';
 import { styles } from './styles';
 import { User } from '../../../api/user';
@@ -13,8 +14,12 @@ class Category extends Component {
 
   componentDidMount() {
     this.setState({ category: this.props.preferred });
+  } 
+componentWillReceiveProps(nexProps){
+  if(this.data.category.length !== nextProps.category.length){
+    console.log('update')
   }
-
+}
   category(id, selected) {
     if (!selected) {
       this.setState({ category: this.state.category.concat(id) });
@@ -23,9 +28,10 @@ class Category extends Component {
       this.setState({ category });
     }
   }
-  async handleButton() {
+   handleButton() {
     const category = [...new Set(this.state.category)];
     await User.profileUpdate({ preferred: category });
+    // this.props.updateUserCategory({preferred: category})
     this.props.navigation.navigate('Home');
   }
   render() {
@@ -243,4 +249,4 @@ const mapStatetoProps = ({ Auth }) => {
   const { preferred } = Auth;
   return { preferred };
 };
-export default connect(mapStatetoProps, { })(Category);
+export default connect(mapStatetoProps, { updateUserCategory})(Category);
