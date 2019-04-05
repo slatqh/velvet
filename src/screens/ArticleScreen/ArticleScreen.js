@@ -17,6 +17,7 @@ import HTMLView from 'react-native-htmlview';
 import FastImage from 'react-native-fast-image';
 import { MyStatusBar, Loading } from '../../components';
 import { styles } from './styles';
+import { loadArticlePost } from './action';
 import { addStarredArticle, deleteStarred } from '../Auth/actions';
 import { ArticleText } from './ArticleTextComponent';
 import { Post } from '../../../api/post';
@@ -36,14 +37,13 @@ class ArticleScreen extends PureComponent {
     this.state = {
       progress: true,
       pressed: true,
-      data: '',
-      loading: true,
+      data: false,
       zIndex: 1,
       starredId: [],
       shopping: '',
-      articleColor: true,
+      loading: true,
+      articleColor: null,
     };
-    this.loadArticle();
     this.shoppingBagWidth = new Animated.Value(24);
     this.shoppingBag = new Animated.Value(0);
     this.shoppingBagOpacity = new Animated.Value(0);
@@ -52,37 +52,41 @@ class ArticleScreen extends PureComponent {
     );
   }
 
+  // componentWillMount() {
+  //   const { starred } = this.props;
+  //   const existingArticle = starred.includes(this.props.data.id);
+  //   if (existingArticle) {
+  //     this.setState({ articleColor: true });
+  //   }
+  // }
   componentDidMount() {
+    this.loadArticle();
     this.scrollY.addListener(event => {
       if (event.value >= -200) {
         return this.setState({ zIndex: -1 });
       }
       return this.setState({ zIndex: 1 });
     });
-    const { starred } = this.props;
-    const existingArticle = starred.includes(this.state.starredId);
-    if (existingArticle) {
-      return this.setState({ articleColor: !this.state.articleColor });
-    }
   }
+
   componentWillUnmount() {
     this.scrollY.removeAllListeners();
   }
   async loadArticle() {
     const articleId = this.props.navigation.getParam('id');
-    const { data } = await Post.getArticle(articleId);
-    this.setState({ data, shopping: data.mainShoppingLink, loading: false, starredId: data.id });
+    await this.props.loadArticlePost(articleId);
+    const { data } = this.props;
+    return this.setState({ data, shopping: data.mainShoppingLink, loading: false, starredId: data.id });
   }
-
   _starredArticle() {
     const { starred } = this.props;
     const existingArticle = starred.includes(this.state.starredId);
     if (existingArticle) {
-      this.setState({ articleColor: !this.state.articleColor });
+      this.setState({ articleColor: true });
       const articleId = this.props.starred.filter(i => i !== this.state.starredId);
       return this.props.deleteStarred(articleId);
     }
-    this.setState({ articleColor: !this.state.articleColor });
+    this.setState({ articleColor: false });
     return this.updateUserStarred();
   }
 
@@ -132,7 +136,8 @@ class ArticleScreen extends PureComponent {
     ]);
   }
   render() {
-    const { zIndex, data, articleColor } = this.state;
+    const existingArticle = this.props.starred.includes(this.props.data.id);
+    const { zIndex, articleColor } = this.state;
     const starIconY = this.scrollY.interpolate({
       inputRange: [-HEADER_MAX_HEIGHT, -HEADER_MAX_HEIGHT / 2, HEADER_MAX_HEIGHT],
       outputRange: [0, -130, -130],
@@ -196,7 +201,7 @@ class ArticleScreen extends PureComponent {
           }
         >
           <View style={() => (Platform.OS === 'ios' ? null : { marginTop: -450 })}>
-            <ArticleText animation={barOpacity} data={data} />
+            <ArticleText animation={barOpacity} data={this.state.data} />
           </View>
         </Animated.ScrollView>
         <View style={styles.header}>
@@ -221,7 +226,7 @@ class ArticleScreen extends PureComponent {
             </View>
             <View>
               <HTMLView
-                value={`${h1}${data.title.rendered.toUpperCase()}${h1close}`}
+                value={`${h1}${this.props.articleTitle}${h1close}`}
                 stylesheet={{
                   h1: {
                     fontFamily: 'Playfair Display',
@@ -243,7 +248,7 @@ class ArticleScreen extends PureComponent {
         >
           <Icon
             name='star'
-            containerStyle={{ backgroundColor: articleColor ? '#4f4f4f' : 'white', padding: 5, borderRadius: 25 }}
+            containerStyle={{ backgroundColor: existingArticle ? 'white' : '#4f4f4f', padding: 5, borderRadius: 25 }}
             size={25}
           />
         </TouchableOpacity>
@@ -321,8 +326,12 @@ class ArticleScreen extends PureComponent {
     );
   }
 }
-const mapStateToProps = ({ Auth }) => {
+const mapStateToProps = ({ Auth, Article }) => {
   const { starred, starredUpdate } = Auth;
-  return { starred, starredUpdate };
+  const { data, loading, articleTitle, articleContent } = Article;
+
+  return { data, loading, articleTitle, articleContent, starred, starredUpdate };
 };
-export default connect(mapStateToProps, { addStarredArticle, deleteStarred })(ArticleScreen);
+
+export default connect(mapStateToProps, { loadArticlePost, addStarredArticle, deleteStarred })(ArticleScreen);
+

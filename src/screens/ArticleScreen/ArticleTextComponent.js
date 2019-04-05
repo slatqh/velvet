@@ -65,6 +65,9 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
 }
 
 export const ArticleText = ({ animation, data }) => {
+  if (data.content === undefined) {
+    return <View />;
+  }
   const content = data.content.rendered.replace(/This slideshow requires JavaScript./g, ' ');
   return (
     <View style={[styles.container, { marginTop: Platform.OS === 'android' ? HEADER : 0, backgroundColor: 'black' }]}>

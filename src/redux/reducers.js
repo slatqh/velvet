@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import Authreducer from '../screens/Auth/Authreducer'
-import Articlereducer from '../screens/Home/reducer';
-;
+import Authreducer from '../screens/Auth/Authreducer';
+import Homereducer from '../screens/Home/reducer';
+import ArticleReducer from '../screens/ArticleScreen/ArticleReducer';
+
 export default combineReducers({
   Auth: Authreducer,
-  Posts: Articlereducer,
+  Home: Homereducer,
+  Article: ArticleReducer,
 });

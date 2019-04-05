@@ -8,15 +8,12 @@ import {
   SEARCH_ARTICLES_FAILED,
 } from './reducer';
 import { Post } from '../../../api/post';
-import { User } from '../../../api/user';
 
 export function searchValue(e) {
-  console.log(e);
   return async (dispatch) => {
     dispatch({ type: SEARCH_ARTICLES_STARTED });
     try {
       const data = await Post.searchPosts(e);
-      console.log(data);
       return dispatch(searchSuccess(data));
     } catch (error) {
       return dispatch(searchFailed(error));
@@ -54,7 +51,7 @@ export function loadCategoryPosts(id) {
       const { data } = await Post.categoryPosts(id);
       return dispatch(categoryArticlesSuccess(data));
     } catch (error) {
-      return dispatch(articlesLoadFailed(data));
+      return dispatch(articlesLoadFailed(error));
     }
   };
 }

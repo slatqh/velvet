@@ -5,14 +5,13 @@ import {
   View,
   Animated,
   RefreshControl,
-  Alert,
   Dimensions,
   Platform,
   FlatList,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { addStarredArticle } from '../Auth/actions';
+import { addStarredArticle, deleteStarred } from '../Auth/actions';
 import { List, Card, Logo, Search, Loading } from '../../components';
 import { loadArticles, searchValue } from './action';
 import { currentDate } from '../../helpers';
@@ -21,7 +20,6 @@ import { styles } from './styles';
 const { height, width } = Dimensions.get('window');
 const CARD_HEIGHT = Platform.OS === 'android' ? (height / 2) + 30 : (height / 2) + 50;
 const CARD_MIN_HEIGHT = Platform.OS === 'android' ? (height / 3) : 300;
-const CARD_WIDTH = width / 1.3;
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -96,7 +94,8 @@ class HomeScreen extends React.Component {
    const { starred } = this.props;
    const existingArticle = starred.includes(id);
    if (existingArticle) {
-     return Alert.alert('Article already added to wishlist');
+     const articleId = this.props.starred.filter(i => i !== id);
+     return this.props.deleteStarred(articleId);
    }
    this.updateUserStarred(id);
    return false;
@@ -222,10 +221,10 @@ class HomeScreen extends React.Component {
    );
  }
 }
-const mapStateToProps = ({ Posts, Auth }) => {
-  const { data, loading, articles, search, userSearch } = Posts;
+const mapStateToProps = ({ Home, Auth }) => {
+  const { data, loading, articles, search, userSearch } = Home;
   const { starred } = Auth;
   return { data, loading, articles, search, userSearch, starred };
 };
-export default connect(mapStateToProps, { loadArticles, searchValue, addStarredArticle })(HomeScreen);
+export default connect(mapStateToProps, { loadArticles, searchValue, addStarredArticle, deleteStarred })(HomeScreen);
 

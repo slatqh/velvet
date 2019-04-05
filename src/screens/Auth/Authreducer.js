@@ -12,6 +12,7 @@ const initialState = {
   starred: [],
   starredArticles: [],
   starredUpdate: false,
+  starIconColor: false,
   admin: false,
   loading: false,
   signup: false,
@@ -82,9 +83,9 @@ export default (state = initialState, action) => {
     case STARRED_ARTICLES :
       return { ...state, loading: true, profileUpdate: false };
     case STARRED_ARTICLE_UPDATE:
-      return { ...state, starred: action.payload, loading: false, starredUpdate: !state.starredUpdate };
+      return { ...state, starred: action.payload, loading: false, starredUpdate: !state.starredUpdate, starIconColor: true };
     case STARRED_ARTICLES_DELETED :
-      return { ...state, loading: false, starred: action.payload };
+      return { ...state, loading: false, starred: action.payload, starIconColor: false };
     case STARRED_FETCH_SUCCESS :
       return { ...state, loading: false, starredArticles: action.payload };
     default:
