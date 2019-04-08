@@ -66,7 +66,7 @@ const styles = {
   titleWhite: {
     fontSize: 12,
     fontFamily: 'Playfair Display',
-    color: 'white',
+    color: '#f8d18d',
   },
   selected: {
     backgroundColor: '#7E354D',

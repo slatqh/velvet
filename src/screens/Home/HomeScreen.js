@@ -12,6 +12,7 @@ import {
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { addStarredArticle, deleteStarred } from '../Auth/actions';
+import { NavigationActions, StackActions } from 'react-navigation';
 import { List, Card, Logo, Search, Loading } from '../../components';
 import { loadArticles, searchValue } from './action';
 import { currentDate } from '../../helpers';
@@ -22,10 +23,17 @@ const CARD_HEIGHT = Platform.OS === 'android' ? (height / 2) + 30 : (height / 2)
 const CARD_MIN_HEIGHT = Platform.OS === 'android' ? (height / 3) : 300;
 
 class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation, loadArticles }) => {
     const search = navigation.getParam('search');
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home' }),
+      ],
+    });
     return {
-      headerTitle: () => (!search ? <Search value={(e) => navigation.state.params.headerSearch(e)} /> : <Logo />),
+      headerTitle: () => (!search ? <Search value={(e) => navigation.state.params.headerSearch(e)} /> :
+                          <Logo onPress={() =>  navigation.dispatch(resetAction)}/>),
       headerStyle: { borderBottomColor: 'transparent', opacity: 1 },
       headerLeft: <Icon
         containerStyle={{ margin: 10 }}

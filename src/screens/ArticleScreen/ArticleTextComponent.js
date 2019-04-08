@@ -76,7 +76,7 @@ export const ArticleText = ({ animation, data }) => {
       />
       <View style={{ padding: 20 }}>
         <View style={Styles.headerContainer}>
-          <Text style={Styles.authorName}>Souha Abbas</Text>
+          <Text style={Styles.authorName}>Admin</Text>
           {/* <Text style={Styles.readTime}>7 min read</Text> */}
         </View>
         <Text style={Styles.postCreated}>{getDate(data.date)}</Text>

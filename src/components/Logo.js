@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, Image, SafeAreaView } from 'react-native';
+import { View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 
-export const Logo = () => (
-  <View style={styles.container}>
-
+export const Logo = ({onPress}) => (
+  <TouchableOpacity
+    onPress={onPress}
+    style={styles.container}>
     <Image
       style={styles.image}
       resizeMode='contain'
       source={require('../../assets/images/splash.png')}
     />
 
-  </View>
+
+  </TouchableOpacity>
+
 );
 
 const styles = {
