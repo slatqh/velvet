@@ -20,12 +20,11 @@ export default class CircleText extends React.Component {
 // componentWillUpdate(){
 //   const { selected } = this.state;
 //   if(selected !== selected){
-//     return true; 
+//     return true;
 //   }
 // }
 onCategoryPress() {
     const { selected, category } = this.state;
-    console.log('CIRCLE ', selected);
     if (selected || category) {
       this.setState({ selected: !this.state.selected, category: false });
       return this.props.onSelect(this.state.selected);
@@ -35,7 +34,7 @@ onCategoryPress() {
     return this.props.onSelect(!this.state.selected);
   }
 handleCircleStyles(){
-  const { selected, category } = this.state; 
+  const { selected, category } = this.state;
   if(selected || category ){
     return [this.props.style, { backgroundColor: '#7E354D' }]
   } else if (selected){
@@ -44,8 +43,6 @@ handleCircleStyles(){
   return this.props.style
 }
   render() {
-    console.log('SELECTED CIRCLE', this.state.selected);
-    console.log('CATEGORY CIRCLE', this.state.category);
     const { selected, category } = this.state;
     return (
       <TouchableOpacity

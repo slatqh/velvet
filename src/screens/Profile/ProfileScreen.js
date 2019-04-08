@@ -154,10 +154,10 @@ class ProfileScreen extends React.Component {
             />
             <ProfileInput
               label='Rate Velvet'
-              onPress={() => console.log('pressed')}
+              // onPress={() => console.log('pressed')}
               editable={false}
               rightIcon={<Icon
-                onPress={() => console.log('pressed')}
+                // onPress={() => console.log('pressed')}
                 type='antdesign'
                 name='right'
                 size={28}

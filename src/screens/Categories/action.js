@@ -6,13 +6,14 @@ import {
 } from '../Auth/Authreducer'
 
 export function updateUserCategory(category){
+    console.log(category)
    return  async (dispatch) => {
-        dispatch({ UPDATING_USER_CATEGORY_START})
+        dispatch({ type: UPDATING_USER_CATEGORY_START})
         try {
-           await User.profileUpdate({ preferred: category });
-           return dispatch({ UPDATING_USER_CATEGORY_FINISHED});
+           await User.profileUpdate(category);
+           return dispatch({ type: UPDATING_USER_CATEGORY_FINISHED});
         } catch (error) {
-            throw error; 
+            throw error;
         }
     }
 };

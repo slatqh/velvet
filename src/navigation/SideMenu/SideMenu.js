@@ -17,7 +17,7 @@ import { styles } from './styles';
 import { menuData, titleMenu } from '../../helpers';
 
 const { height } = Dimensions.get('window');
-const ANIMATION_HEIGHT = height; 
+const ANIMATION_TITLE_HEIGHT = height / 4;
 class SideMenu extends Component {
   constructor(props) {
     super(props);
@@ -81,8 +81,8 @@ class SideMenu extends Component {
   MenuAnimation(value, heightValue) {
     Animated.parallel([
       Animated.timing(value, {
-        toValue: height - height - heightValue,
-        duration: 300,
+        toValue: -heightValue,
+        duration: 500,
         easing: Easing.elastic(1),
         useNativeDriver: true,
       }).start(() => value.setValue(0)),
@@ -97,13 +97,13 @@ class SideMenu extends Component {
         duration: 200,
         useNativeDriver: true,
       }).start(() => this.setState({ showMenu: true })),
+      Animated.timing(this.titleOpactity, {
+        toValue: 1,
+        duration: 250,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start()
     ]);
-    Animated.timing(this.titleOpactity, {
-      toValue: 1,
-      duration: 250,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
   }
   backToMainMenu() {
     Animated.parallel([
@@ -213,32 +213,32 @@ class SideMenu extends Component {
                   title='FASHION'
                   style={{ }}
                   onPress={() =>
-                    this.loadPosts(170, 'fashion', this.titleFashion, 95)
+                    this.loadPosts(170, 'fashion', this.titleFashion, ANIMATION_TITLE_HEIGHT-100)
                   }
                 />
               </Animated.View>
               <Animated.View style={[titleTravelStyle]}>
                 <MenuText
                   title='TRAVEL'
-                  onPress={() => this.loadPosts(150, 'TRAVEL', this.titleTravel, 200)}
+                  onPress={() => this.loadPosts(150, 'TRAVEL', this.titleTravel, ANIMATION_TITLE_HEIGHT-60)}
                 />
               </Animated.View>
               <Animated.View style={[titleDriveStyle]}>
                 <MenuText
                   title='DRIVE'
-                  onPress={() => this.loadPosts(520, 'DRIVE', this.titleDrive, 250)}
+                  onPress={() => this.loadPosts(520, 'DRIVE', this.titleDrive, ANIMATION_TITLE_HEIGHT)}
                 />
               </Animated.View>
               <Animated.View style={[titleCultureStyle]}>
                 <MenuText
                   title='CULTURE'
-                  onPress={() => this.loadPosts(163, 'CULTURE', this.titleCulture, 300)}
+                  onPress={() => this.loadPosts(163, 'CULTURE', this.titleCulture, ANIMATION_TITLE_HEIGHT)}
                 />
               </Animated.View>
               <Animated.View style={[titleFoodStyle]}>
                 <MenuText
                   title='FOOD'
-                  onPress={() => this.loadPosts(151, 'FOOD', this.titleFood, 340)}
+                  onPress={() => this.loadPosts(151, 'FOOD', this.titleFood, ANIMATION_TITLE_HEIGHT)}
                 />
               </Animated.View>
             </Animated.View> : null

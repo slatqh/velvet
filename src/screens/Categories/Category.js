@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, SafeAreaView, ImageBackground } from 'react-native';
+import { View, Text, ScrollView, SafeAreaView, ImageBackground, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { Logo, CustomButton, CircleText } from '../../components';
 import { updateUserCategory } from './action';
@@ -14,12 +14,8 @@ class Category extends Component {
 
   componentDidMount() {
     this.setState({ category: this.props.preferred });
-  } 
-componentWillReceiveProps(nexProps){
-  if(this.data.category.length !== nextProps.category.length){
-    console.log('update')
   }
-}
+
   category(id, selected) {
     if (!selected) {
       this.setState({ category: this.state.category.concat(id) });
@@ -28,10 +24,9 @@ componentWillReceiveProps(nexProps){
       this.setState({ category });
     }
   }
-   handleButton() {
+  handleButton() {
     const category = [...new Set(this.state.category)];
-    await User.profileUpdate({ preferred: category });
-    // this.props.updateUserCategory({preferred: category})
+    this.props.updateUserCategory({preferred: category})
     this.props.navigation.navigate('Home');
   }
   render() {
@@ -60,7 +55,7 @@ componentWillReceiveProps(nexProps){
             showsHorizontalScrollIndicator={false}
           >
             <View style={styles.circlesContainer}>
-              <View style={{ justifyContent: 'center', alignContent: 'center', flex: 1 }}>
+              <View style={Styles.circlesWrap }>
                 <CircleText
                   style={[styles.smallCircle, styles.dior]}
                   name='DIOR'
@@ -95,7 +90,7 @@ componentWillReceiveProps(nexProps){
                   onSelect={(selected) => this.category(149, selected)}
                 />
               </View>
-              <View style={{ justifyContent: 'center', alignContent: 'center', flex: 1, marginLeft: 15 }}>
+              <View style={ Styles.circlesWrap1}>
                 <CircleText
                   style={[styles.largeCircle, styles.travel]}
                   name='TRAVEL'
@@ -125,7 +120,7 @@ componentWillReceiveProps(nexProps){
                   onSelect={(selected) => this.category(154, selected)}
                 />
               </View>
-              <View style={{ justifyContent: 'center', alignContent: 'center', flex: 1 }}>
+              <View style={Styles.circlesWrap4 }>
                 <CircleText
                   style={[styles.largeCircle, styles.fashion]}
                   name='MEN'
@@ -151,7 +146,7 @@ componentWillReceiveProps(nexProps){
                   onSelect={(selected) => this.category(163, selected)}
                 />
               </View>
-              <View style={{ marginLeft: -20, marginTop: 30, justifyContent: 'center', alignContent: 'center', flex: 1 }}>
+              <View style={Styles.circlesWrap3 }>
                 <CircleText
                   style={[styles.largeCircle, styles.events]}
                   name='WOMEN'
@@ -245,6 +240,24 @@ componentWillReceiveProps(nexProps){
     );
   }
 }
+
+const Styles = StyleSheet.create({
+  circlesWrap: {
+    justifyContent: 'center', alignContent: 'center', flex: 1
+  },
+  circlesWrap1: {
+    justifyContent: 'center', alignContent: 'center', flex: 1, marginLeft: 15
+  },
+  circlesWrap2: {
+    justifyContent: 'center', alignContent: 'center', flex: 1
+  },
+  circlesWrap3 :{
+    marginLeft: -20, marginTop: 30, justifyContent: 'center', alignContent: 'center', flex: 1
+  },
+  circlesWrap4: {
+    justifyContent: 'center', alignContent: 'center', flex: 1
+  }
+})
 const mapStatetoProps = ({ Auth }) => {
   const { preferred } = Auth;
   return { preferred };

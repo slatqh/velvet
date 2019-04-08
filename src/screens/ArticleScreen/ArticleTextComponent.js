@@ -94,7 +94,7 @@ export const ArticleText = ({ animation, data }) => {
       <View style={{ paddingBottom: 60 }}>
         <InstagramButton />
         <ShareButton onPress={() => shareWithFriends()} />
-        <ShoppingButton onPress={() => console.log('shopping button')} />
+        {/* <ShoppingButton onPress={() => console.log('shopping button')} /> */}
       </View>
       {/* <SocialIcons styles={{ padding: 40 }} /> */}
     </View>

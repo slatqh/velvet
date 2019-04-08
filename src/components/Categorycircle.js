@@ -48,7 +48,7 @@ export class Circle extends React.Component {
     const { selected} = this.state;
     return (
       <View >
-      <TouchableOpacity
+      <View
       onPress={
         ()=> this.selectCategory()
      }
@@ -58,7 +58,7 @@ export class Circle extends React.Component {
           style={selected? [this.titleStyles(), { color: 'white'} ]: this.titleStyles()}>
          {this.props.children.toUpperCase()}
         </Text>
-      </TouchableOpacity>
+      </View>
       </View>
     )
   }

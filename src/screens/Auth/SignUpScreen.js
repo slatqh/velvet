@@ -102,7 +102,7 @@ class SignUpScreen extends Component {
           <View style={styles.Button}>
             <Text style={styles.agreementText}> By clicking "Sign up" I agree to our {' '}
               <Text
-                onPress={() => console.log('Terms')}
+                // onPress={() => console.log('Terms')}
                 style={{ color: Colors.black, textDecorationLine: 'underline' }}
               >
                   Terms of Service
