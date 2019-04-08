@@ -152,6 +152,7 @@ class HomeScreen extends React.Component {
              this.props.navigation.navigate('Article', { id: i._id });
            }
            }
+           starIcon={() => this._starredArticle(i.id)}
            categoryName={this.getCategoryName}
            starred={this.props.starred}
            id={i.id}
