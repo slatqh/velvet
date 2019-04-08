@@ -153,6 +153,8 @@ class HomeScreen extends React.Component {
            }
            }
            categoryName={this.getCategoryName}
+           starred={this.props.starred}
+           id={i.id}
            date={i.date}
            title={i.title}
            image={i.jetpack_featured_media_url}
