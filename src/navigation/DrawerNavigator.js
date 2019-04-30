@@ -14,51 +14,62 @@ import {
 } from '../screens';
 import { SideMenu } from './SideMenu';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-  Article: ArticleScreen,
-  WishList,
-}, {
-  initialRouteName: 'Home',
-  headerMode: 'screen',
-  transitionConfig: () => fadeIn(1200),
-});
+const HomeStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Article: ArticleScreen,
+    WishList,
+  },
+  {
+    initialRouteName: 'Home',
+    headerMode: 'screen',
+    transitionConfig: () => fadeIn(1200),
+  },
+);
 
 const ProfileStack = createStackNavigator({
   Profile: ProfileScreen,
-  Home: AuthScreen,
+  // Auth: LoginScreen,
 });
-const CategoryStack = createStackNavigator({
-  Category,
-}, {
-  defaultNavigationOptions: {
-    header: null,
+const CategoryStack = createStackNavigator(
+  {
+    Category,
   },
-});
-
-export const AuthStack = createStackNavigator({
-  Auth: AuthScreen,
-  Login: LoginScreen,
-  Sign: SignUpScreen,
-}, {
-  defaultNavigationOptions: {
-    header: null,
+  {
+    defaultNavigationOptions: {
+      header: null,
+    },
   },
-  initialRouteName: 'Auth',
-});
+);
 
-export const App = createDrawerNavigator({
-  Menu: SideMenu,
-  Home: HomeStack,
-  Login: AuthStack,
-  Profile: ProfileStack,
-  Category: CategoryStack,
-}, {
-  headerMode: 'screen',
-  transitionConfig: () => fadeIn(1200),
-  initialRouteName: 'Home',
-  contentComponent: ({ navigation }) => <SideMenu navigation={navigation} />,
-  drawerWidth: () => Dimensions.get('window').width,
-  drawerBackgroundColor: 'transparent',
+export const AuthStack = createStackNavigator(
+  {
+    Auth: AuthScreen,
+    Login: LoginScreen,
+    Sign: SignUpScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      header: null,
+    },
+    initialRouteName: 'Auth',
+  },
+);
 
-});
+export const App = createDrawerNavigator(
+  {
+    Menu: SideMenu,
+    Home: HomeStack,
+    Login: AuthStack,
+    Profile: ProfileStack,
+    Category: CategoryStack,
+  },
+  {
+    headerMode: 'screen',
+    transitionConfig: () => fadeIn(1200),
+    initialRouteName: 'Home',
+    contentComponent: ({ navigation }) => <SideMenu navigation={navigation} />,
+    drawerWidth: () => Dimensions.get('window').width,
+    drawerBackgroundColor: 'transparent',
+  },
+);
