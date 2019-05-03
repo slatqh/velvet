@@ -56,7 +56,7 @@ class AuthScreen extends Component {
 
         <Pages
           indicatorOpacity={0.5}
-          indicatorColor={Colors.grey}
+          indicatorColor={Platform.OS === 'ios' ? Colors.grey : 'transparent'}
           containerStyle={{}}
           indicatorPosition="bottom"
           progress={this.progress}>
