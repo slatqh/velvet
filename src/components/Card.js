@@ -1,10 +1,18 @@
 import React, { PureComponent } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, ImageBackground, StyleSheet, Animated } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  ImageBackground,
+  StyleSheet,
+  Animated,
+  Platform,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import HTMLView from 'react-native-htmlview';
 import { Icon } from 'react-native-elements';
 import Colors from '../../constants/Colors';
-// const Loading =  <ActivityIndicator color='#9e9e9e' size='small'/>
 
 const h1 = '<h1>';
 const h1close = '</h1>';
@@ -30,51 +38,67 @@ export default class ImageCard extends PureComponent {
   render() {
     const { image, categoryName, onPress } = this.props;
     return (
-      <TouchableOpacity
-        style={styles.container}
-        onPress={onPress}
-      >
-
+      <TouchableOpacity style={styles.container} onPress={onPress}>
         <FastImage
           style={styles.image}
           source={{
             uri: image,
             priority: FastImage.priority.normal,
           }}
-          resizeMode={FastImage.resizeMode.cover}
-        >
+          resizeMode={FastImage.resizeMode.cover}>
           <TouchableOpacity
-            style={{ alignSelf: 'flex-end', flex: 1, paddingTop: 20, paddingRight: 10 }}
-            onPress={this.props.starIcon}
-          >
+            style={{
+              alignSelf: 'flex-end',
+              flex: 1,
+              paddingTop: 20,
+              paddingRight: 10,
+            }}
+            onPress={this.props.starIcon}>
             <Icon
-              type='font-awesome'
-              name='star'
+              type="font-awesome"
+              name="star"
               size={10}
-              containerStyle={[styles.starIcon, { opacity: this.opacityStyle() }]}
+              containerStyle={[
+                styles.starIcon,
+                { opacity: this.opacityStyle() },
+              ]}
               color={Colors.black}
             />
           </TouchableOpacity>
           <View style={styles.inner}>
             <View style={styles.category}>
-              <Text style={{ fontSize: 12, letterSpacing: 2, fontFamily: 'raleway' }}>{categoryName()} </Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  letterSpacing: 2,
+                  fontFamily: 'Raleway-Medium',
+                }}>
+                {categoryName()}{' '}
+              </Text>
               {/* <Text style={{ opacity: 0.5 }}>7 min read </Text> */}
             </View>
             <View style={{ flex: 1, justifyContent: 'space-around' }}>
-              <View stlye={{ flex: 0.7 }}>
+              <View stlye={{ flex: 0.5 }}>
                 <HTMLView
                   value={`${h1}${this.props.title.toUpperCase()}${h1close}`}
                   stylesheet={title.title}
                 />
               </View>
-              <View style={[this.props.showReadButton, { }]}>
+              <View style={[this.props.showReadButton, {}]}>
                 <TouchableOpacity
                   style={[styles.button, { marginTop: 10 }]}
-                  onPress={onPress}
-                >
+                  onPress={onPress}>
                   <Text
-                    style={{ width: 40, fontFamily: 'Raleway', letterSpacing: 1, fontSize: 12, color: Colors.white, flexDirection: 'row' }}
-                  >READ</Text>
+                    style={{
+                      width: 40,
+                      fontFamily: 'Raleway',
+                      letterSpacing: 1,
+                      fontSize: 12,
+                      color: Colors.white,
+                      flexDirection: 'row',
+                    }}>
+                    READ
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -87,13 +111,14 @@ export default class ImageCard extends PureComponent {
 const title = {
   title: {
     h1: {
-      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      // flexDirection: 'row',
       justifyContent: 'flex-start',
-      flexWrap: 'wrap',
-      flexShrink: 1,
+      // flexWrap: 'wrap',
+      // flexShrink: 1,
       fontFamily: 'Playfair Display',
-      fontSize: 16,
-
+      fontSize: Platform.OS === 'android' ? 14 : 16,
     },
   },
 };
@@ -115,8 +140,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   inner: {
-    height: CARD_HEIGHT / 2,
-    flex: 0.5,
+    height: CARD_HEIGHT / 3,
+    // flex: 0.5,
     margin: 10,
     padding: 10,
     borderRadius: 10,
@@ -124,11 +149,12 @@ const styles = StyleSheet.create({
   },
   category: {
     alignSelf: 'flex-start',
+    marginBottom: 7,
   },
 
   button: {
-
     alignSelf: 'flex-end',
+    marginBottom: 10,
     width: 60,
     paddingTop: 3,
     paddingBottom: 3,
@@ -142,5 +168,4 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 20,
   },
-
 });
