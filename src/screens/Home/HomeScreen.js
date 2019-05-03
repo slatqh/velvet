@@ -70,6 +70,7 @@ class HomeScreen extends React.Component {
       refreshing: false,
       loading: false,
       closeSearch: true,
+      androidCardHeigh: 450,
     };
     this.scrollY = new Animated.Value(0);
   }
@@ -97,6 +98,14 @@ class HomeScreen extends React.Component {
   }
 
   // component function
+
+  androidCardRender = x => {
+    console.log(x);
+    if (x >= 0) {
+      return 450;
+    }
+    return 200;
+  };
   getCategoryName = () => {
     if (this.props.navigation.state.params === undefined) {
       return "WHAT'S NEW";
@@ -144,10 +153,10 @@ class HomeScreen extends React.Component {
       extrapolate: 'clamp',
       useNativeDriver: true,
     });
-
     const headerStyle = {
       transform: [],
-      height: heightTranslate,
+      height:
+        Platform.OS === 'ios' ? heightTranslate : this.androidCardRender(),
     };
     //  handling a search button
     if (this.props.userSearch && !search) {
@@ -184,9 +193,16 @@ class HomeScreen extends React.Component {
         <View style={{ flex: 1 }}>
           <Animated.View
             style={[
-              styles.header,
+              // Platform.OS === 'ios' ? styles.header : null,
               headerStyle,
-              { backgroundColor: 'transparent' },
+              {
+                backgroundColor: 'transparent',
+              },
+              //   height:
+              //     Platform.OS === 'ios'
+              //       ? CARD_HEIGHT
+              //       : this.state.androidCardHeigh,
+              // },
             ]}>
             <ScrollView
               horizontal
@@ -206,15 +222,31 @@ class HomeScreen extends React.Component {
               />
             </ScrollView>
           </Animated.View>
-          <View style={[styles.listScroll]}>
+          <View
+            style={[
+              styles.listScroll,
+              {
+                // marginTop: Platform.OS === 'android' ? CARD_HEIGHT : 0,
+              },
+            ]}>
             <ScrollView
               bounces
               showsVerticalScrollIndicator={false}
               scrollEventThrottle={10}
               decelerationRate={0.5}
-              onScroll={Animated.event([
-                { nativeEvent: { contentOffset: { y: this.scrollY } } },
-              ])}
+              onScroll={Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: { y: this.scrollY },
+                    },
+                  },
+                ],
+                {
+                  listener: event =>
+                    this.androidCardRender(event.nativeEvent.contentOffset.y),
+                },
+              )}
               refreshControl={
                 <RefreshControl refreshing={this.state.refreshing} />
               }>

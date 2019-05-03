@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import { Loading } from '../components';
 import HTMLView from 'react-native-htmlview';
 import { Icon } from 'react-native-elements';
@@ -11,98 +18,99 @@ const h1close = '</h1>';
 
 export default class List extends React.PureComponent {
   opacityStyle = () => {
-
     const { starred, id, starIconDisable } = this.props;
-    if(starIconDisable){
-       return;
+    if (starIconDisable) {
+      return;
     } else {
-        const existingArticle = starred.includes(id);
-        if (existingArticle) {
-          return 1;
-        }
-        return 0.4;
-
+      const existingArticle = starred.includes(id);
+      if (existingArticle) {
+        return 1;
+      }
+      return 0.4;
     }
-  }
-render(){
-  const {
-    title,
-    image,
-    categoryName,
-    onPress,
-    date,
-    trashIcon,
-    deleteArticle,
-    starIcon,
-    starIconDisable,
-    loading
-  } = this.props;
+  };
+  render() {
+    const {
+      title,
+      image,
+      categoryName,
+      onPress,
+      date,
+      trashIcon,
+      deleteArticle,
+      starIcon,
+      starIconDisable,
+      loading,
+    } = this.props;
 
-  return (
-    <TouchableOpacity onPress={onPress}>
-    <View style={styles.container}>
-      <View style={{ flex: 0.7, flexDirection: 'row' }}>
-        <FastImage
-          style={styles.image}
-          resizeMode={FastImage.resizeMode.cover}
-          source={{
-            uri: image,
-            priority: FastImage.priority.normal,
-          }}
-        />
-      </View>
-      <View style={{ justifyContent: 'space-around', flex: 1 }}>
-        <View style={styles.inner}>
-          <Text style={styles.categoryTitle}>{categoryName ? categoryName() : null}</Text>
-        { starIconDisable ? <View /> : <TouchableOpacity
-            onPress={starIcon}
-          >
-             <Icon
-              type='font-awesome'
-              name='star'
-              size={10}
-              containerStyle={[styles.starIcon, { opacity: this.opacityStyle() }]}
-
-              color='black'
+    return (
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.container}>
+          <View style={{ flex: 0.7, flexDirection: 'row' }}>
+            <FastImage
+              style={styles.image}
+              resizeMode={FastImage.resizeMode.cover}
+              source={{
+                uri: image,
+                priority: FastImage.priority.normal,
+              }}
+            />
+          </View>
+          <View style={{ justifyContent: 'space-around', flex: 0.7 }}>
+            <View style={styles.inner}>
+              <Text style={styles.categoryTitle}>
+                {categoryName ? categoryName() : null}
+              </Text>
+              {starIconDisable ? (
+                <View />
+              ) : (
+                <TouchableOpacity onPress={starIcon}>
+                  <Icon
+                    type="font-awesome"
+                    name="star"
+                    size={10}
+                    containerStyle={[
+                      styles.starIcon,
+                      { opacity: this.opacityStyle() },
+                    ]}
+                    color="black"
+                  />
+                </TouchableOpacity>
+              )}
+              {/* <Text style={styles.minToRead}>7 min read</Text> */}
+            </View>
+            <HTMLView
+              value={`${h1}${title.toUpperCase()}${h1close}`}
+              stylesheet={Title.title}
+            />
+            <Text style={styles.date}>{getDate(date)}</Text>
+            {trashIcon ? (
+              <Icon
+                type="font-awesome"
+                onPress={deleteArticle}
+                name="trash"
+                size={14}
+                iconStyle={{ padding: 5 }}
+                containerStyle={{ alignSelf: 'flex-end', padding: 10 }}
               />
-          </TouchableOpacity>
-        }
-          {/* <Text style={styles.minToRead}>7 min read</Text> */}
+            ) : null}
+          </View>
         </View>
-        <HTMLView
-          value={`${h1}${title.toUpperCase()}${h1close}`}
-          stylesheet={Title.title}
-        />
-        <Text style={styles.minToRead}>{getDate(date)}</Text>
-        {
-          trashIcon ? <Icon
-            type='font-awesome'
-            onPress={deleteArticle}
-            name='trash'
-            size={14}
-            iconStyle={{ padding: 5 }}
-            containerStyle={{ alignSelf: 'flex-end', padding: 10 }}
-          /> : null
-        }
-      </View>
-    </View>
-  </TouchableOpacity>
-  )
-}
-}
-
-
-  const Title = {
-    title: {
-      h1: {
-        fontFamily: 'Playfair Display',
-        paddingHorizontal: 10,
-        paddingTop: 15,
-        fontSize: 12,
-      },
-    }
+      </TouchableOpacity>
+    );
   }
+}
 
+const Title = {
+  title: {
+    h1: {
+      fontFamily: 'Playfair Display',
+      paddingHorizontal: 10,
+      paddingTop: 15,
+      fontSize: 12,
+    },
+  },
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -137,6 +145,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   categoryTitle: {
+    marginTop: 15,
+    alignSelf: 'center',
     letterSpacing: 1,
     paddingLeft: 5,
     maxWidth: 150,
@@ -144,17 +154,18 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'raleway',
   },
-  minToRead: {
+  date: {
     opacity: 0.7,
     fontSize: 10,
     fontFamily: 'raleway',
-    paddingRight: 10,
+    marginLeft: 10,
+    marginBottom: 10,
   },
   starIcon: {
-    margin: 5,
+    marginTop: 10,
+    marginRight: 7,
     backgroundColor: '#ddd',
     padding: 5,
     borderRadius: 20,
   },
-
 });

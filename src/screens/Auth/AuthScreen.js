@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, Animated, Easing, Dimensions, Text, Platform } from 'react-native';
+import {
+  View,
+  AsyncStorage,
+  Animated,
+  Easing,
+  Dimensions,
+  Text,
+  Platform,
+} from 'react-native';
 import { connect } from 'react-redux';
 import { Pages } from 'react-native-pages';
 import LottieView from 'lottie-react-native';
@@ -39,56 +47,65 @@ class AuthScreen extends Component {
     return (
       <View style={styles.container}>
         <LottieView
-          style={[styles.lottie, {}]}
+          style={
+            Platform.OS === 'ios' ? styles.lottieIos : styles.lottieAndroid
+          }
           source={require('../../../assets/lottie/data.json')}
           progress={this.lottie}
         />
+
         <Pages
           indicatorOpacity={0.5}
           indicatorColor={Colors.grey}
-          containerStyle={{ marginTop: 0 }}
-          indicatorPosition='bottom'
-          progress={this.progress}
-        >
-          <Animated.View style={[styles.pages]} >
+          containerStyle={{}}
+          indicatorPosition="bottom"
+          progress={this.progress}>
+          <Animated.View style={[styles.pages]}>
             <Animated.Text style={[styles.title]}>EXPLORE</Animated.Text>
             <View style={{ alignSelf: 'center', justifyContent: 'center' }}>
               <Text style={styles.descriptionExplore}>
-              Learn about new trends and the latest events in the fashion industry
-              from our writers around the world.
+                Learn about new trends and the latest events in the fashion
+                industry from our writers around the world.
               </Text>
             </View>
           </Animated.View>
-          <View style={[styles.pages, { }]}>
+          <View style={[styles.pages, {}]}>
             <Text style={styles.title}>SHOP</Text>
-            <View style={{ }}>
+            <View style={{}}>
               <Text style={styles.descriptionShop}>
-                Browse your favorite products by clicking the
-                shopping links provided with the articles.
+                Browse your favorite products by clicking the shopping links
+                provided with the articles.
               </Text>
             </View>
           </View>
-          <View style={[styles.pages, { }]}>
+          <View style={[styles.pages, {}]}>
             <Text style={styles.title}>BE INSPIRED</Text>
             <Text style={styles.descriptionInspired}>
-              Discover new trends from our extensive coverage
-              of fashion events around
-              <Text style={{ flex: 1, margin: 50, alignItems: 'center' }}> the world.</Text>
+              Discover new trends from our extensive coverage of fashion events
+              around
+              <Text style={{ flex: 1, margin: 50, alignItems: 'center' }}>
+                {' '}
+                the world.
+              </Text>
             </Text>
           </View>
         </Pages>
-        <View style={{ justifyContent: 'flex-end', paddingBottom: 30, marginLeft: 15, marginRight: 15 }}>
-
+        <View
+          style={{
+            justifyContent: 'flex-end',
+            paddingBottom: 30,
+            marginLeft: 15,
+            marginRight: 15,
+          }}>
           <CustomButton
-            title='LOGIN'
+            title="LOGIN"
             color={Colors.grey}
             backgroundColor={Colors.black}
-
             onPress={() => this.props.navigation.navigate('Login')}
           />
           <CustomButton
-            title='SIGNUP'
-            color='black'
+            title="SIGNUP"
+            color="black"
             backgroundColor={Colors.white}
             onPress={() => this.props.navigation.navigate('Sign')}
           />
@@ -101,21 +118,35 @@ const mapStateToProps = ({ Auth }) => {
   const { user } = Auth;
   return { user };
 };
-export default connect(mapStateToProps, { login })(AuthScreen);
+export default connect(
+  mapStateToProps,
+  { login },
+)(AuthScreen);
 
 const styles = {
   container: {
     flex: 1,
+    padding: 0,
+    margin: 0,
   },
-  lottie: {
+  lottieIos: {
     flex: 1,
     alignSelf: 'center',
     position: 'absolute',
-    bottom:0,
-    width: width*1.3,
-    height: width*2.4,
-    marginBottom: 0,
-    zIndex: -1,
+    bottom: 0,
+    width: width * 1.3,
+    height: width * 2.4,
+  },
+  lottieAndroid: {
+    flex: 1,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: height - height - 30,
+    left: 0,
+    right: 0,
+
+    // width: '100%',
+    // height: height / 2,
   },
   title: {
     letterSpacing: 2,
@@ -125,25 +156,18 @@ const styles = {
     margin: 10,
   },
   descriptionExplore: {
-
-    // justifyContent: 'center',
-    // alignSelf: 'center',
-    // paddingHorizontal: 10,
     fontSize: 12,
     fontFamily: 'Raleway-Regular',
     marginBottom: 10,
   },
   descriptionShop: {
     alignSelf: 'center',
-    // paddingHorizontal: 25,
     fontSize: 12,
     fontFamily: 'raleway',
     marginBottom: 10,
   },
   descriptionInspired: {
     justifyContent: 'center',
-    // alignSelf: 'center',
-    // paddingHorizontal: 20,
     fontSize: 12,
     fontFamily: 'raleway',
     marginBottom: 10,
@@ -152,7 +176,6 @@ const styles = {
     justifyContent: 'flex-end',
     paddingHorizontal: 40,
     alignItems: 'center',
-    // alignSelf: 'center',
     flex: 1,
     backgroundColor: 'transparent',
   },
