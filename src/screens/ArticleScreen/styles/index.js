@@ -3,7 +3,7 @@ import Colors from '../../../../constants/Colors';
 
 const { width, height } = Dimensions.get('window');
 
-const HEADER_MAX_HEIGHT = 550;
+const HEADER_MAX_HEIGHT = Platform.OS === 'ios' ? 550 : height / 1.8;
 export const styles = StyleSheet.create({
   header: {
     position: 'absolute',
@@ -11,23 +11,27 @@ export const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    width: null,
+    width,
     height: HEADER_MAX_HEIGHT,
   },
   backgroundImage: {
-    position: 'absolute',
+    flex: 1,
+    width: '100%',
+    height: height / 2,
+    resizeMode: 'cover',
+    // position: 'absolute',
     overflow: 'hidden',
-    zIndex: -1,
-    top: 0,
-    left: 0,
-    right: 0,
-    width: null,
+    // zIndex: -1,
+    // top: 0,
+    // left: 0,
+    // right: 0,
+    // width: 300,
     // alignItems: 'center',
-    height: HEADER_MAX_HEIGHT,
+    // height: HEADER_MAX_HEIGHT,
   },
   scrollContent: {
     zIndex: -1,
-    // marginTop,
+    marginTop: Platform.OS === 'ios' ? 0 : HEADER_MAX_HEIGHT,
     backgroundColor: 'black',
     borderRadius: 12,
   },
@@ -60,7 +64,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     opacity: 1,
     top: 100,
-    right: Platform.OS === 'ios' ? 20 : width + 150,
+    right: Platform.OS === 'ios' ? width - width + 20 : width, //hiding star icon due to interpolate issue for android
     // backgroundColor: '#fff',
     width: 40,
     height: 40,
@@ -86,7 +90,6 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 3,
   },
   fashion: {
-
     fontSize: 12,
     paddingRight: 10,
     color: Colors.white,
@@ -99,13 +102,18 @@ export const styles = StyleSheet.create({
     fontSize: 36,
   },
   gradient: {
-    zIndex: -1, opacity: 0.7, position: 'absolute', top: 0, left: 0, width, height,
+    zIndex: -1,
+    opacity: 0.7,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width,
+    height,
   },
 });
 
-
 export const ArticleTextStyles = {
-   articleText: {
+  articleText: {
     p: {
       // justifyContent: 'space-around',
       color: Colors.white,
@@ -136,4 +144,4 @@ export const ArticleTextStyles = {
       alignSelf: 'center',
     },
   },
-}
+};

@@ -8,6 +8,9 @@ import {
   Dimensions,
   Easing,
   Linking,
+  Image,
+  UIManager,
+  LayoutAnimation,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from 'react-native-elements';
@@ -21,15 +24,15 @@ import { ArticleText } from './ArticleTextComponent';
 import { addStarredArticle, deleteStarred } from '../Auth/actions';
 import Colors from '../../../constants/Colors';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const h1 = '<h1>';
 const h1close = '</h1>';
-const HEADER_MAX_HEIGHT = Platform.OS === 'ios' ? 500 : 500;
+const HEADER_MAX_HEIGHT = height / 1.6;
 
 class ArticleScreen extends PureComponent {
   static navigationOptions = {
     header: null,
-  }
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -42,11 +45,13 @@ class ArticleScreen extends PureComponent {
       loading: true,
       articleColor: null,
     };
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
     this.shoppingBagWidth = new Animated.Value(24);
     this.shoppingBag = new Animated.Value(0);
     this.shoppingBagOpacity = new Animated.Value(0);
     this.scrollY = new Animated.Value(
-      Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : -HEADER_MAX_HEIGHT
+      Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : -HEADER_MAX_HEIGHT,
     );
   }
   componentDidMount() {
@@ -66,14 +71,21 @@ class ArticleScreen extends PureComponent {
     const articleId = this.props.navigation.getParam('id');
     await this.props.loadArticlePost(articleId);
     const { data } = this.props;
-    return this.setState({ data, shopping: data.mainShoppingLink, loading: false, starredId: data.id });
+    return this.setState({
+      data,
+      shopping: data.mainShoppingLink,
+      loading: false,
+      starredId: data.id,
+    });
   }
   _starredArticle() {
     const { starred } = this.props;
     const existingArticle = starred.includes(this.state.starredId);
     if (existingArticle) {
       this.setState({ articleColor: true });
-      const articleId = this.props.starred.filter(i => i !== this.state.starredId);
+      const articleId = this.props.starred.filter(
+        i => i !== this.state.starredId,
+      );
       return this.props.deleteStarred(articleId);
     }
     this.setState({ articleColor: false });
@@ -92,9 +104,9 @@ class ArticleScreen extends PureComponent {
     const linkWidth = name.replace(/\s/g, '').length;
     const totalWidth = () => {
       if (linkWidth < 9) {
-        return (linkWidth * 13) + 25;
+        return linkWidth * 13 + 25;
       }
-      return (linkWidth * 13) + 10;
+      return linkWidth * 13 + 10;
     };
 
     this.setState({ progress: false });
@@ -110,7 +122,7 @@ class ArticleScreen extends PureComponent {
         easing: Easing.linear(),
       }).start(() => this.setState({ pressed: true })),
     ]);
-  }
+  };
   shoppingAnimationBack = () => {
     Animated.parallel([
       Animated.timing(this.shoppingBagOpacity, {
@@ -124,12 +136,16 @@ class ArticleScreen extends PureComponent {
         easing: Easing.linear(),
       }).start(() => this.setState({ progress: true })),
     ]);
-  }
+  };
   render() {
     const existingArticle = this.props.starred.includes(this.props.data.id);
     const { zIndex } = this.state;
     const starIconY = this.scrollY.interpolate({
-      inputRange: [-HEADER_MAX_HEIGHT, -HEADER_MAX_HEIGHT / 2, HEADER_MAX_HEIGHT],
+      inputRange: [
+        -HEADER_MAX_HEIGHT,
+        -HEADER_MAX_HEIGHT / 2,
+        HEADER_MAX_HEIGHT,
+      ],
       outputRange: [0, -50, -50],
       extrapolate: 'clamp',
     });
@@ -148,11 +164,7 @@ class ArticleScreen extends PureComponent {
       opacity: barTranslate,
     };
     const starIconStyle = {
-      transform: [
-        { translateY: starIconY },
-        { translateX: starIconX },
-      ],
-
+      transform: [{ translateY: starIconY }, { translateX: starIconX }],
     };
     const shoppingBagStyles = {
       width: this.shoppingBagWidth,
@@ -165,42 +177,45 @@ class ArticleScreen extends PureComponent {
       return <Loading />;
     }
     return (
-      <View >
-        <MyStatusBar backgroundColor='black' barStyle="light-content" />
+      <View>
+        <MyStatusBar backgroundColor="black" barStyle="light-content" />
         <Animated.ScrollView
           contentContainerStyle={styles.scrollContent}
           scrollEventThrottle={16}
           bounces={false}
+          ref={scrollView => (scrollView = this.scrollView)}
+          // ref={scrollView => console.log(scrollView)}
+          // onContentSizeChange={() => {
+          //   this._onContentSizeChange();
+          // }}
           contentInset={{
             top: HEADER_MAX_HEIGHT,
           }}
           contentOffset={{
             y: -HEADER_MAX_HEIGHT,
           }}
-          onScroll={
-            Animated.event(
-              [
-                { nativeEvent:
-                  {
-                    contentOffset: { y: this.scrollY },
-                  },
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: { y: this.scrollY },
                 },
-              ],
-              { useNativeDrive: true }
-            )
-          }
-        >
-          <View style={() => (Platform.OS === 'ios' ? null : { marginTop: -450 })}>
+              },
+            ],
+            { useNativeDrive: true },
+          )}>
+          <View style={Platform.OS === 'ios' ? null : { marginTop: 0 }}>
             <ArticleText animation={barOpacity} data={this.state.data} />
           </View>
         </Animated.ScrollView>
         <View style={styles.header}>
           <FastImage
-            style={[
-              styles.backgroundImage,
-            ]}
-            source={{ uri: this.state.data.jetpack_featured_media_url,
-              priority: FastImage.priority.normal }}
+            style={[styles.backgroundImage]}
+            source={{
+              uri: this.state.data.jetpack_featured_media_url,
+              priority: FastImage.priority.high,
+            }}
+            cache={FastImage.cacheControl.web}
             resizeMode={FastImage.resizeMode.cover}
           />
           <LinearGradient
@@ -213,9 +228,7 @@ class ArticleScreen extends PureComponent {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={styles.fashion}>FASHION</Text>
             </View>
-            <View style={{ 
-             
-            }}>
+            <View style={{}}>
               <HTMLView
                 value={`${h1}${this.props.articleTitle}${h1close}`}
                 stylesheet={{
@@ -224,7 +237,7 @@ class ArticleScreen extends PureComponent {
                     color: Colors.white,
                     fontSize: 30,
                     justifyContent: 'center',
-                    alignItems:'center',
+                    alignItems: 'center',
                     marginTop: 15,
                   },
                 }}
@@ -234,83 +247,92 @@ class ArticleScreen extends PureComponent {
         </View>
         <TouchableOpacity
           style={[styles.starIcon, starIconStyle, { zIndex }]}
-          onPress={() => this._starredArticle()}
-        >
+          onPress={() => this._starredArticle()}>
           <Icon
-            name='star'
-            containerStyle={{ backgroundColor: existingArticle ? 'white' : '#4f4f4f', padding: 5, borderRadius: 25 }}
+            name="star"
+            containerStyle={{
+              backgroundColor: existingArticle ? 'white' : '#4f4f4f',
+              padding: 5,
+              borderRadius: 25,
+            }}
             size={25}
           />
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.closeButton]}
-          onPress={() => this.props.navigation.goBack()}
-        >
+          onPress={() => this.props.navigation.goBack()}>
           <View>
             <Icon
-              name='close'
-              containerStyle={{ padding: 5, backgroundColor: '#4f4f4f', borderRadius: 40 }}
-              color='white'
+              name="close"
+              containerStyle={{
+                padding: 5,
+                backgroundColor: '#4f4f4f',
+                borderRadius: 40,
+              }}
+              color="white"
               size={30}
             />
-
           </View>
         </TouchableOpacity>
         {/* ANIMATION */}
         <Animated.View style={[styles.shoppingBag, { zIndex }]}>
-          {
-
-            this.state.progress ? <TouchableOpacity
+          {this.state.progress ? (
+            <TouchableOpacity
               onPress={this.shoppingBagAnimation}
-              style={{ backgroundColor: 'white', width: 24, borderRadius: 12, height: 24, alignItems: 'center', justifyContent: 'center' }}
-            >
+              style={{
+                backgroundColor: 'white',
+                width: 24,
+                borderRadius: 12,
+                height: 24,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               <Icon
-                type='font-awesome'
-                name='shopping-bag'
+                type="font-awesome"
+                name="shopping-bag"
                 size={12}
                 color={Colors.black}
               />
-
-            </TouchableOpacity> :
-              <Animated.View style={[shoppingBagStyles, { flex: 1,
-                backgroundColor: 'white',
-                height: 24,
-                borderRadius: 12,
-                flexDirection: 'row',
-                alignItems: 'center' }]}
-              >
-                <TouchableOpacity
-                  onPress={this.shoppingAnimationBack}
-                >
-                  <Icon
-                    type='font-awesome'
-                    name='shopping-bag'
-                    size={12}
-                    iconStyle={{ paddingLeft: 5, paddingRight: 10 }}
-                    color={Colors.black}
-                  />
-
-                </TouchableOpacity>
-                <Animated.Text
-                  style={[shoppingBagText]}
+            </TouchableOpacity>
+          ) : (
+            <Animated.View
+              style={[
+                shoppingBagStyles,
+                {
+                  flex: 1,
+                  backgroundColor: 'white',
+                  height: 24,
+                  borderRadius: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                },
+              ]}>
+              <TouchableOpacity onPress={this.shoppingAnimationBack}>
+                <Icon
+                  type="font-awesome"
+                  name="shopping-bag"
+                  size={12}
+                  iconStyle={{ paddingLeft: 5, paddingRight: 10 }}
+                  color={Colors.black}
+                />
+              </TouchableOpacity>
+              <Animated.Text
+                style={[shoppingBagText]}
+                onPress={() => Linking.openURL(this.state.shopping.link)}>
+                {this.state.shopping.name.toUpperCase()}
+              </Animated.Text>
+              <Animated.View style={shoppingBagText}>
+                <Icon
                   onPress={() => Linking.openURL(this.state.shopping.link)}
-
-                >
-                  {this.state.shopping.name.toUpperCase()}</Animated.Text>
-                <Animated.View style={shoppingBagText}>
-                  <Icon
-                    onPress={() => Linking.openURL(this.state.shopping.link)}
-                    type='font-awesome'
-                    name='angle-right'
-                    size={18}
-                    iconStyle={[{ alignSelf: 'flex-end' }]}
-                    color={Colors.black}
-                  />
-
-                </Animated.View>
+                  type="font-awesome"
+                  name="angle-right"
+                  size={18}
+                  iconStyle={[{ alignSelf: 'flex-end' }]}
+                  color={Colors.black}
+                />
               </Animated.View>
-          }
-
+            </Animated.View>
+          )}
         </Animated.View>
       </View>
     );
@@ -320,8 +342,17 @@ const mapStateToProps = ({ Auth, Article }) => {
   const { starred, starredUpdate } = Auth;
   const { data, loading, articleTitle, articleContent } = Article;
 
-  return { data, loading, articleTitle, articleContent, starred, starredUpdate };
+  return {
+    data,
+    loading,
+    articleTitle,
+    articleContent,
+    starred,
+    starredUpdate,
+  };
 };
 
-export default connect(mapStateToProps, { loadArticlePost, addStarredArticle, deleteStarred })(ArticleScreen);
-
+export default connect(
+  mapStateToProps,
+  { loadArticlePost, addStarredArticle, deleteStarred },
+)(ArticleScreen);
