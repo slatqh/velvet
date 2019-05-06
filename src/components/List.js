@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { Loading } from '../components';
 import HTMLView from 'react-native-htmlview';
@@ -45,7 +46,10 @@ export default class List extends React.PureComponent {
 
     return (
       <TouchableOpacity onPress={onPress}>
-        <View style={styles.container}>
+        <View
+          style={
+            Platform.OS === 'ios' ? styles.container : styles.containerAndroid
+          }>
           <View style={{ flex: 0.7, flexDirection: 'row' }}>
             <FastImage
               style={styles.image}
@@ -124,6 +128,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 1,
     elevation: 1,
+    borderBottomWidth: 3,
+    borderRightWidth: 3,
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: 10,
+  },
+  containerAndroid: {
+    flex: 1,
+    height: 130,
+    margin: 5,
+    flexDirection: 'row',
+    borderRadius: 10,
+    borderColor: '#ddd',
+    // shadowColor: '#f000',
+    // shadowOpacity: 0.3,
+    // shadowRadius: 1,
+    // elevation: 1,
     borderBottomWidth: 3,
     borderRightWidth: 3,
     marginLeft: 5,

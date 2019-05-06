@@ -1,4 +1,3 @@
-
 import { AsyncStorage } from 'react-native';
 import { User } from '../../../api/user';
 import { Post } from '../../../api/post';
@@ -23,29 +22,29 @@ import {
   STARRED_FETCH_FAILED,
 } from './Authreducer';
 
-export const nameChanged = (input) => ({
+export const nameChanged = input => ({
   type: NAME_CHANGED,
   payload: input,
 });
-export const emailChanged = (input) => ({
+export const emailChanged = input => ({
   type: EMAIL_CHANGED,
   payload: input,
 });
-export const phoneChanged = (input) => ({
+export const phoneChanged = input => ({
   type: PHONE_CHANGED,
   payload: input,
 });
-export const passwordChanged = (input) => ({
+export const passwordChanged = input => ({
   type: PASSWORD_CHANGED,
   payload: input,
 });
-export const passwordConfirmChanged = (input) => ({
+export const passwordConfirmChanged = input => ({
   type: PASSWORD_CONFIRM_CHANGED,
   payload: input,
 });
 
 export function signUp(name, email, password) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch({ type: SIGNUP });
     try {
       const data = await User.signUp({ name, email, password });
@@ -57,7 +56,7 @@ export function signUp(name, email, password) {
 }
 
 export function login(email, password) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch({ type: LOGIN });
     try {
       const data = await User.login({ email, password });
@@ -75,7 +74,8 @@ function SignUpSuccess() {
 export function loginSuccess(data) {
   const { name, email, _id, admin, starred, preferred, phone } = data;
   return dispatch => {
-    dispatch({ type: LOGIN_SUCCESS,
+    dispatch({
+      type: LOGIN_SUCCESS,
       phone,
       name,
       email,
@@ -88,6 +88,7 @@ export function loginSuccess(data) {
 }
 
 export function loginFailed({ response }) {
+  console.log(response);
   return {
     type: LOGIN_FAILED,
     payload: response.data.message,
@@ -119,7 +120,7 @@ export function fetchingStarredArticles() {
   };
 }
 export function addStarredArticle(args) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch({ type: STARRED_ARTICLES });
     try {
       const { starred } = await User.profileUpdate({ starred: args });
@@ -133,7 +134,7 @@ export function addStarredArticle(args) {
   };
 }
 export function deleteStarred(args) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch({ type: STARRED_ARTICLES });
     try {
       const { starred } = await User.profileUpdate({ starred: args });
@@ -143,4 +144,3 @@ export function deleteStarred(args) {
     }
   };
 }
-

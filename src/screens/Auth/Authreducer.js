@@ -38,24 +38,25 @@ export const STARRED_ARTICLE_UPDATE = 'STARRED_ARTICLE_UPDATE';
 export const STARRED_ARTICLES_DELETED = 'STARRED_ARTICLES_DELETED';
 export const STARRED_FETCH_SUCCESS = 'STARRED_FETCH_SUCCESS';
 export const STARRED_FETCH_FAILED = 'FAILED';
-export const UPDATING_USER_CATEGORY_START = 'UPDATING_USER_CATEGORY_START'
-export const UPDATING_USER_CATEGORY_FINISHED = 'UPDATING_USER_CATEGORY_FINISHED'
-
+export const UPDATING_USER_CATEGORY_START = 'UPDATING_USER_CATEGORY_START';
+export const UPDATING_USER_CATEGORY_FINISHED =
+  'UPDATING_USER_CATEGORY_FINISHED';
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case NAME_CHANGED :
+    case NAME_CHANGED:
       return { ...state, name: action.payload };
-    case EMAIL_CHANGED :
+    case EMAIL_CHANGED:
       return { ...state, email: action.payload, error: false };
-    case PHONE_CHANGED :
+    case PHONE_CHANGED:
       return { ...state, phone: action.payload, error: false };
-    case PASSWORD_CHANGED :
+    case PASSWORD_CHANGED:
       return { ...state, password: action.payload, error: false };
-    case PASSWORD_CONFIRM_CHANGED :
+    case PASSWORD_CONFIRM_CHANGED:
       return { ...state, passwordConfirm: action.payload };
     case LOGIN_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         name: action.name,
         email: action.email,
         user: action.user,
@@ -69,11 +70,11 @@ export default (state = initialState, action) => {
       return { ...state, loading: true, signup: false };
     case SIGNUP:
       return { ...state, loading: true };
-    case USER_SIGNUP_SUCCESS :
+    case USER_SIGNUP_SUCCESS:
       return { ...state, signup: true, loading: false };
     case LOGIN_FAILED:
-      return { ...state, error: action.payload, loading: false };
-    case USER_LOGOUT :
+      return { ...state, error: action.payload, loading: false, user: false };
+    case USER_LOGOUT:
       return { ...state, error: false };
     case USER_LOGOUT_SUCCESS:
       return { ...state, user: false, error: false };
@@ -83,18 +84,29 @@ export default (state = initialState, action) => {
       return { ...state, name: action.name, email: action.email };
     case PROFILE_UPDATE_FAILED:
       return { ...state, error: action.payload };
-    case STARRED_ARTICLES :
+    case STARRED_ARTICLES:
       return { ...state, loading: true, profileUpdate: false };
     case STARRED_ARTICLE_UPDATE:
-      return { ...state, starred: action.payload, loading: false, starredUpdate: !state.starredUpdate, starIconColor: true };
-    case STARRED_ARTICLES_DELETED :
-      return { ...state, loading: false, starred: action.payload, starIconColor: false };
-    case STARRED_FETCH_SUCCESS :
+      return {
+        ...state,
+        starred: action.payload,
+        loading: false,
+        starredUpdate: !state.starredUpdate,
+        starIconColor: true,
+      };
+    case STARRED_ARTICLES_DELETED:
+      return {
+        ...state,
+        loading: false,
+        starred: action.payload,
+        starIconColor: false,
+      };
+    case STARRED_FETCH_SUCCESS:
       return { ...state, loading: false, starredArticles: action.payload };
-    case UPDATING_USER_CATEGORY_START :
-    return { ...state, loading: true,  };
-    case UPDATING_USER_CATEGORY_FINISHED :
-    return { ...state, loading: false };
+    case UPDATING_USER_CATEGORY_START:
+      return { ...state, loading: true };
+    case UPDATING_USER_CATEGORY_FINISHED:
+      return { ...state, loading: false };
     default:
       return state;
   }

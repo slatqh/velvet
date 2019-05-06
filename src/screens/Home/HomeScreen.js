@@ -100,7 +100,6 @@ class HomeScreen extends React.Component {
   // component function
 
   androidCardRender = x => {
-    console.log(x);
     if (x >= 0) {
       return 450;
     }
@@ -193,16 +192,10 @@ class HomeScreen extends React.Component {
         <View style={{ flex: 1 }}>
           <Animated.View
             style={[
-              // Platform.OS === 'ios' ? styles.header : null,
               headerStyle,
               {
                 backgroundColor: 'transparent',
               },
-              //   height:
-              //     Platform.OS === 'ios'
-              //       ? CARD_HEIGHT
-              //       : this.state.androidCardHeigh,
-              // },
             ]}>
             <ScrollView
               horizontal
