@@ -35,12 +35,11 @@ export const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   date: {
-    fontFamily: 'Raleway',
+    fontFamily: 'Raleway-Regular',
     color: Colors.Black,
     opacity: 0.6,
     fontSize: 10,
     padding: 5,
     marginLeft: 10,
   },
-
 });

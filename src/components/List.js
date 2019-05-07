@@ -108,7 +108,7 @@ export default class List extends React.PureComponent {
 const Title = {
   title: {
     h1: {
-      fontFamily: 'Playfair Display',
+      fontFamily: 'PlayfairDisplay-Regular',
       paddingHorizontal: 10,
       paddingTop: 15,
       fontSize: 12,
@@ -173,12 +173,12 @@ const styles = StyleSheet.create({
     maxWidth: 150,
     flexWrap: 'wrap',
     fontSize: 10,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
   },
   date: {
     opacity: 0.7,
     fontSize: 10,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
     marginLeft: 10,
     marginBottom: 10,
   },

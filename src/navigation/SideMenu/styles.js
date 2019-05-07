@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-
   },
   closeButton: {
     backgroundColor: 'transparent',
@@ -16,7 +15,6 @@ export const styles = StyleSheet.create({
   icon: {
     color: 'white',
     backgroundColor: 'transparent',
-
   },
   divider: {
     alignSelf: 'center',
@@ -27,10 +25,15 @@ export const styles = StyleSheet.create({
     marginBottom: 40,
   },
   mainDivider: {
-    marginTop: 7, backgroundColor: 'white', width: 120, height: 2,
+    marginTop: 7,
+    backgroundColor: 'white',
+    width: 120,
+    height: 2,
   },
   popUpMenu: {
-    alignItems: 'center', marginBottom: 0, textDecorationLine: 'underline',
+    alignItems: 'center',
+    marginBottom: 0,
+    textDecorationLine: 'underline',
   },
   subMenuTitle: {
     flex: 1,

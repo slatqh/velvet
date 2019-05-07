@@ -6,17 +6,17 @@ import Colors from '../../constants/Colors';
 
 const GradientBtn = ({ name }) => (
   <LinearGradient
-    colors={['#eceff1', '#e0e0e0', '#eceff1']} style={styles.gradient}
+    colors={['#eceff1', '#e0e0e0', '#eceff1']}
+    style={styles.gradient}
     start={{ x: 0, y: 1 }}
-    end={{ x: 0.9, y: 0 }}
-  >
+    end={{ x: 0.9, y: 0 }}>
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Icon
-        type='font-awesome'
+        type="font-awesome"
         color={Colors.black}
         size={15}
         iconStyle={{ alignSelf: 'flex-start', paddingLeft: 15, padding: 5 }}
-        name='shopping-bag'
+        name="shopping-bag"
       />
       <Text style={styles.text}>{name} </Text>
     </View>
@@ -25,7 +25,7 @@ const GradientBtn = ({ name }) => (
 
 export const ShoppingButton = ({ onPress, styles }) => (
   <TouchableOpacity style={{ margin: 10 }} onPress={onPress}>
-    <GradientBtn name='SHOPPING' />
+    <GradientBtn name="SHOPPING" />
   </TouchableOpacity>
 );
 
@@ -39,9 +39,8 @@ const styles = {
     paddingLeft: 30,
     paddingVertical: 5,
     paddingRight: 50,
-    fontFamily: 'Playfair Display',
+    fontFamily: 'PlayfairDisplay-Regular',
     fontWeight: '500',
     fontSize: 16,
   },
-}
-;
+};

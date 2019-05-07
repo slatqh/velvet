@@ -139,19 +139,19 @@ const Styles = {
   },
   authorName: {
     color: Colors.white,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
     fontSize: 16,
   },
   readTime: {
     color: Colors.white,
     opacity: 0.7,
     paddingRight: 30,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
     fontSize: 14,
   },
   postCreated: {
     color: Colors.white,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
     fontSize: 14,
   },
 };

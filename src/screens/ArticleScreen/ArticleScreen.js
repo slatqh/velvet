@@ -233,7 +233,7 @@ class ArticleScreen extends PureComponent {
                 value={`${h1}${this.props.articleTitle}${h1close}`}
                 stylesheet={{
                   h1: {
-                    fontFamily: 'Playfair Display',
+                    fontFamily: 'PlayfairDisplay-Regular',
                     color: Colors.white,
                     fontSize: 30,
                     justifyContent: 'center',

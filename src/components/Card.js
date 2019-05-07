@@ -91,7 +91,7 @@ export default class ImageCard extends PureComponent {
                   <Text
                     style={{
                       width: 40,
-                      fontFamily: 'Raleway',
+                      fontFamily: 'Raleway-Regular',
                       letterSpacing: 1,
                       fontSize: 12,
                       color: Colors.white,
@@ -117,7 +117,7 @@ const title = {
       justifyContent: 'flex-start',
       // flexWrap: 'wrap',
       // flexShrink: 1,
-      fontFamily: 'Playfair Display',
+      fontFamily: 'PlayfairDisplay-Regular',
       fontSize: Platform.OS === 'android' ? 14 : 16,
     },
   },

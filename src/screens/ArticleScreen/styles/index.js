@@ -93,11 +93,11 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     paddingRight: 10,
     color: Colors.white,
-    fontFamily: 'Raleway',
+    fontFamily: 'Raleway-Regular',
     alignSelf: 'flex-start',
   },
   title: {
-    fontFamily: 'Playfair Display',
+    fontFamily: 'PlayfairDisplay-Regular',
     color: Colors.white,
     fontSize: 36,
   },
@@ -117,7 +117,7 @@ export const ArticleTextStyles = {
     p: {
       // justifyContent: 'space-around',
       color: Colors.white,
-      fontFamily: 'raleway',
+      fontFamily: 'Raleway-Regular',
       fontSize: 18,
       alignSelf: 'center',
       margin: 0,
@@ -128,7 +128,7 @@ export const ArticleTextStyles = {
     h: {
       // justifyContent: 'space-around',
       color: Colors.white,
-      fontFamily: 'Playfair Display',
+      fontFamily: 'PlayfairDisplay-Regular',
       width: width - 20,
       // padding: 14,
     },

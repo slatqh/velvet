@@ -18,7 +18,9 @@ import { Post } from '../../../api/post';
 
 class ProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: () => <Text style={{ fontFamily: 'Raleway' }}>PROFILE</Text>,
+    headerTitle: () => (
+      <Text style={{ fontFamily: 'Raleway-Regular' }}>PROFILE</Text>
+    ),
     headerStyle: {
       borderBottomColor: '#ddd',
       shadowOffset: { width: 2, height: 3 },
@@ -81,7 +83,7 @@ class ProfileScreen extends React.Component {
                   ? this.setState({ editProfile: true })
                   : this.saveUserProfile()
               }>
-              <Text style={{ fontFamily: 'raleway' }}>
+              <Text style={{ fontFamily: 'Raleway-Regular' }}>
                 {editProfile ? 'Save' : 'Edit'}
               </Text>
             </TouchableOpacity>

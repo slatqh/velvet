@@ -7,7 +7,7 @@ export default class CircleText extends React.Component {
     this.state = {
       selected: false,
       category: false,
-      categoryData: []
+      categoryData: [],
     };
   }
   componentDidMount() {
@@ -17,41 +17,39 @@ export default class CircleText extends React.Component {
       return this.setState({ category: cat });
     }
   }
-// componentWillUpdate(){
-//   const { selected } = this.state;
-//   if(selected !== selected){
-//     return true;
-//   }
-// }
-onCategoryPress() {
+  // componentWillUpdate(){
+  //   const { selected } = this.state;
+  //   if(selected !== selected){
+  //     return true;
+  //   }
+  // }
+  onCategoryPress() {
     const { selected, category } = this.state;
     if (selected || category) {
       this.setState({ selected: !this.state.selected, category: false });
       return this.props.onSelect(this.state.selected);
-
     }
     this.setState({ selected: !this.state.selected });
     return this.props.onSelect(!this.state.selected);
   }
-handleCircleStyles(){
-  const { selected, category } = this.state;
-  if(selected || category ){
-    return [this.props.style, { backgroundColor: '#7E354D' }]
-  } else if (selected){
-    return [this.props.style, { backgroundColor: '#7E354D' }]
+  handleCircleStyles() {
+    const { selected, category } = this.state;
+    if (selected || category) {
+      return [this.props.style, { backgroundColor: '#7E354D' }];
+    } else if (selected) {
+      return [this.props.style, { backgroundColor: '#7E354D' }];
+    }
+    return this.props.style;
   }
-  return this.props.style
-}
   render() {
     const { selected, category } = this.state;
     return (
       <TouchableOpacity
-        style={ this.handleCircleStyles()}
-        onPress={() => this.onCategoryPress()}
-      >
-        <Text
-          style={category || selected ? styles.titleWhite : styles.title}
-        >{this.props.name.toUpperCase()}</Text>
+        style={this.handleCircleStyles()}
+        onPress={() => this.onCategoryPress()}>
+        <Text style={category || selected ? styles.titleWhite : styles.title}>
+          {this.props.name.toUpperCase()}
+        </Text>
       </TouchableOpacity>
     );
   }
@@ -61,11 +59,11 @@ const styles = {
   title: {
     fontSize: 12,
     color: '#7E354D',
-    fontFamily: 'Playfair Display',
+    fontFamily: 'PlayfairDisplay-Regular',
   },
   titleWhite: {
     fontSize: 12,
-    fontFamily: 'Playfair Display',
+    fontFamily: 'PlayfairDisplay-Regular',
     color: '#f8d18d',
   },
   selected: {

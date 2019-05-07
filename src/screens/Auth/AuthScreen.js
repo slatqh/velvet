@@ -163,13 +163,13 @@ const styles = {
   descriptionShop: {
     alignSelf: 'center',
     fontSize: 12,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
     marginBottom: 10,
   },
   descriptionInspired: {
     justifyContent: 'center',
     fontSize: 12,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
     marginBottom: 10,
   },
   pages: {

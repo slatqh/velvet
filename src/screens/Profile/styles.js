@@ -11,7 +11,7 @@ export const styles = {
   settings: {
     marginLeft: 30,
     marginTop: 20,
-    fontFamily: 'Raleway',
+    fontFamily: 'Raleway-Regular',
     textDecorationLine: 'underline',
     fontSize: 18,
   },
@@ -28,11 +28,10 @@ export const styles = {
     alignSelf: 'center',
     fontSize: 16,
     letterSpacing: 2,
-    fontFamily: 'Raleway',
-
+    fontFamily: 'Raleway-Regular',
   },
   siteLinks: {
-    fontFamily: 'Raleway',
+    fontFamily: 'Raleway-Regular',
     letterSpacing: 2,
     fontSize: 14,
     textDecorationLine: 'underline',

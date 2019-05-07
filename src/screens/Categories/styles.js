@@ -145,17 +145,16 @@ export const styles = {
     marginTop: 90,
     marginLeft: -2,
     marginBottom: -18,
-
   },
   mainTitle: {
     fontSize: 28,
-    fontFamily: 'Playfair Display',
+    fontFamily: 'PlayfairDisplay-Regular',
     paddingVertical: 5,
     fontWeight: '600',
   },
   title: {
     fontSize: 12,
     color: '#7E354D',
-    fontFamily: 'Playfair Display',
+    fontFamily: 'PlayfairDisplay-Regular',
   },
 };

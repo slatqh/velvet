@@ -25,7 +25,10 @@ class LoginScreen extends Component {
   async _handleLogin() {
     const { email, password } = this.props;
     if (this.state.remember) {
-      AsyncStorage.multiSet([['userEmail', email], ['userPassword', `${password}`]]);
+      AsyncStorage.multiSet([
+        ['userEmail', email],
+        ['userPassword', `${password}`],
+      ]);
       await this.props.login(email, password);
       this.checkUser();
     } else {
@@ -54,38 +57,39 @@ class LoginScreen extends Component {
         <ImageBackground
           resizeMode="cover"
           style={{ flex: 1 }}
-          source={require('../../../assets/images/login.png')}
-        >
+          source={require('../../../assets/images/login.png')}>
           <View style={styles.logo}>
             <Logo />
           </View>
-          { this.props.loading ? <Loading /> : null}
-          { this.props.error ? this._handleError() : <View />}
+          {this.props.loading ? <Loading /> : null}
+          {this.props.error ? this._handleError() : <View />}
           <View style={styles.innerContainer}>
             <Inputs
-              clearButtonMode='while-editing'
-              placeholder='Email'
-              icon='email'
+              clearButtonMode="while-editing"
+              placeholder="Email"
+              icon="email"
               autoFocus
-              onChangeText={(e) => this.props.emailChanged(e)}
+              onChangeText={e => this.props.emailChanged(e)}
             />
             <Inputs
-              placeholder='Password'
+              placeholder="Password"
               secureTextEntry
-              icon='lock'
-              onChangeText={(e) => this.props.passwordChanged(e)}
+              icon="lock"
+              onChangeText={e => this.props.passwordChanged(e)}
             />
             <View style={styles.inputs}>
               <CheckBox
                 iconLeft
-                checkedIcon='check-square'
+                checkedIcon="check-square"
                 checkedColor={Colors.white}
                 checked={this.state.remember}
                 right
-                title='Remember me'
+                title="Remember me"
                 textStyle={styles.rememberMe}
                 containerStyle={styles.checkBox}
-                onPress={() => this.setState({ remember: !this.state.remember })}
+                onPress={() =>
+                  this.setState({ remember: !this.state.remember })
+                }
               />
               {/* <TouchableOpacity
                 title='forgot password?'
@@ -97,14 +101,13 @@ class LoginScreen extends Component {
           </View>
           <View style={styles.Button}>
             <CustomButton
-              title='LOGIN'
+              title="LOGIN"
               color={Colors.grey}
               backgroundColor={Colors.black}
               onPress={() => this._handleLogin()}
             />
           </View>
         </ImageBackground>
-
       </View>
     );
   }
@@ -113,11 +116,14 @@ const MapStateToProps = ({ Auth }) => {
   const { email, password, error, user } = Auth;
   return { email, password, error, user };
 };
-export default connect(MapStateToProps, {
-  emailChanged,
-  passwordChanged,
-  login,
-})(LoginScreen);
+export default connect(
+  MapStateToProps,
+  {
+    emailChanged,
+    passwordChanged,
+    login,
+  },
+)(LoginScreen);
 
 const styles = {
   container: {
@@ -151,17 +157,16 @@ const styles = {
   forgetPass: {
     color: Colors.white,
     fontSize: 12,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
   },
   rememberMe: {
     color: Colors.grey,
     fontSize: 12,
-    fontFamily: 'raleway',
+    fontFamily: 'Raleway-Regular',
   },
   logo: {
     alignItems: 'center',
     justifyContent: 'flex-start',
     flex: 0.5,
   },
-
 };
