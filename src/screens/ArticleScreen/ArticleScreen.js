@@ -184,10 +184,6 @@ class ArticleScreen extends PureComponent {
           scrollEventThrottle={16}
           bounces={false}
           ref={scrollView => (scrollView = this.scrollView)}
-          // ref={scrollView => console.log(scrollView)}
-          // onContentSizeChange={() => {
-          //   this._onContentSizeChange();
-          // }}
           contentInset={{
             top: HEADER_MAX_HEIGHT,
           }}
@@ -204,7 +200,10 @@ class ArticleScreen extends PureComponent {
             ],
             { useNativeDrive: true },
           )}>
-          <View style={Platform.OS === 'ios' ? null : { marginTop: 0 }}>
+          <View
+            style={
+              Platform.OS === 'ios' ? null : { marginBottom: HEADER_MAX_HEIGHT }
+            }>
             <ArticleText animation={barOpacity} data={this.state.data} />
           </View>
         </Animated.ScrollView>

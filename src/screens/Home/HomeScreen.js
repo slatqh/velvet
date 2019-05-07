@@ -70,7 +70,7 @@ class HomeScreen extends React.Component {
       refreshing: false,
       loading: false,
       closeSearch: true,
-      androidCardHeigh: 450,
+      cardAndroid: 450,
     };
     this.scrollY = new Animated.Value(0);
   }
@@ -101,9 +101,9 @@ class HomeScreen extends React.Component {
 
   androidCardRender = x => {
     if (x >= 0) {
-      return 450;
+      this.setState({ cardAndroid: 400 });
     }
-    return 200;
+    this.setState({ cardAndroid: 200 });
   };
   getCategoryName = () => {
     if (this.props.navigation.state.params === undefined) {
@@ -154,8 +154,7 @@ class HomeScreen extends React.Component {
     });
     const headerStyle = {
       transform: [],
-      height:
-        Platform.OS === 'ios' ? heightTranslate : this.androidCardRender(),
+      height: heightTranslate,
     };
     //  handling a search button
     if (this.props.userSearch && !search) {
@@ -191,12 +190,11 @@ class HomeScreen extends React.Component {
         <Text style={styles.title}> {this.getCategoryName()}</Text>
         <View style={{ flex: 1 }}>
           <Animated.View
-            style={[
-              headerStyle,
-              {
-                backgroundColor: 'transparent',
-              },
-            ]}>
+            style={
+              Platform.OS === 'ios'
+                ? headerStyle
+                : { height: this.state.cardAndroid }
+            }>
             <ScrollView
               horizontal
               bounces={false}
