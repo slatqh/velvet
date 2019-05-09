@@ -9,6 +9,7 @@ import {
   Image,
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
+import HTML from 'react-native-render-html';
 import { InstagramButton, ShareButton, ShoppingButton } from '../../components';
 import { getDate } from '../../helpers';
 import Colors from '../../../constants/Colors';
@@ -28,24 +29,33 @@ async function shareWithFriends() {
 }
 
 function renderNode(node, index, siblings, parent, defaultRenderer) {
+  console.log(parent);
   if (node.name == 'img') {
     const { src } = node.attribs;
     const pWidth = node.attribs.width;
     const pHeight = node.attribs.height;
-    const imageHeight = ((width - 20) * pHeight) / pWidth || 300;
-    if (parent.name === 'p') {
+    const imageHeight = ((width - 20) * pHeight) / pWidth || 400;
+    if (parent.name === 'figure') {
       return (
-        <Text>
-          {'\n'}
-          {'\n'}
+        // <Text>
+        //   {'\n'}
+        //   {'\n'}
+        <View style={{ backgroundColor: 'white', flex: 1 }}>
           <Image
             key={index}
-            style={{ width: width - 20, height: imageHeight }}
+            style={{
+              width: width - 20,
+              height: imageHeight,
+              marginTop: -50,
+              paddingVertical: 0,
+            }}
             source={{ uri: src }}
+            resizeMode="cover"
           />
-          {'\n'}
-          {'\n'}
-        </Text>
+        </View>
+        //   {/* {'\n'}
+        //   {'\n'}
+        // </Text> */}
       );
     }
     return (
@@ -54,10 +64,11 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
         style={{
           width: width - 20,
           height: imageHeight,
-          margin: 0,
+          marginTop: -40,
           padding: 0,
         }}
         source={{ uri: src }}
+        resizeMode="cover"
       />
     );
   }
@@ -85,7 +96,9 @@ function renderNode(node, index, siblings, parent, defaultRenderer) {
     );
   }
 }
-
+function renderContent(content) {
+  return <Text>{content}</Text>;
+}
 export const ArticleText = ({ animation, data }) => {
   if (data.content === undefined) {
     return <View />;
@@ -110,9 +123,51 @@ export const ArticleText = ({ animation, data }) => {
         </View>
         <Text style={Styles.postCreated}>{getDate(data.date)}</Text>
       </View>
-      <View style={{ flex: 1, padding: 10 }}>
-        <View style={{ alignSelf: 'center' }}>
-          <HTMLView value={content} renderNode={renderNode} />
+      <View style={{ flex: 1, marginHorizontal: 25 }}>
+        <View>
+          <HTML
+            html={content}
+            renderers={{
+              img: htmlAttribs => {
+                console.log(parseInt(htmlAttribs.width));
+                const imageHeight =
+                  ((width - 20) * htmlAttribs.height) / htmlAttribs.width;
+                const imageWidth = ((width - 20) * htmlAttribs.width) / height;
+
+                return (
+                  <View
+                    style={{
+                      flex: 1,
+                      alignSelf: 'center',
+                    }}>
+                    <Image
+                      source={{ uri: htmlAttribs.src }}
+                      // resizeMethod="resize"
+                      resizeMode="contain"
+                      // scale="fitStart"
+                      style={{
+                        flex: 1,
+                        marginTop: 20,
+                        width,
+                        height: imageHeight,
+                      }}
+                    />
+                  </View>
+                );
+              },
+            }}
+            baseFontStyle={{
+              fontSize: 16,
+              color: 'white',
+              fontFamily: 'Raleway-Regular',
+            }}
+          />
+          {/* <HTMLView
+            value={content}
+            renderNode={renderNode}
+            imagesInitialDimensions={{ width: 300, height: 300 }}
+            classesStyles={{ 'gallery-icon landscape': { marginTop: -50 } }}
+          /> */}
         </View>
       </View>
       <View style={{ flex: 1 }} />

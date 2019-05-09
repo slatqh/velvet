@@ -125,23 +125,15 @@ export const ArticleTextStyles = {
       width: width - 20,
       // padding: 14,
     },
-    h: {
-      // justifyContent: 'space-around',
-      color: Colors.white,
-      fontFamily: 'PlayfairDisplay-Regular',
-      width: width - 20,
-      // padding: 14,
-    },
-    img: {
-      // flexDirection: 'row',
-      // width: width,
-      // alignSelf: 'center',
-      // paddingRight: 130,
-    },
+
     div: {
       paddingLeft: 10,
       paddingRight: 10,
       alignSelf: 'center',
+    },
+    img: {
+      padding: 0,
+      marginTop: -80,
     },
   },
 };
