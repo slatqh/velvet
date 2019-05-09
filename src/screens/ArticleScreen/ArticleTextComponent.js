@@ -123,22 +123,24 @@ export const ArticleText = ({ animation, data }) => {
         </View>
         <Text style={Styles.postCreated}>{getDate(data.date)}</Text>
       </View>
-      <View style={{ flex: 1, marginHorizontal: 25 }}>
+      <View style={{ flex: 1, marginHorizontal: 15 }}>
         <View>
           <HTML
             html={content}
             renderers={{
               img: htmlAttribs => {
-                console.log(parseInt(htmlAttribs.width));
                 const imageHeight =
                   ((width - 20) * htmlAttribs.height) / htmlAttribs.width;
                 const imageWidth = ((width - 20) * htmlAttribs.width) / height;
 
                 return (
                   <View
+                    key={htmlAttribs['data-attachment-id']}
                     style={{
                       flex: 1,
                       alignSelf: 'center',
+                      alignItems: 'center',
+                      paddingHorizontal: 25,
                     }}>
                     <Image
                       source={{ uri: htmlAttribs.src }}
@@ -171,7 +173,7 @@ export const ArticleText = ({ animation, data }) => {
         </View>
       </View>
       <View style={{ flex: 1 }} />
-      <View style={{ paddingBottom: 60 }}>
+      <View style={{ padding: 60 }}>
         <InstagramButton />
         <ShareButton onPress={() => shareWithFriends()} />
         {/* <ShoppingButton onPress={() => console.log('shopping button')} /> */}

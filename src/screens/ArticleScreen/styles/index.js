@@ -133,7 +133,6 @@ export const ArticleTextStyles = {
     },
     img: {
       padding: 0,
-      marginTop: -80,
     },
   },
 };
