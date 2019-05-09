@@ -150,7 +150,7 @@ export const styles = {
     fontSize: 28,
     fontFamily: 'PlayfairDisplay-Regular',
     paddingVertical: 5,
-    fontWeight: '600',
+    // fontWeight: '600',
   },
   title: {
     fontSize: 12,

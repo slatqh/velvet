@@ -70,9 +70,9 @@ class HomeScreen extends React.Component {
       refreshing: false,
       loading: false,
       closeSearch: true,
-      cardAndroid: 450,
     };
     this.scrollY = new Animated.Value(0);
+    this.androidHeight = new Animated.Value(0);
   }
   componentWillMount() {
     this.props.navigation.setParams({
@@ -99,12 +99,6 @@ class HomeScreen extends React.Component {
 
   // component function
 
-  androidCardRender = x => {
-    if (x >= 0) {
-      this.setState({ cardAndroid: 400 });
-    }
-    this.setState({ cardAndroid: 200 });
-  };
   getCategoryName = () => {
     if (this.props.navigation.state.params === undefined) {
       return "WHAT'S NEW";
@@ -145,15 +139,29 @@ class HomeScreen extends React.Component {
   render() {
     const search = this.props.navigation.getParam('search');
     const { articles } = this.props;
-
     const heightTranslate = this.scrollY.interpolate({
       inputRange: [0, 100],
       outputRange: [CARD_HEIGHT, CARD_MIN_HEIGHT],
       extrapolate: 'clamp',
       useNativeDriver: true,
     });
+    // androidCardRender = x => {
+    //   console.log(this.androidHeight.addListener());
+    //   if (x > 0) {
+    //     Animated.timing(this.androidHeight, {
+    //       toValue: 200,
+    //       duration: 1000,
+    //     }).start();
+    //   }
+    //   Animated.timing(this.androidHeight, {
+    //     toValue: 400,
+    //     duration: 1000,
+    //   }).start();
+    // };
+    // const headerStyleAndroid = {
+    //   transform: [{ translateY: this.scrollY }],
+    // };
     const headerStyle = {
-      transform: [],
       height: heightTranslate,
     };
     //  handling a search button
@@ -191,9 +199,7 @@ class HomeScreen extends React.Component {
         <View style={{ flex: 1 }}>
           <Animated.View
             style={
-              Platform.OS === 'ios'
-                ? headerStyle
-                : { height: this.state.cardAndroid }
+              Platform.OS === 'ios' ? headerStyle : { height: CARD_HEIGHT }
             }>
             <ScrollView
               horizontal
@@ -234,8 +240,10 @@ class HomeScreen extends React.Component {
                   },
                 ],
                 {
-                  listener: event =>
-                    this.androidCardRender(event.nativeEvent.contentOffset.y),
+                  // listener: event =>
+                  //   this.androidHeight.setValue(
+                  //     event.nativeEvent.contentOffset.y,
+                  //   ),
                 },
               )}
               refreshControl={

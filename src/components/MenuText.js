@@ -15,7 +15,6 @@ const styles = {
     fontFamily: 'Raleway-Medium',
     fontSize: 12,
     letterSpacing: 2,
-    fontWeight: '500',
     color: Colors.white,
     alignSelf: 'center',
     margin: 15,

@@ -16,7 +16,8 @@ class WishList extends Component {
       fontSize: 14,
       color: 'black',
       fontFamily: 'Raleway-Regular',
-      letterSpacing: 2,
+      fontWeight: '100',
+      // letterSpacing: 2,
     },
     headerLeft: (
       <Icon

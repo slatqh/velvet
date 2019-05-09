@@ -84,18 +84,24 @@ export default class ImageCard extends PureComponent {
                   stylesheet={title.title}
                 />
               </View>
-              <View style={[this.props.showReadButton, {}]}>
+              <View style={this.props.showReadButton}>
                 <TouchableOpacity
-                  style={[styles.button, { marginTop: 10 }]}
+                  style={[
+                    styles.button,
+                    { marginTop: 0, flexDirection: 'row' },
+                  ]}
                   onPress={onPress}>
                   <Text
                     style={{
-                      width: 40,
+                      // width: 40,
+                      paddingHorizontal: 7,
                       fontFamily: 'Raleway-Regular',
                       letterSpacing: 1,
                       fontSize: 12,
                       color: Colors.white,
+                      alignItems: 'center',
                       flexDirection: 'row',
+                      alignSelf: 'center',
                     }}>
                     READ
                   </Text>
@@ -141,7 +147,6 @@ const styles = StyleSheet.create({
   },
   inner: {
     height: CARD_HEIGHT / 3,
-    // flex: 0.5,
     margin: 10,
     padding: 10,
     borderRadius: 10,
@@ -155,7 +160,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end',
     marginBottom: 10,
-    width: 60,
+    // width: 60,
     paddingTop: 3,
     paddingBottom: 3,
     paddingLeft: 12,
