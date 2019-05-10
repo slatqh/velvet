@@ -27,6 +27,7 @@ export const styles = {
     backgroundColor: 'transparent',
     justifyContent: 'center',
     alignItems: 'center',
+    // alignSelf: 'center',
   },
   largeCircle: {
     width: 100,

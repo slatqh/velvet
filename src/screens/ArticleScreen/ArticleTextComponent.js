@@ -130,27 +130,30 @@ export const ArticleText = ({ animation, data }) => {
             renderers={{
               img: htmlAttribs => {
                 const imageHeight =
-                  ((width - 20) * htmlAttribs.height) / htmlAttribs.width;
-                const imageWidth = ((width - 20) * htmlAttribs.width) / height;
+                  ((width - 40) * htmlAttribs.height) / htmlAttribs.width;
+                const imageWidth = ((width - 40) * htmlAttribs.width) / height;
 
                 return (
                   <View
                     key={htmlAttribs['data-attachment-id']}
-                    style={{
-                      flex: 1,
-                      alignSelf: 'center',
-                      alignItems: 'center',
-                      paddingHorizontal: 25,
-                    }}>
+                    style={
+                      {
+                        // flex: 1,
+                        // alignSelf: 'center',
+                        // alignItems: 'center',
+                        // marginRight: 20,
+                      }
+                    }>
                     <Image
                       source={{ uri: htmlAttribs.src }}
                       // resizeMethod="resize"
-                      resizeMode="contain"
+                      // resizeMode="contain"
                       // scale="fitStart"
                       style={{
-                        flex: 1,
+                        // flex: 1,
                         marginTop: 20,
-                        width,
+                        // alignSelf: 'center',
+                        width: width - 40,
                         height: imageHeight,
                       }}
                     />

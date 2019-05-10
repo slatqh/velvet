@@ -34,10 +34,10 @@ export class Circle extends React.Component {
   alignCircle() {
     const { name } = this.props;
     if (name.length <= 3) {
-      return { alignItems: 'flex-start' };
+      return { alignItems: 'center' };
     }
     if (name.length <= 7) {
-      return { alignItems: 'flex-end' };
+      return { alignItems: 'center' };
     }
     return { alignItems: 'center' };
   }
@@ -89,7 +89,7 @@ const styles = {
     fontSize: 12,
     flexWrap: 'wrap',
     alignItems: 'center',
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
   },
   smallCircle: {
     margin: 0,
@@ -112,7 +112,7 @@ const styles = {
     borderWidth: 1,
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   largeCircle: {
     marginBottom: -1,

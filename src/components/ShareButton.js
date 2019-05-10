@@ -42,7 +42,7 @@ const styles = {
     paddingVertical: 5,
     paddingRight: 65,
     fontFamily: 'PlayfairDisplay-Regular',
-    fontWeight: '500',
+    // fontWeight: '500',
     fontSize: 16,
   },
 };

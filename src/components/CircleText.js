@@ -60,6 +60,7 @@ const styles = {
     fontSize: 12,
     color: '#7E354D',
     fontFamily: 'PlayfairDisplay-Regular',
+    alignItems: 'center',
   },
   titleWhite: {
     fontSize: 12,
