@@ -15,7 +15,9 @@ class UserApi {
 
   async signUp(args) {
     try {
-      const { data } = await axios.post(`${keys.LOCALHOST}/user/signup`, { ...args });
+      const { data } = await axios.post(`${keys.LOCALHOST}/user/signup`, {
+        ...args,
+      });
       return data;
     } catch (error) {
       throw error;

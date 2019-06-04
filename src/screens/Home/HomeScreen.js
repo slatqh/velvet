@@ -11,7 +11,11 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { addStarredArticle, deleteStarred } from '../Auth/actions';
+import {
+  addStarredArticle,
+  deleteStarred,
+  fetchingStarredArticles,
+} from '../Auth/actions';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { List, Card, Logo, Search, Loading } from '../../components';
 import { loadArticles, searchValue } from './action';
@@ -119,6 +123,7 @@ class HomeScreen extends React.Component {
   async updateUserStarred(id) {
     const arr = [...this.props.starred, id];
     this.props.addStarredArticle(arr);
+    this.props.fetchingStarredArticles();
   }
   _renderTopCards = ({ item }) => (
     <Card
@@ -145,22 +150,6 @@ class HomeScreen extends React.Component {
       extrapolate: 'clamp',
       useNativeDriver: true,
     });
-    // androidCardRender = x => {
-    //   console.log(this.androidHeight.addListener());
-    //   if (x > 0) {
-    //     Animated.timing(this.androidHeight, {
-    //       toValue: 200,
-    //       duration: 1000,
-    //     }).start();
-    //   }
-    //   Animated.timing(this.androidHeight, {
-    //     toValue: 400,
-    //     duration: 1000,
-    //   }).start();
-    // };
-    // const headerStyleAndroid = {
-    //   transform: [{ translateY: this.scrollY }],
-    // };
     const headerStyle = {
       height: heightTranslate,
     };
@@ -210,7 +199,7 @@ class HomeScreen extends React.Component {
               ref={scroll => {
                 this.ScrollList = scroll;
               }}>
-              {/* rendering Cards components  */}
+              {/* /* rendering Cards components  */}
               <FlatList
                 horizontal
                 data={this.props.data.slice(0, 10)}
@@ -219,13 +208,7 @@ class HomeScreen extends React.Component {
               />
             </ScrollView>
           </Animated.View>
-          <View
-            style={[
-              styles.listScroll,
-              {
-                // marginTop: Platform.OS === 'android' ? CARD_HEIGHT : 0,
-              },
-            ]}>
+          <View style={[styles.listScroll]}>
             <ScrollView
               bounces
               showsVerticalScrollIndicator={false}
@@ -239,12 +222,7 @@ class HomeScreen extends React.Component {
                     },
                   },
                 ],
-                {
-                  // listener: event =>
-                  //   this.androidHeight.setValue(
-                  //     event.nativeEvent.contentOffset.y,
-                  //   ),
-                },
+                {},
               )}
               refreshControl={
                 <RefreshControl refreshing={this.state.refreshing} />
@@ -283,5 +261,11 @@ const mapStateToProps = ({ Home, Auth }) => {
 };
 export default connect(
   mapStateToProps,
-  { loadArticles, searchValue, addStarredArticle, deleteStarred },
+  {
+    loadArticles,
+    searchValue,
+    addStarredArticle,
+    deleteStarred,
+    fetchingStarredArticles,
+  },
 )(HomeScreen);

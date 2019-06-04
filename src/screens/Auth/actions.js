@@ -90,7 +90,7 @@ export function loginSuccess(data) {
 export function loginFailed({ response }) {
   return {
     type: LOGIN_FAILED,
-    payload: response.data.message,
+    payload: response,
   };
 }
 

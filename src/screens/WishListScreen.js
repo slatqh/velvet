@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { ScrollView, View, Text, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
-import { Icon } from 'react-native-elements';
+import { Icon, Overlay } from 'react-native-elements';
 import {
   deleteStarred,
   fetchingStarredArticles,
 } from '../screens/Auth/actions';
 import { List, Loading } from '../components';
 
-class WishList extends Component {
+class WishList extends React.PureComponent {
   static navigationOptions = ({ navigation }) => ({
     title: 'WISHLIST',
     headerMode: 'screen',
@@ -32,10 +32,10 @@ class WishList extends Component {
     this.state = {
       data: [],
       articleId: [],
-      deleted: true,
+      deleted: false,
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchingStarredArticles();
   }
   componentWillUnmount() {
@@ -44,12 +44,27 @@ class WishList extends Component {
   async deleteArticle(index, id) {
     const articleId = this.props.starred.filter(i => i !== id);
     await this.props.deleteStarred(articleId);
-    this.setState({ deleted: !this.state.deleted });
-    this.props.fetchingStarredArticles();
+    await this.props.fetchingStarredArticles();
   }
   render() {
-    return this.props.starred.length > 0 ? (
+    return this.props.starredArticles.length > 0 ? (
       <ScrollView style={styles.container}>
+        <Overlay
+          isVisible={this.props.loading}
+          windowBackgroundColor="rgba(255, 255, 255, .5)"
+          overlayBackgroundColor="transparent"
+          width="auto"
+          height="auto">
+          <ActivityIndicator />
+        </Overlay>
+        {/* <View
+          style={{
+            backgroundColor: 'transparent',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator />
+        </View> */}
         {this.props.starredArticles.map((i, index) => (
           <View key={i.id}>
             <List
@@ -88,7 +103,7 @@ const styles = {
     fontSize: 19,
   },
 };
-const mapStateToProps = ({ Auth }) => {
+const mapStateToProps = ({ Auth, Article }) => {
   const { starred, starredArticles, loading } = Auth;
   return { starred, starredArticles, loading };
 };

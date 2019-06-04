@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: height / 2,
-    resizeMode: 'cover',
+    // resizeMode: 'cover',
     // position: 'absolute',
     overflow: 'hidden',
     // zIndex: -1,

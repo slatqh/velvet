@@ -21,7 +21,11 @@ import { MyStatusBar, Loading } from '../../components';
 import { styles } from './styles';
 import { loadArticlePost } from './action';
 import { ArticleText } from './ArticleTextComponent';
-import { addStarredArticle, deleteStarred } from '../Auth/actions';
+import {
+  addStarredArticle,
+  deleteStarred,
+  fetchingStarredArticles,
+} from '../Auth/actions';
 import Colors from '../../../constants/Colors';
 
 const { width, height } = Dimensions.get('window');
@@ -95,6 +99,7 @@ class ArticleScreen extends PureComponent {
   async updateUserStarred() {
     const arr = [...this.props.starred, this.state.starredId];
     this.props.addStarredArticle(arr);
+    this.props.fetchingStarredArticles();
   }
   shoppingBagAnimation = () => {
     if (this.state.shopping === undefined) {
@@ -353,5 +358,10 @@ const mapStateToProps = ({ Auth, Article }) => {
 
 export default connect(
   mapStateToProps,
-  { loadArticlePost, addStarredArticle, deleteStarred },
+  {
+    loadArticlePost,
+    addStarredArticle,
+    deleteStarred,
+    fetchingStarredArticles,
+  },
 )(ArticleScreen);
