@@ -11,12 +11,13 @@ import {
   SignUpScreen,
   WishList,
   Category,
+  HomeScreenMain,
 } from '../screens';
 import { SideMenu } from './SideMenu';
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home: HomeScreenMain,
     Article: ArticleScreen,
     WishList,
   },

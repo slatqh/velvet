@@ -17,14 +17,7 @@ import {
   fetchingStarredArticles
 } from "../Auth/actions";
 import { NavigationActions, StackActions } from "react-navigation";
-import {
-  List,
-  Card,
-  Logo,
-  Search,
-  Loading,
-  OfflineNotice
-} from "../../components";
+import { List, Card, Logo, Search, Loading } from "../../components";
 import { loadArticles, searchValue } from "./action";
 import { currentDate } from "../../helpers";
 import { styles } from "./styles";
@@ -35,45 +28,46 @@ const CARD_HEIGHT =
 const CARD_MIN_HEIGHT = Platform.OS === "android" ? height / 3 : 300;
 
 class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation, loadArticles }) => {
-    const search = navigation.getParam("search");
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: "Home" })]
-    });
-    return {
-      headerTitle: () =>
-        !search ? (
-          <Search value={e => navigation.state.params.headerSearch(e)} />
-        ) : (
-          <Logo onPress={() => navigation.dispatch(resetAction)} />
-        ),
-      headerStyle: { borderBottomColor: "transparent", opacity: 1 },
-      headerLeft: (
-        <Icon
-          containerStyle={{ margin: 10 }}
-          onPress={() => navigation.openDrawer()}
-          name="menu"
-        />
-      ),
-      headerRight: !search ? (
-        <Icon
-          containerStyle={{ margin: 10 }}
-          size={25}
-          onPress={() => {
-            navigation.setParams({ search: !search });
-          }}
-          name="close"
-        />
-      ) : (
-        <Icon
-          containerStyle={{ margin: 10 }}
-          onPress={() => navigation.setParams({ search: !search })}
-          name="search"
-        />
-      )
-    };
-  };
+  // static navigationOptions = ({ navigation, loadArticles }) => {
+  //   const search = navigation.getParam('search');
+  //   console.log('SEARCH', search);
+  //   const resetAction = StackActions.reset({
+  //     index: 0,
+  //     actions: [NavigationActions.navigate({ routeName: 'Home' })],
+  //   });
+  //   return {
+  //     headerTitle: () =>
+  //       search ? (
+  //         <Search value={e => navigation.state.params.headerSearch(e)} />
+  //       ) : (
+  //         <Logo onPress={() => navigation.dispatch(resetAction)} />
+  //       ),
+  //     headerStyle: { borderBottomColor: 'transparent', opacity: 1 },
+  //     headerLeft: (
+  //       <Icon
+  //         containerStyle={{ margin: 10 }}
+  //         onPress={() => navigation.openDrawer()}
+  //         name="menu"
+  //       />
+  //     ),
+  //     headerRight: !search ? (
+  //       <Icon
+  //         containerStyle={{ margin: 10 }}
+  //         size={25}
+  //         onPress={() => {
+  //           navigation.setParams({ search: !search });
+  //         }}
+  //         name="close"
+  //       />
+  //     ) : (
+  //       <Icon
+  //         containerStyle={{ margin: 10 }}
+  //         onPress={() => navigation.setParams({ search: !search })}
+  //         name="search"
+  //       />
+  //     ),
+  //   };
+  // };
 
   constructor(props) {
     super(props);
@@ -94,6 +88,11 @@ class HomeScreen extends React.Component {
     });
   }
   async componentDidMount() {
+    this.props.navigation.setParams({
+      headerSearch: this.props.searchValue,
+      search: true,
+      name: "WHAT'S NEW"
+    });
     await this.props.loadArticles();
     this.setState({ loading: true });
   }
@@ -191,7 +190,6 @@ class HomeScreen extends React.Component {
     //  main screen view
     return (
       <View style={[styles.container]}>
-        {this.state.isConnected ? null : <OfflineNotice />}
         <Text style={styles.date}> {currentDate()}</Text>
         <Text style={styles.title}> {this.getCategoryName()}</Text>
         <View style={{ flex: 1 }}>
