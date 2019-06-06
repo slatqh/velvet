@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { NavigationActions, StackActions } from "react-navigation";
@@ -75,15 +75,20 @@ export default class HomeScreenMain extends Component {
     this.setState({ isConnected });
   };
   render() {
-    // return <HomeScreen navigation={this.props.navigation} />;
-    // console.log(this.state.isConnected);
+    console.log(this.props);
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: "Home" })]
+    });
     if (this.state.isConnected) {
       return <HomeScreen navigation={this.props.navigation} />;
     }
     return (
-      <TouchableOpacity onPress={() => this.componentDidMount()}>
-        <OfflineNotice />
-      </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+        <OfflineNotice
+          onPress={() => this.props.navigation.dispatch(resetAction)}
+        />
+      </View>
     );
   }
 }
