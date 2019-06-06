@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   ScrollView,
   Text,
@@ -7,32 +7,39 @@ import {
   RefreshControl,
   Dimensions,
   Platform,
-  FlatList,
-} from 'react-native';
-import { Icon } from 'react-native-elements';
-import { connect } from 'react-redux';
+  FlatList
+} from "react-native";
+import { Icon } from "react-native-elements";
+import { connect } from "react-redux";
 import {
   addStarredArticle,
   deleteStarred,
-  fetchingStarredArticles,
-} from '../Auth/actions';
-import { NavigationActions, StackActions } from 'react-navigation';
-import { List, Card, Logo, Search, Loading } from '../../components';
-import { loadArticles, searchValue } from './action';
-import { currentDate } from '../../helpers';
-import { styles } from './styles';
+  fetchingStarredArticles
+} from "../Auth/actions";
+import { NavigationActions, StackActions } from "react-navigation";
+import {
+  List,
+  Card,
+  Logo,
+  Search,
+  Loading,
+  OfflineNotice
+} from "../../components";
+import { loadArticles, searchValue } from "./action";
+import { currentDate } from "../../helpers";
+import { styles } from "./styles";
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 const CARD_HEIGHT =
-  Platform.OS === 'android' ? height / 2 + 30 : height / 2 + 50;
-const CARD_MIN_HEIGHT = Platform.OS === 'android' ? height / 3 : 300;
+  Platform.OS === "android" ? height / 2 + 30 : height / 2 + 50;
+const CARD_MIN_HEIGHT = Platform.OS === "android" ? height / 3 : 300;
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation, loadArticles }) => {
-    const search = navigation.getParam('search');
+    const search = navigation.getParam("search");
     const resetAction = StackActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Home' })],
+      actions: [NavigationActions.navigate({ routeName: "Home" })]
     });
     return {
       headerTitle: () =>
@@ -41,7 +48,7 @@ class HomeScreen extends React.Component {
         ) : (
           <Logo onPress={() => navigation.dispatch(resetAction)} />
         ),
-      headerStyle: { borderBottomColor: 'transparent', opacity: 1 },
+      headerStyle: { borderBottomColor: "transparent", opacity: 1 },
       headerLeft: (
         <Icon
           containerStyle={{ margin: 10 }}
@@ -64,7 +71,7 @@ class HomeScreen extends React.Component {
           onPress={() => navigation.setParams({ search: !search })}
           name="search"
         />
-      ),
+      )
     };
   };
 
@@ -74,6 +81,7 @@ class HomeScreen extends React.Component {
       refreshing: false,
       loading: false,
       closeSearch: true,
+      isConnected: false
     };
     this.scrollY = new Animated.Value(0);
     this.androidHeight = new Animated.Value(0);
@@ -82,7 +90,7 @@ class HomeScreen extends React.Component {
     this.props.navigation.setParams({
       headerSearch: this.props.searchValue,
       search: true,
-      name: "WHAT'S NEW",
+      name: "WHAT'S NEW"
     });
   }
   async componentDidMount() {
@@ -133,7 +141,7 @@ class HomeScreen extends React.Component {
       navigation={this.props.navigation}
       categoryName={this.getCategoryName}
       onPress={() =>
-        this.props.navigation.navigate('Article', { id: item._id })
+        this.props.navigation.navigate("Article", { id: item._id })
       }
       title={this.props.articles ? item.title.rendered : item.title}
       image={item.jetpack_featured_media_url}
@@ -142,16 +150,16 @@ class HomeScreen extends React.Component {
     />
   );
   render() {
-    const search = this.props.navigation.getParam('search');
+    const search = this.props.navigation.getParam("search");
     const { articles } = this.props;
     const heightTranslate = this.scrollY.interpolate({
       inputRange: [0, 100],
       outputRange: [CARD_HEIGHT, CARD_MIN_HEIGHT],
-      extrapolate: 'clamp',
-      useNativeDriver: true,
+      extrapolate: "clamp",
+      useNativeDriver: true
     });
     const headerStyle = {
-      height: heightTranslate,
+      height: heightTranslate
     };
     //  handling a search button
     if (this.props.userSearch && !search) {
@@ -164,7 +172,7 @@ class HomeScreen extends React.Component {
               <View key={i.id}>
                 <List
                   onPress={() => {
-                    this.props.navigation.navigate('Article', { id: i._id });
+                    this.props.navigation.navigate("Article", { id: i._id });
                   }}
                   starIcon={() => this._starredArticle(i.id)}
                   categoryName={this.getCategoryName}
@@ -183,13 +191,15 @@ class HomeScreen extends React.Component {
     //  main screen view
     return (
       <View style={[styles.container]}>
+        {this.state.isConnected ? null : <OfflineNotice />}
         <Text style={styles.date}> {currentDate()}</Text>
         <Text style={styles.title}> {this.getCategoryName()}</Text>
         <View style={{ flex: 1 }}>
           <Animated.View
             style={
-              Platform.OS === 'ios' ? headerStyle : { height: CARD_HEIGHT }
-            }>
+              Platform.OS === "ios" ? headerStyle : { height: CARD_HEIGHT }
+            }
+          >
             <ScrollView
               horizontal
               bounces={false}
@@ -198,7 +208,8 @@ class HomeScreen extends React.Component {
               decelerationRate={0.8}
               ref={scroll => {
                 this.ScrollList = scroll;
-              }}>
+              }}
+            >
               {/* /* rendering Cards components  */}
               <FlatList
                 horizontal
@@ -218,15 +229,16 @@ class HomeScreen extends React.Component {
                 [
                   {
                     nativeEvent: {
-                      contentOffset: { y: this.scrollY },
-                    },
-                  },
+                      contentOffset: { y: this.scrollY }
+                    }
+                  }
                 ],
-                {},
+                {}
               )}
               refreshControl={
                 <RefreshControl refreshing={this.state.refreshing} />
-              }>
+              }
+            >
               {this.props.loading ? (
                 <Loading />
               ) : (
@@ -237,7 +249,7 @@ class HomeScreen extends React.Component {
                       starred={this.props.starred}
                       id={i.id}
                       onPress={() =>
-                        this.props.navigation.navigate('Article', { id: i._id })
+                        this.props.navigation.navigate("Article", { id: i._id })
                       }
                       categoryName={this.getCategoryName}
                       date={i.date}
@@ -266,6 +278,6 @@ export default connect(
     searchValue,
     addStarredArticle,
     deleteStarred,
-    fetchingStarredArticles,
-  },
+    fetchingStarredArticles
+  }
 )(HomeScreen);

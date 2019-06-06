@@ -10,7 +10,7 @@ import {
   LOADING_ARTICLE_POST,
   ARTICLE_POST_LOAD_SUCCESS,
   ARTICLE_POST_LOAD_FAILED,
-} from './ArticleReducer';
+} from './articlereducer';
 
 export function loadArticlePost(id) {
   return async dispatch => {

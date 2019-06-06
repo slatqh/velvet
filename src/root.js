@@ -1,11 +1,8 @@
-import React from 'react';
-import AppContainer from './navigation/AppNavigator';
-import { YellowBox } from 'react-native';
+import React from "react";
+import AppContainer from "./navigation/AppNavigator";
 
 console.disableYellowBox = true;
 
-const Root = () => (
-  <AppContainer />
-);
+const Root = () => <AppContainer />;
 
 export default Root;

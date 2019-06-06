@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import Authreducer from '../screens/Auth/Authreducer';
 import Homereducer from '../screens/Home/reducer';
-import ArticleReducer from '../screens/ArticleScreen/ArticleReducer';
+import ArticleReducer from '../screens/ArticleScreen/articlereducer';
 
 export default combineReducers({
   Auth: Authreducer,
