@@ -35,6 +35,13 @@ class WishList extends React.PureComponent {
       deleted: false,
     };
   }
+  UNSAFE_componentWillUpdate(prevProps) {
+    console.log(prevProps.starredArticles);
+    if (prevProps.starredArticles !== this.props.starredArticles) {
+      return true;
+    }
+    return false;
+  }
   componentDidMount() {
     this.props.fetchingStarredArticles();
   }

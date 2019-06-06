@@ -15,6 +15,7 @@ import { Circle } from './Categorycircle';
 import CircleText from './CircleText';
 import { ShareButton } from './ShareButton.js';
 import { ShoppingButton } from './ShoppingButton.js';
+import OfflineNotice from './OfflineNotice';
 
 export {
   ShoppingButton,
@@ -34,4 +35,5 @@ export {
   CustomButton,
   Card,
   Inputs,
+  OfflineNotice,
 };

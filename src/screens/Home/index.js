@@ -1,6 +1,4 @@
-import HomeScreen from './HomeScreen'
+import HomeScreen from './HomeScreen';
+import HomeScreenMain from './HomeScreenMain';
 
-
-export {
-  HomeScreen
-}
+export { HomeScreen, HomeScreenMain };
