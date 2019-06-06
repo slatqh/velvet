@@ -20,16 +20,24 @@ class OfflineNotice extends PureComponent {
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <TouchableOpacity onPress={this.props.onPress}>
-            <Text
+            <View
               style={{
-                color: "white",
-                fontSize: 20,
-                backgroundColor: "#b52524",
-                padding: 10
+                width: width / 2,
+                backgroundColor: "#ddd",
+                alignItems: "center",
+                justifyContent: "center"
               }}
             >
-              Reload
-            </Text>
+              <Text
+                style={{
+                  color: "#938585",
+                  fontSize: 20,
+                  paddingVertical: 5
+                }}
+              >
+                Reload
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
