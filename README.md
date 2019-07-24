@@ -1,5 +1,6 @@
 # velvet
-Velvet app
+Velvet - react native app for fashion magazine.
+
 
 For video demo please visit 
 
